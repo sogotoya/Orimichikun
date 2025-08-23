@@ -63,9 +63,7 @@ public class PlayScript : MonoBehaviour
             case State.Attack:
                 ModeAttack();
                 break;
-            case State.Damage:
-                ModeDamage();
-                break;
+
         }
     }
 
@@ -114,14 +112,12 @@ public class PlayScript : MonoBehaviour
         // 上方向に速度を与える
         m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_jumpForce);
 
-        // アニメーション用
-        m_Animator.SetTrigger("Jump");
 
         // 状態をIdleに戻すのは「着地したら」
         StartCoroutine(CheckLanding());
     }
     void ModeAttack() { }
-    void ModeDamage() { }
+    
     //ステートチェンジ関数
     void ChangeState(State newState)
     {
