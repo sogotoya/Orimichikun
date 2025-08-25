@@ -1,3 +1,4 @@
+using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class PlayScript : MonoBehaviour
         Move,
         Jump,
         Attack,
+        Die,
         Damage
     }
 
@@ -24,8 +26,16 @@ public class PlayScript : MonoBehaviour
     public Transform m_Ground;
     [Header("着地判定")]
     public float m_groundCheck;
+    [Header("最大ジャンプ回数")]
+    public int maxJumpCount = 2;
+    [Header("落下判定")]
+    public float m_deathY = -10f;
+    [Header("UI画像")]
+    public GameObject m_image;
     private Rigidbody2D m_Rigidbody;
     private Animator m_Animator;
+    // 何回ジャンプしたか
+    private int jumpCount = 0; 
     //左右入力値
     private float moveX;
     //現在の状態
@@ -39,6 +49,7 @@ public class PlayScript : MonoBehaviour
     {
         m_Animator = GetComponent<Animator>();
         m_Rigidbody = GetComponent<Rigidbody2D>();
+        m_image.SetActive(false);
     }
 
     private void Update()
@@ -48,6 +59,14 @@ public class PlayScript : MonoBehaviour
 
         // 接地判定
         isGrounded = Physics2D.OverlapCircle(m_Ground.position, m_groundCheck, m_Layer);
+        // 接地したらジャンプ回数リセット
+        if (isGrounded) jumpCount = 0;
+        // Y座標が死亡ラインより下なら
+        if (transform.position.y < m_deathY)
+        {
+            ChangeState(State.Die);
+        }
+
         // ステート処理
         switch (CurrentState)
         {
@@ -63,6 +82,12 @@ public class PlayScript : MonoBehaviour
             case State.Attack:
                 ModeAttack();
                 break;
+            case State.Die:
+                ModeDie();
+                break;
+            case State.Damage:
+                ModeDamage();
+                break;
 
         }
     }
@@ -77,7 +102,7 @@ public class PlayScript : MonoBehaviour
             ChangeState(State.Move);
         }
         //地面を踏んでいてspaceキーを押したらジャンプする
-        if (Input.GetKeyDown(KeyCode.Space)&&isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && jumpCount < maxJumpCount)
         {
             ChangeState(State.Jump);
         }
@@ -101,7 +126,7 @@ public class PlayScript : MonoBehaviour
             ChangeState(State.Idle);
         }
         //地面を踏んでいてspaceキーを押したらジャンプする
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && jumpCount < maxJumpCount)
         {
             ChangeState(State.Jump);
         }
@@ -111,12 +136,31 @@ public class PlayScript : MonoBehaviour
     {
         // 上方向に速度を与える
         m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_jumpForce);
-
+        // ジャンプ回数を増やす
+        jumpCount++;
 
         // 状態をIdleに戻すのは「着地したら」
         StartCoroutine(CheckLanding());
     }
     void ModeAttack() { }
+
+    void ModeDie()
+    {
+        m_image.SetActive(true);
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            // 例: プレイヤーの位置をスタート地点に戻す
+            transform.position = Vector3.zero; // スタート位置に戻す場合
+            m_Rigidbody.velocity = Vector2.zero;
+            ChangeState(State.Idle);
+            // 死亡後に復活
+            m_image.SetActive(false);
+        }
+    }
+    void ModeDamage()
+    {
+
+    }
     
     //ステートチェンジ関数
     void ChangeState(State newState)
