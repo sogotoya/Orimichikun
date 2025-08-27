@@ -13,6 +13,7 @@ public class HPManager : MonoBehaviour
 
     [SerializeField]
     [Header("HPのUI")]
+    [Tooltip("HPのUI")]
     Image m_HPImage;
 
     [SerializeField]
@@ -24,7 +25,7 @@ public class HPManager : MonoBehaviour
 
     [Header("並びの開始位置")]
     [Tooltip("並びの開始位置")]
-    public Vector2 m_StartPos = Vector3.zero;
+    public Vector2 m_StartPos = Vector2.zero;
 
 
     private void Start()
@@ -45,8 +46,10 @@ public class HPManager : MonoBehaviour
     /// </summary>
     void AddUI()
     {
-        //最初の座標、回転無し
-        Image m_UI = Instantiate(m_HPImage, m_StartPos, Quaternion.identity);
+        //親オブジェクトの子として複製
+        Image m_UI = Instantiate(m_HPImage, m_HPImage.transform.parent);
+        //位置の指定
+        m_UI.rectTransform.anchoredPosition = m_StartPos;
         //リストに追加
         m_HPImageList.Add(m_UI);
 
@@ -64,7 +67,7 @@ public class HPManager : MonoBehaviour
             // X方向に等間隔
             Vector2 m_Pos = m_StartPos + new Vector2(i * m_Spacing, 0);
             //それぞれ均等に配置
-            m_HPImageList[i].transform.position = m_Pos;
+            m_HPImageList[i].rectTransform.anchoredPosition = m_Pos;
         }
     }
 }
