@@ -11,6 +11,8 @@
 //空のオブジェクトを新しく作る
 //このスクリプトをアタッチする
 //それぞれの変数にインスペクター上でドラッグ&ドロップ
+
+//m_ImageList現在使ってません
 #endregion
 using System.Collections;
 using System.Collections.Generic;
@@ -64,6 +66,16 @@ public class UIReplicationManager : MonoBehaviour
         //リストの追加
         m_ImageList.Add(m_UI);
 
+    }
+
+    /// <summary>
+    /// 表示非表示変更
+    /// </summary>
+    void RemoveUI()
+    {
+        //要素の数を取得して端から表示切替
+        int m_Count = m_ImageList.Count;
+        m_ImagePanel.gameObject.SetActive(!m_ImageList[m_Count].gameObject.activeSelf);
     }
 
 }

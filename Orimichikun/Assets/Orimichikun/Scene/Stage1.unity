@@ -794,6 +794,7 @@ GameObject:
   - component: {fileID: 1778496384}
   - component: {fileID: 1778496385}
   - component: {fileID: 1778496386}
+  - component: {fileID: 1778496387}
   m_Layer: 0
   m_Name: TE1_Attack_0
   m_TagString: Untagged
@@ -947,10 +948,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de7fe2c1b65a07c44a1721cde71675a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Team: 
-  m_Hp: 100
-  m_MaxHp: 100
+  m_Team: Enemy
+  m_Hp: 1
+  m_MaxHp: 1
   m_Die: {fileID: 0}
+--- !u!114 &1778496387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1778496381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a35e6b9af3a5a146bf8661b778cf3e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_DamegePoint: 0
+  m_Parameta: {fileID: 1778496386}
 --- !u!1 &2031184454
 GameObject:
   m_ObjectHideFlags: 0

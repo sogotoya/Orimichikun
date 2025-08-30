@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class Enemy_Tsuta : MonoBehaviour
@@ -25,7 +26,8 @@ public class Enemy_Tsuta : MonoBehaviour
             m_BoxCollider2D = this.gameObject.AddComponent<BoxCollider2D>();
             Debug.Log("nullなのでコライダー追加");
         }
-            m_MaxCollider = m_BoxCollider2D.size.y;
+        m_MaxCollider = m_BoxCollider2D.size.y;
+        m_BoxCollider2D.size = new Vector2(m_BoxCollider2D.size.x, 0);
         m_Time = 0f;
     }
 
@@ -39,7 +41,7 @@ public class Enemy_Tsuta : MonoBehaviour
     {
 
 
-        if(m_Time == m_ChangeStartTime)
+        if (m_Time == m_ChangeStartTime)
         {
 
         }
