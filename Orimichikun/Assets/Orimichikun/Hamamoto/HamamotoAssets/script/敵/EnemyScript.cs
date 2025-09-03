@@ -6,148 +6,81 @@ public class EnemyScript : MonoBehaviour
 {
     public enum State
     {
-        Idle,
         Patrol,
-        Chase,
         Attack,
+        Damage,
     }
-
-    [Header("移動速度")]
-    public float m_moveSpeed = 2f;
-    [Header("攻撃範囲")]
-    public float m_attackRange = 1.5f;
-    [Header("追跡範囲")]
-    public float m_chaseRange = 5f;
-    [Header("パトロール範囲の左右端")]
-    public Transform m_leftPoint;
-    public Transform m_rightPoint;
-
+  
     [Header("プレイヤー")]
-    public Transform m_player;
-
-    private Rigidbody2D m_Rigidbody;
-    private Animator m_Animator;
-
-    private State CurrentState = State.Idle;
-    private bool facingRight = true;
-    private Vector3 patrolTarget;
+    public GameObject m_Player;
+    [Header("アニメーター")]
+    public Animator m_Animator;
+    [Header("敵の速さ")]
+    public float m_EnemySpeed;
+    [Header("地面判定用レイヤー")]
+    public LayerMask m_Layer;
+    [Header("地面チェック位置")]
+    public Transform m_Ground;
+    private State CurrentState = State.Patrol;
+    //右に行くか左に行くか？
+    private int m_Direction = 1;
+    private Parameta2D m_Parameta;
+    private Damege2D m_Damege;
+    
 
     private void Start()
     {
-        m_Rigidbody = GetComponent<Rigidbody2D>();
-        m_Animator = GetComponent<Animator>();
-
-        // 初期はパトロール開始地点を設定
-        patrolTarget = m_leftPoint != null ? m_leftPoint.position : transform.position;
-        ChangeState(State.Patrol);
+        m_Animator=GetComponent<Animator>();
+        m_Parameta=GetComponent<Parameta2D>();
+        m_Damege=GetComponent<Damege2D>();
     }
 
     private void Update()
     {
+        if (m_Parameta.m_Hp <= 0) return; // 死んでたら何もしない
+
         switch (CurrentState)
         {
-            case State.Idle: ModeIdle(); break;
             case State.Patrol: ModePatrol(); break;
-            case State.Chase: ModeChase(); break;
             case State.Attack: ModeAttack(); break;
-
+            case State.Damage:ModeDamage(); break;
         }
     }
-    
-    void ModeIdle()
-    {
-        m_Animator.SetFloat("Speed", 0f);
 
-        // プレイヤーが近づいたら Chase へ
-        if (Vector2.Distance(transform.position, m_player.position) < m_chaseRange)
-        {
-            ChangeState(State.Chase);
-        }
-    }
 
     void ModePatrol()
     {
-        m_Animator.SetFloat("Speed", 1f);
 
-        // 左右に歩く
-        transform.position = Vector2.MoveTowards(transform.position, patrolTarget, m_moveSpeed * Time.deltaTime);
-
-        // ターゲットに着いたら反転
-        if (Vector2.Distance(transform.position, patrolTarget) < 0.1f)
+        //移動処理
+        transform.Translate(Vector2.right * m_Direction * m_EnemySpeed * Time.deltaTime);
+        RaycastHit2D hit = Physics2D.Raycast(m_Ground.position, Vector2.down, 0.5f, m_Layer);
+        // 地面がなかったら方向転換
+        if (hit.collider == null)
         {
-            patrolTarget = (patrolTarget == m_leftPoint.position) ? m_rightPoint.position : m_leftPoint.position;
-            Flip();
-        }
-
-        // プレイヤーが範囲内に来たら Chase
-        if (Vector2.Distance(transform.position, m_player.position) < m_chaseRange)
-        {
-            ChangeState(State.Chase);
-        }
-    }
-
-    void ModeChase()
-    {
-        m_Animator.SetFloat("Speed", 1f);
-
-        // プレイヤー方向へ移動
-        Vector2 dir = (m_player.position - transform.position).normalized;
-        m_Rigidbody.velocity = new Vector2(dir.x * m_moveSpeed, m_Rigidbody.velocity.y);
-
-        // 向きを反転
-        if ((dir.x > 0 && !facingRight) || (dir.x < 0 && facingRight))
-        {
-            Flip();
-        }
-
-        // 攻撃可能距離なら攻撃
-        if (Vector2.Distance(transform.position, m_player.position) < m_attackRange)
-        {
-            ChangeState(State.Attack);
-        }
-        // 追跡範囲外ならパトロールに戻る
-        else if (Vector2.Distance(transform.position, m_player.position) > m_chaseRange * 1.5f)
-        {
-            ChangeState(State.Patrol);
+            TurnAround();
         }
     }
 
     void ModeAttack()
     {
-        m_Animator.SetTrigger("Attack");
 
-        // 攻撃アニメの終了後に再び Chase に戻る
-        StartCoroutine(BackToChase());
     }
-
-    IEnumerator BackToChase()
+    void ModeDamage()
     {
-        // 攻撃モーションの長さに合わせる
-        yield return new WaitForSeconds(1f); 
-        ChangeState(State.Chase);
+
+
+ 
     }
-
-
-
-    void ChangeState(State newState)
+    void TurnAround()
     {
-        CurrentState = newState;
-    }
-//反転の関数 
-    void Flip()
-    {
-        facingRight = !facingRight;
+        //行く方向を反転
+        m_Direction *= -1;
+        // 見た目も反転
         Vector3 scale = transform.localScale;
-        scale.x *= -1;
+        scale.x = Mathf.Abs(scale.x) * m_Direction;
         transform.localScale = scale;
     }
 
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, m_attackRange);
 
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, m_chaseRange);
-    }
+
 }

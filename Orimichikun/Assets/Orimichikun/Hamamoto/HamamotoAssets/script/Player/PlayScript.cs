@@ -34,6 +34,7 @@ public class PlayScript : MonoBehaviour
     public GameObject m_image;
     private Rigidbody2D m_Rigidbody;
     private Animator m_Animator;
+    private Parameta2D m_Parameta;
     // 何回ジャンプしたか
     private int jumpCount = 0; 
     //左右入力値
@@ -51,6 +52,7 @@ public class PlayScript : MonoBehaviour
     {
         m_Animator = GetComponent<Animator>();
         m_Rigidbody = GetComponent<Rigidbody2D>();
+        m_Parameta = GetComponent<Parameta2D>();
         m_image.SetActive(false);
     }
 
@@ -68,7 +70,10 @@ public class PlayScript : MonoBehaviour
         }
         // 今回の接地判定を保存
         wasGrounded = isGrounded;
-
+        if (m_Parameta.m_Hp <= 1)
+        {
+            LockFall();
+        }
         // Y座標が死亡ラインより下なら
         if (transform.position.y < m_deathY)
         {
@@ -201,7 +206,7 @@ public class PlayScript : MonoBehaviour
         // もし水平移動も一切できないようにしたいなら：
         m_Rigidbody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
 
-        // UIを表示するならここ
+        // UIを表示
         m_image.SetActive(true);
     }
     void Respawn()
@@ -214,9 +219,13 @@ public class PlayScript : MonoBehaviour
 
         // StateをIdleに戻す
         CurrentState = State.Idle;
-
+        m_Parameta.m_Hp=m_Parameta.m_MaxHp;
         // UIを消す
         m_image.SetActive(false);
+    }
+    public bool IsFacingRight()
+    {
+        return facingRight;
     }
     IEnumerator CheckLanding()
     {
