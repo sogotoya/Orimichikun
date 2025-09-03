@@ -27,7 +27,7 @@ namespace StateMachineAI
             if (m_Times > 5.0f)
             {
                 //S_TypeB(B_Mode)へステート移動
-                owner.ChangeState(AIState_ABType.B_Mode);
+                //owner.ChangeState(AIState_ABType.B_Mode);
             }
             else
             {
