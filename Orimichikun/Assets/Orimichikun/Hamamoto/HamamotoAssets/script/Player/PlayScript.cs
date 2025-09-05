@@ -61,54 +61,42 @@ public class PlayScript : MonoBehaviour
         // 入力取得
         moveX = Input.GetAxisRaw("Horizontal");
 
-        // 接地判定
-        isGrounded = Physics2D.OverlapCircle(m_Ground.position, m_groundCheck, m_Layer);
+        // 接地判定（Raycast のみ使用）
+        isGrounded = CheckGrounded();
+
         // 接地したらジャンプ回数リセット
         if (isGrounded)
         {
             jumpCount = 0;
         }
+
         // 今回の接地判定を保存
         wasGrounded = isGrounded;
+
         if (m_Parameta.m_Hp <= 1)
         {
             LockFall();
         }
-        // Y座標が死亡ラインより下なら
         if (transform.position.y < m_deathY)
         {
             LockFall();
         }
-        // エンターキーでリスポーン
         if (CurrentState == State.Die && Input.GetKeyDown(KeyCode.Return))
         {
             Respawn();
         }
 
-        if (CurrentState != State.Die) { 
-        // ステート処理
-        switch (CurrentState)
+        if (CurrentState != State.Die)
         {
-            case State.Idle:
-                ModeIdle();
-                break;
-            case State.Move:
-                ModeMove();
-                break;
-            case State.Jump:
-                ModeJump();
-                break;
-            case State.Attack:
-                ModeAttack();
-                break;
-            case State.Die:
-                ModeDie();
-                break;
-            case State.Damage:
-                ModeDamage();
-                break;
+            switch (CurrentState)
+            {
+                case State.Idle: ModeIdle(); break;
+                case State.Move: ModeMove(); break;
+                case State.Jump: ModeJump(); break;
+                case State.Attack: ModeAttack(); break;
+                case State.Die: ModeDie(); break;
+                case State.Damage: ModeDamage(); break;
             }
-
         }
     }
 
@@ -222,6 +210,15 @@ public class PlayScript : MonoBehaviour
         m_Parameta.m_Hp=m_Parameta.m_MaxHp;
         // UIを消す
         m_image.SetActive(false);
+
+  
+
+    }
+    bool CheckGrounded()
+    {
+        // 足元から下方向にRayを飛ばす
+        RaycastHit2D hit = Physics2D.Raycast(m_Ground.position, Vector2.down, m_groundCheck, m_Layer);
+        return hit.collider != null;
     }
     public bool IsFacingRight()
     {

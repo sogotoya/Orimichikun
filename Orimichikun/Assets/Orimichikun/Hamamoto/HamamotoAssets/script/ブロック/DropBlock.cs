@@ -24,7 +24,7 @@ public class DropBlock : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //player‚ªcollision‚ğ“¥‚ñ‚¾‚ç
-        if (!m_isDropping&&collision.gameObject.CompareTag("Player"))
+        if (!m_isDropping && collision.gameObject.CompareTag("Player") ) 
         {
             //—‰º‚Ì€”õŠJnI
             StartCoroutine(DropAfterDelay());

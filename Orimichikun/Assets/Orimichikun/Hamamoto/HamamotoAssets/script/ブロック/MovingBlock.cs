@@ -44,7 +44,7 @@ public class MovingBlock : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //player‚ªcollision‚ğ“¥‚ñ‚¾‚ç
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Enemy"))
         {
             //player‚ğ°‚É‚­‚Á‚Â‚¯‚é
             collision.transform.SetParent(transform);

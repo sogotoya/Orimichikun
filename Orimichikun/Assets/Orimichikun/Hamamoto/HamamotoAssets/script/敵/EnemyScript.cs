@@ -42,15 +42,14 @@ public class EnemyScript : MonoBehaviour
         switch (CurrentState)
         {
             case State.Patrol: ModePatrol(); break;
-            case State.Attack: ModeAttack(); break;
-            case State.Damage:ModeDamage(); break;
+
         }
     }
 
 
     void ModePatrol()
     {
-
+        
         //ˆÚ“®ˆ—
         transform.Translate(Vector2.right * m_Direction * m_EnemySpeed * Time.deltaTime);
         RaycastHit2D hit = Physics2D.Raycast(m_Ground.position, Vector2.down, 0.5f, m_Layer);
@@ -60,17 +59,17 @@ public class EnemyScript : MonoBehaviour
             TurnAround();
         }
     }
-
-    void ModeAttack()
+    private void ModeDie()
     {
+        if (m_Animator)
+        {
+            m_Animator.SetTrigger("Die");
+        }
 
+
+   
     }
-    void ModeDamage()
-    {
 
-
- 
-    }
     void TurnAround()
     {
         //s‚­•ûŒü‚ğ”½“]

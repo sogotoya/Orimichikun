@@ -60,7 +60,11 @@ public class Parameta2D : MonoBehaviour
         {
             m_Animator.SetTrigger("Die");
         }
-        Destroy(gameObject, 2f);
+
+
+
+
+        Destroy(gameObject, 1f);
     }
 
 }
