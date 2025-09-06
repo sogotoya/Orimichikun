@@ -12,14 +12,19 @@ public class Parameta2D : MonoBehaviour
 
     [Header("–³“GŠÔ (•b)")]
     public float m_InvincibleTime = 1f;
-
     private float m_InvincibleTimer = 0f;
 
     private Animator m_Animator;
+    public Goal m_Goal;
 
     private void Start()
     {
         m_Animator = GetComponent<Animator>();
+        // ƒV[ƒ“ã‚ÌGoal‚ğ©“®‚Å’T‚·
+        if (m_Goal == null)
+        {
+            m_Goal = FindObjectOfType<Goal>();
+        }
     }
 
     private void Update()
@@ -49,6 +54,7 @@ public class Parameta2D : MonoBehaviour
         }
         if (m_Hp <= 0)
         {
+
             m_Hp = 0;
             Die();
         }
@@ -59,12 +65,18 @@ public class Parameta2D : MonoBehaviour
         if (m_Animator)
         {
             m_Animator.SetTrigger("Die");
+           
+        }
+
+
+        if (m_Goal != null)
+        {
+            m_Goal.OnBossDie();
         }
 
 
 
-
-        Destroy(gameObject, 1f);
+        Destroy(gameObject,2f);
     }
 
 }

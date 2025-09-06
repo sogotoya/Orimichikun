@@ -7,6 +7,7 @@ public class HPBar : MonoBehaviour
 {
     Slider m_Slider;
     public Parameta2D m_Parameta2;
+
     void Start()
     {
         // スライダーを取得する
