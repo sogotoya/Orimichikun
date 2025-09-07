@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class TP : MonoBehaviour
 {
+    public AudioSource m_Bgm1;
+    public AudioSource m_Bgm2;
+
     [Header("キャラクター")]
     public GameObject m_Player;
     [Header("テレポート先")]
@@ -37,8 +40,12 @@ public class TP : MonoBehaviour
     {
         if (m_TP != null)
         {
+            m_Bgm1.Stop();
+
             //プレイヤーがTPに移動
             m_Player.transform.position = m_TP.position;
+
+            m_Bgm2.Play();
         }
     }
 }

@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Orimichikun/Scene/Title.unity
+    guid: 038a36ef34a070d47b53ecb50b753cd5
+  - enabled: 1
+    path: Assets/Orimichikun/Scene/Stage.unity
+    guid: af59d19f7a496904b9b5d34bc4a2741a
   m_configObjects: {}

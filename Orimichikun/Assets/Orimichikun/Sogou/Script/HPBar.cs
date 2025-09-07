@@ -12,7 +12,7 @@ public class HPBar : MonoBehaviour
     {
         // スライダーを取得する
         m_Slider = GameObject.Find("Slider").GetComponent<Slider>();
-        if(m_Parameta2 != null )
+        if(m_Parameta2 == null )
         {
             Debug.Log("Parameta2Dアタッチされてません");
         }
