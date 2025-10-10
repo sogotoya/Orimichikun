@@ -37,7 +37,13 @@ public class EnemyScript : MonoBehaviour
 
     private void Update()
     {
-        if (m_Parameta.m_Hp <= 0) return; // Ž€‚ñ‚Å‚½‚ç‰½‚à‚µ‚È‚¢
+        if (m_Parameta.m_Hp <= 0)
+        {
+            Destroy(GetComponent<BoxCollider2D>());
+            Destroy(GetComponent<Rigidbody2D>());
+            return;
+            // Ž€‚ñ‚Å‚½‚ç‰½‚à‚µ‚È‚¢
+        }
 
         switch (CurrentState)
         {
@@ -64,6 +70,7 @@ public class EnemyScript : MonoBehaviour
         if (m_Animator)
         {
             m_Animator.SetTrigger("Die");
+            
         }
 
 

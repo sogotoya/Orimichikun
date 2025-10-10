@@ -2,6 +2,7 @@ using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class PlayScript : MonoBehaviour
 {
@@ -32,9 +33,12 @@ public class PlayScript : MonoBehaviour
     public float m_deathY = -10f;
     [Header("UI画像")]
     public GameObject m_image;
+    [Header("jumpの音")]
+    public AudioClip[] m_jump;
     private Rigidbody2D m_Rigidbody;
     private Animator m_Animator;
     private Parameta2D m_Parameta;
+    private AudioSource m_Audio;
     // 何回ジャンプしたか
     private int jumpCount = 0; 
     //左右入力値
@@ -53,6 +57,7 @@ public class PlayScript : MonoBehaviour
         m_Animator = GetComponent<Animator>();
         m_Rigidbody = GetComponent<Rigidbody2D>();
         m_Parameta = GetComponent<Parameta2D>();
+        m_Audio = GetComponent<AudioSource>();
         m_image.SetActive(false);
     }
 
@@ -64,6 +69,7 @@ public class PlayScript : MonoBehaviour
         // 接地判定（Raycast のみ使用）
         isGrounded = CheckGrounded();
 
+        
         // 接地したらジャンプ回数リセット
         if (isGrounded)
         {
@@ -140,6 +146,14 @@ public class PlayScript : MonoBehaviour
         //地面を踏んでいてspaceキーを押したらジャンプする
         if (Input.GetKeyDown(KeyCode.Space) && jumpCount < maxJumpCount)
         {
+            if (m_jump != null && m_jump.Length > 0)
+            {
+                int index = Mathf.Clamp(jumpCount - 1, 0, m_jump.Length - 1);
+                if (m_jump[index] != null)
+                {
+                    m_Audio.PlayOneShot(m_jump[index]);
+                }
+            }
             // 上方向に速度を与える
             m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_jumpForce);
             // ジャンプ回数を増やす
