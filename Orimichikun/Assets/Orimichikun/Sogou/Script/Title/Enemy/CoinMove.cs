@@ -7,6 +7,9 @@ using static UnityEngine.UI.GridLayoutGroup;
 public class CoinMove : MonoBehaviour
 {
     [SerializeField]
+    FastMessage m_FM;
+
+    [SerializeField]
     CameraShake m_CameraShake;
     // プレイヤーに近づくスピード
     float m_MoveSpeed = 1.0f;
@@ -22,9 +25,9 @@ public class CoinMove : MonoBehaviour
     {
         if (m_Coin == null) return;
         if (m_CameraShake == null) return;
+        if(m_FM == null) return;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (m_Coin == null)
@@ -40,7 +43,7 @@ public class CoinMove : MonoBehaviour
     {
         //コルーチン止めるための保存
         Coroutine shakeCoroutine = StartCoroutine(m_CameraShake.Shake(0.5f, 0.1f));
-        
+
         Vector2 dir = m_Player.transform.position - transform.position;
         //座標が空中になるためYは0
         dir.y = 0f;
@@ -56,6 +59,7 @@ public class CoinMove : MonoBehaviour
         else
         {
             StopCoroutine(shakeCoroutine);
+            m_FM.m_MessageFlag = true;
         }
     }
 }
