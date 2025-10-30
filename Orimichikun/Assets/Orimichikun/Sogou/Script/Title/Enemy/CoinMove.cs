@@ -7,7 +7,12 @@ using static UnityEngine.UI.GridLayoutGroup;
 public class CoinMove : MonoBehaviour
 {
     [SerializeField]
+    Camera m_Camera;
+
+    [SerializeField]
     FastMessage m_FM;
+    //何回呼ばれたかのカウント
+    int m_FlagCount = 0;
 
     [SerializeField]
     CameraShake m_CameraShake;
@@ -16,23 +21,34 @@ public class CoinMove : MonoBehaviour
 
     // プレイヤーにどこまで近づくか（停止距離）
     float m_StopDistance = 2f;
+
     [SerializeField]
     GameObject m_Coin;
 
     [SerializeField]
     GameObject m_Player;
+
+    //繰り返し呼ばれる対策
+    bool m_ShakeFlag;
+
     void Start()
     {
         if (m_Coin == null) return;
         if (m_CameraShake == null) return;
-        if(m_FM == null) return;
+        if (m_FM == null) return;
     }
 
     void Update()
     {
-        if (m_Coin == null)
+        //コインをとられた、メッセージ表示される前まで
+        if (m_Coin == null && !m_FM.m_MessageFlag)
         {
             MoveStart();
+        }
+        //FastMessageのContact()が終わったら起動
+        if (m_FM.m_ContactFlag)
+        {
+            StartCoroutine(BackMoveStart());
         }
     }
 
@@ -56,10 +72,35 @@ public class CoinMove : MonoBehaviour
             Vector3 move = dir.normalized * m_MoveSpeed * Time.deltaTime;
             transform.position += move;
         }
-        else
+        else//指定した地点についた
         {
+            //対策
             StopCoroutine(shakeCoroutine);
+
+            //コメント表示
             m_FM.m_MessageFlag = true;
         }
+    }
+
+    /// <summary>
+    /// 後退する
+    /// </summary>
+    IEnumerator BackMoveStart()
+    {
+        Vector2 dir = new Vector3(Screen.width, 0, 0) - transform.position;
+        //座標が空中になるためYは0
+        dir.y = 0f;
+        float distance = dir.magnitude;
+        //Debug.Log($"距離: {m_Distance}, 停止距離: {m_StopDistance}");
+
+        if (distance > m_StopDistance)
+        {
+            // 移動
+            Vector3 move = dir.normalized * m_MoveSpeed * Time.deltaTime;
+            transform.position += move;
+        }
+        //4秒たったら削除
+        yield return new WaitForSeconds(4f);
+        Destroy(gameObject);
     }
 }
