@@ -793,6 +793,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19ca08a8b7b2da54eae295befd2b9307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_Camera: {fileID: 0}
   m_FM: {fileID: 1258271838}
   m_CameraShake: {fileID: 1762513704}
   m_Coin: {fileID: 1154408330}
@@ -1348,6 +1349,7 @@ MonoBehaviour:
   - {fileID: 2126050114}
   - {fileID: 1656466074}
   m_MessageFlag: 0
+  m_ContactFlag: 0
 --- !u!4 &1258271839
 Transform:
   m_ObjectHideFlags: 0
@@ -2041,7 +2043,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 768a2483d9d014841ab15a8fff64bb78, type: 3}
-    m_FontSize: 32
+    m_FontSize: 16
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 0
@@ -2364,7 +2366,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 768a2483d9d014841ab15a8fff64bb78, type: 3}
-    m_FontSize: 32
+    m_FontSize: 16
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 3
