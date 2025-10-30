@@ -7,9 +7,6 @@ using static UnityEngine.UI.GridLayoutGroup;
 public class CoinMove : MonoBehaviour
 {
     [SerializeField]
-    Camera m_Camera;
-
-    [SerializeField]
     FastMessage m_FM;
     //何回呼ばれたかのカウント
     int m_FlagCount = 0;
@@ -87,11 +84,13 @@ public class CoinMove : MonoBehaviour
     /// </summary>
     IEnumerator BackMoveStart()
     {
+        //コルーチン止めるための保存
+        Coroutine shakeCoroutine = StartCoroutine(m_CameraShake.Shake(0.5f, 0.1f));
+        yield return new WaitForSeconds(0.7f);
         Vector2 dir = new Vector3(Screen.width, 0, 0) - transform.position;
         //座標が空中になるためYは0
         dir.y = 0f;
         float distance = dir.magnitude;
-        //Debug.Log($"距離: {m_Distance}, 停止距離: {m_StopDistance}");
 
         if (distance > m_StopDistance)
         {
@@ -101,6 +100,8 @@ public class CoinMove : MonoBehaviour
         }
         //4秒たったら削除
         yield return new WaitForSeconds(4f);
+        //対策
+        StopCoroutine(shakeCoroutine);
         Destroy(gameObject);
     }
 }
