@@ -11,11 +11,11 @@ public class TutorialPlayershoot : MonoBehaviour
     public Transform m_firePoint;
     public AudioClip m_Shoot;
     private AudioSource m_Source;
-    private TutorialPalyerController m_Player;
+    private TutorialPlayerController m_Player;
     private Animator m_Animator;
     private void Start()
     {
-        m_Player = GetComponent<TutorialPalyerController>();
+        m_Player = GetComponent<TutorialPlayerController>();
         m_Animator = GetComponent<Animator>();
         //  AudioSource‚ðŽæ“¾
         m_Source = GetComponent<AudioSource>();

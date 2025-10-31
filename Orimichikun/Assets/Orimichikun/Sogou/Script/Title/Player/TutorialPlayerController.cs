@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class TutorialPalyerController : MonoBehaviour
+public class TutorialPlayerController : MonoBehaviour
 {
     //ó‘Ô‚Ì’è‹`
     public enum State
@@ -31,8 +31,6 @@ public class TutorialPalyerController : MonoBehaviour
     public int maxJumpCount = 2;
     [Header("—‰º”»’è")]
     public float m_deathY = -10f;
-    [Header("UI‰æ‘œ")]
-    public GameObject m_image;
     [Header("jump‚Ì‰¹")]
     public AudioClip[] m_jump;
     private Rigidbody2D m_Rigidbody;
@@ -202,8 +200,6 @@ public class TutorialPalyerController : MonoBehaviour
         // ‚à‚µ…•½ˆÚ“®‚àˆêØ‚Å‚«‚È‚¢‚æ‚¤‚É‚µ‚½‚¢‚È‚çF
         m_Rigidbody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
 
-        // UI‚ğ•\¦
-        m_image.SetActive(true);
     }
     void Respawn()
     {
@@ -215,10 +211,6 @@ public class TutorialPalyerController : MonoBehaviour
 
         // State‚ğIdle‚É–ß‚·
         CurrentState = State.Idle;
-        // UI‚ğÁ‚·
-        m_image.SetActive(false);
-
-
 
     }
     bool CheckGrounded()
