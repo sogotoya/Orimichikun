@@ -10,7 +10,9 @@ public class FastMessage : MonoBehaviour
     [SerializeField]
     GameObject[] m_Renderer;
     //前の行動が終わったかの判定
-    public bool m_MessageFlag;
+    public bool m_MessageFlag=false;
+    //IEnumerator Contact()が終わったかの判定
+    public bool m_ContactFlag=false;
     //1回のみ呼ばれるフラグ
     bool m_Flag = false;
     private void Start()
@@ -55,6 +57,8 @@ public class FastMessage : MonoBehaviour
             yield return new WaitForSeconds(1.5f);
             m_Renderer[i].SetActive(false);
         }
+        //Contact()終わったのでtrue
+        m_ContactFlag = true;
         yield return null;
     }
 }
