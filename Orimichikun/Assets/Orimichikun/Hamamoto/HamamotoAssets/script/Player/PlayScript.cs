@@ -16,7 +16,7 @@ public class PlayScript : MonoBehaviour
         Die,
         Damage
     }
-
+    public RespawnPoint m_RespawnPoint;
     [Header("移動速度")]
     public float m_runSpeed = 6f;
     [Header("ジャンプ力")]
@@ -35,6 +35,7 @@ public class PlayScript : MonoBehaviour
     public GameObject m_image;
     [Header("jumpの音")]
     public AudioClip[] m_jump;
+  
     private Rigidbody2D m_Rigidbody;
     private Animator m_Animator;
     private Parameta2D m_Parameta;
@@ -51,6 +52,7 @@ public class PlayScript : MonoBehaviour
     private bool isGrounded;
     // 地面にいたかどうか
     private bool wasGrounded = false;  
+    
 
     private void Start()
     {
@@ -87,8 +89,10 @@ public class PlayScript : MonoBehaviour
         {
             LockFall();
         }
+        //死んだらリスポーン
         if (CurrentState == State.Die && Input.GetKeyDown(KeyCode.Return))
         {
+            m_RespawnPoint.Respawn();
             Respawn();
         }
 

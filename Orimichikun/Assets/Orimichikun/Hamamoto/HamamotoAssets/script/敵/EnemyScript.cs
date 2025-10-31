@@ -30,6 +30,14 @@ public class EnemyScript : MonoBehaviour
 
     private void Start()
     {
+        if (m_Player==null)
+        {
+            GameObject obj = GameObject.FindGameObjectWithTag("Player");
+            if (obj != null)
+            {
+               m_Player = obj;
+            }
+        }
         m_Animator=GetComponent<Animator>();
         m_Parameta=GetComponent<Parameta2D>();
         m_Damege=GetComponent<Damege2D>();

@@ -310,3 +310,4 @@ MonoBehaviour:
   m_Hp: 2
   m_MaxHp: 2
   m_InvincibleTime: 0.5
+  m_Goal: {fileID: 0}
