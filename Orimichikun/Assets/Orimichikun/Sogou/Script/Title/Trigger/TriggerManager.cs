@@ -22,16 +22,32 @@ public class TriggerManager : MonoBehaviour
     [SerializeField]
     Transform m_Tf;
     bool m_IsSpown;//1回のみ生成
+
+
+    [SerializeField]
+    [Header("ゴーストジャンプアニメーションが入っているオブジェクト")]
+    GameObject m_GhostJump;
+    [SerializeField]
+    [Header("ゴーストダブルジャンプアニメーションが入っているオブジェクト")]
+    GameObject m_GhostDoubleJump;
     private void Update()
     {
+        //範囲内にいるなら表示・範囲内にいなければ非表示
         if(m_IsJump)
         {
-
+            m_GhostJump.SetActive(true);
         }
-
-        if(m_IsDoubleJump)
+        else
         {
-
+            m_GhostJump.SetActive(false);
+        }
+        if (m_IsDoubleJump)
+        {
+            m_GhostDoubleJump.SetActive(true);
+        }
+        else
+        {
+            m_GhostDoubleJump.SetActive(false);
         }
 
         if(m_IsEnemy)
