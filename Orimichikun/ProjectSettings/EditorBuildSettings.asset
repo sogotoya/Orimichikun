@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Orimichikun/Scene/Stage.unity
     guid: af59d19f7a496904b9b5d34bc4a2741a
+  - enabled: 1
+    path: Assets/Orimichikun/Hamamoto/HamamotoAssets/Scene/TestSense.unity
+    guid: 949b057e3f64abd4ab402cbadf9597d9
   m_configObjects: {}

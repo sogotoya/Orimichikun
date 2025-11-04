@@ -51,7 +51,9 @@ public class PlayScript : MonoBehaviour
     //着地しているか？
     private bool isGrounded;
     // 地面にいたかどうか
-    private bool wasGrounded = false;  
+    private bool wasGrounded = false;
+    private bool m_isTouchingWall;
+    private Vector2 m_wallNormal;
     
 
     private void Start()
@@ -132,6 +134,11 @@ public class PlayScript : MonoBehaviour
 
     void ModeMove()
     {
+        // 壁に接触しており 同じ方向に入力している場合
+        if (m_isTouchingWall && Mathf.Sign(moveX) == -Mathf.Sign(m_wallNormal.x))
+        {
+            moveX = 0; // 壁方向入力を無効化
+        }
         // Rigidbody2D の速度設定（Y速度は維持）
         m_Rigidbody.velocity = new Vector2(moveX * m_runSpeed, m_Rigidbody.velocity.y);
 
@@ -168,6 +175,11 @@ public class PlayScript : MonoBehaviour
     }
     void ModeJump()
     {
+        // 壁に接触しており 同じ方向に入力している場合
+        if (m_isTouchingWall && Mathf.Sign(moveX) == -Mathf.Sign(m_wallNormal.x))
+        {
+            moveX = 0; // 壁方向入力を無効化
+        }
         // 空中でも左右移動できるようにする
         m_Rigidbody.velocity = new Vector2(moveX * m_runSpeed, m_Rigidbody.velocity.y);
 
@@ -250,5 +262,23 @@ public class PlayScript : MonoBehaviour
         // 着地したらIdleに戻す
         ChangeState(State.Idle);
     }
-
+    //壁のcollisionに触れたら
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        foreach (var contact in collision.contacts)
+        {
+            // 左右方向の壁か判定
+            if (Mathf.Abs(contact.normal.x) > 0.5f)
+            {
+                m_isTouchingWall = true;
+                m_wallNormal = contact.normal;
+                return;
+            }
+        }
+    }
+    //壁のcollisionに触れたら
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        m_isTouchingWall=false;
+    }
 }
