@@ -47,7 +47,7 @@ public class FastMessage : MonoBehaviour
         {
             m_Renderer[i].SetActive(true);
 
-            yield return new WaitForSeconds(1.5f);
+            yield return new WaitForSeconds(5.0f);
             //0”Ô–Ú‚¾‚Á‚½ê‡ˆÃ“]
             if(i==0)
             {

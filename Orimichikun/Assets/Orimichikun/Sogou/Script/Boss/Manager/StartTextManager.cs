@@ -39,7 +39,7 @@ public class StartTextManager : MonoBehaviour
         for (int i = 0; m_Renderer.Length > i; i++)
         {
             m_Renderer[i].SetActive(true);
-            yield return new WaitForSeconds(10.0f);
+            yield return new WaitForSeconds(5.0f);
             m_Renderer[i].SetActive(false);
         }
         //Contact()èIÇÌÇ¡ÇΩÇÃÇ≈true

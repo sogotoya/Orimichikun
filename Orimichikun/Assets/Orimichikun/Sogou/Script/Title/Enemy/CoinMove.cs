@@ -55,7 +55,7 @@ public class CoinMove : MonoBehaviour
     void MoveStart()
     {
         //コルーチン止めるための保存
-        Coroutine shakeCoroutine = StartCoroutine(m_CameraShake.Shake(0.5f, 0.1f));
+        Coroutine shakeCoroutine = StartCoroutine(m_CameraShake.Shake(0.5f, 0.1f, 0.5f));
 
         Vector2 dir = m_Player.transform.position - transform.position;
         //座標が空中になるためYは0
@@ -85,7 +85,7 @@ public class CoinMove : MonoBehaviour
     IEnumerator BackMoveStart()
     {
         //コルーチン止めるための保存
-        Coroutine shakeCoroutine = StartCoroutine(m_CameraShake.Shake(0.5f, 0.1f));
+        Coroutine shakeCoroutine = StartCoroutine(m_CameraShake.Shake(0.5f, 0.1f,0.5f));
         yield return new WaitForSeconds(0.7f);
         Vector2 dir = new Vector3(Screen.width, 0, 0) - transform.position;
         //座標が空中になるためYは0

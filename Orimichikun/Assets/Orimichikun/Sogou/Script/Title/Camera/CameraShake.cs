@@ -14,10 +14,10 @@ public class CameraShake : MonoBehaviour
     /// <param name="duration"></param>
     /// <param name="magnitude"></param>
     /// <returns></returns>
-    public IEnumerator Shake(float duration, float magnitude)
+    public IEnumerator Shake(float duration, float magnitude,float time)
     {
         Debug.Log("グラグラ");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(time);
         //カメラの元位置を保存
         //親オブジェクトを基準にしないのでローカル
         Vector3 camepos = transform.localPosition;

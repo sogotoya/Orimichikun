@@ -13,7 +13,8 @@ public class BossSpawn : MonoBehaviour
     Transform m_SpawnTf;
 
     //1回のみの判定フラグ
-    bool m_BossFlag;
+    [Header("ボス出現フラグ")]
+    public bool m_BossFlag;
     private void OnTriggerStay2D(Collider2D other)
     {
         //プレイヤーのタグと一致したら
