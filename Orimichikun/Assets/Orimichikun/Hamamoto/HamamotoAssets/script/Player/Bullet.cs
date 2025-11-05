@@ -33,4 +33,12 @@ public class Bullet : MonoBehaviour
             transform.localScale = scale;
         }
     }
+    //Ground‚Ìƒ^ƒO‚ÉG‚ê‚½‚ç’e‚ğÁ‚·
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            Destroy(gameObject);
+        }
+    }
 }

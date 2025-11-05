@@ -265,6 +265,7 @@ public class PlayScript : MonoBehaviour
     //壁のcollisionに触れたら
     private void OnCollisionStay2D(Collision2D collision)
     {
+        //すべての接触点を1つずつ取り出してその接触点の向きを調べている
         foreach (var contact in collision.contacts)
         {
             // 左右方向の壁か判定
@@ -280,5 +281,9 @@ public class PlayScript : MonoBehaviour
     private void OnCollisionExit2D(Collision2D collision)
     {
         m_isTouchingWall=false;
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Debug.Log("111");
     }
 }
