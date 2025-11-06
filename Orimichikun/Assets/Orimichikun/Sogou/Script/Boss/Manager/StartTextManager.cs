@@ -1,3 +1,4 @@
+//Boss戦の時Bossとの会話をするときに使用するスクリプト
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

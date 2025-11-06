@@ -1,3 +1,4 @@
+//会話スタート時Bossの出現を管理するスクリプト
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

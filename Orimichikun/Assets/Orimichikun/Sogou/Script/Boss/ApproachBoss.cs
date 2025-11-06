@@ -1,3 +1,4 @@
+//Boss戦時プレイヤーに近づくためのスクリプト
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

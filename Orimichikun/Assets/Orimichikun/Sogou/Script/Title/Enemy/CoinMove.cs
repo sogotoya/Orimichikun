@@ -1,3 +1,4 @@
+//ƒRƒCƒ“‚ğæ‚Á‚½‚ÌBoss‚ÌˆÚ“®ˆ—
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
