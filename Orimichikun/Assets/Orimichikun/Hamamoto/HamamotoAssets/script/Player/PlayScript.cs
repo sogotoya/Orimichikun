@@ -35,7 +35,8 @@ public class PlayScript : MonoBehaviour
     public GameObject m_image;
     [Header("jumpの音")]
     public AudioClip[] m_jump;
-  
+    [Header("SavePointのスクリプト")]
+    public SavePoint m_SavePoint;
     private Rigidbody2D m_Rigidbody;
     private Animator m_Animator;
     private Parameta2D m_Parameta;
@@ -54,10 +55,12 @@ public class PlayScript : MonoBehaviour
     private bool wasGrounded = false;
     private bool m_isTouchingWall;
     private Vector2 m_wallNormal;
-    
+    private Vector3 m_LastSavePosition;
 
     private void Start()
     {
+
+        m_LastSavePosition = transform.position;
         m_Animator = GetComponent<Animator>();
         m_Rigidbody = GetComponent<Rigidbody2D>();
         m_Parameta = GetComponent<Parameta2D>();
@@ -91,11 +94,10 @@ public class PlayScript : MonoBehaviour
         {
             LockFall();
         }
-        //死んだらリスポーン
+        // 死んで Enter を押したらリスポーン
         if (CurrentState == State.Die && Input.GetKeyDown(KeyCode.Return))
         {
-            m_RespawnPoint.Respawn();
-            Respawn();
+            PlayerSpawn();
         }
 
         if (CurrentState != State.Die)
@@ -227,23 +229,8 @@ public class PlayScript : MonoBehaviour
         // UIを表示
         m_image.SetActive(true);
     }
-    void Respawn()
-    {
-        // 座標を初期位置へ
-        transform.position = Vector3.zero;
-
-        // Rigidbodyの制約を解除
-        m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
-
-        // StateをIdleに戻す
-        CurrentState = State.Idle;
-        m_Parameta.m_Hp=m_Parameta.m_MaxHp;
-        // UIを消す
-        m_image.SetActive(false);
-
-  
-
-    }
+    
+   
     bool CheckGrounded()
     {
         // 足元から下方向にRayを飛ばす
@@ -282,8 +269,22 @@ public class PlayScript : MonoBehaviour
     {
         m_isTouchingWall=false;
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    //セーブポイントに触れたらプレイヤーのスポーンの位置変更
+    public void UpdateSavePoint(Vector3 pos)
     {
-        Debug.Log("111");
+        m_LastSavePosition = pos;
+    }
+    public void PlayerSpawn()
+    {
+        // セーブ位置へ復活
+        transform.position = m_LastSavePosition;
+        // ステータス挙動リセット
+        m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+        CurrentState = State.Idle;
+        m_Parameta.m_Hp = m_Parameta.m_MaxHp;
+        // UIを消す
+        m_image.SetActive(false);
+
+        Debug.Log("リスポーン！");
     }
 }

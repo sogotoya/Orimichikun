@@ -26,6 +26,8 @@ public class EnemyScript : MonoBehaviour
     private int m_Direction = 1;
     private Parameta2D m_Parameta;
     private Damege2D m_Damege;
+    //ストップしているかどうか
+    private bool m_MoveStop=false;
     
 
     private void Start()
@@ -63,9 +65,17 @@ public class EnemyScript : MonoBehaviour
 
     void ModePatrol()
     {
+        //プレイヤーがあたっていなければ
+        if (!m_MoveStop)
+        {
+            //移動処理
+            transform.Translate(Vector2.right * m_Direction * m_EnemySpeed * Time.deltaTime);
+        }
+        else
+        {
+            Stop();
+        }
         
-        //移動処理
-        transform.Translate(Vector2.right * m_Direction * m_EnemySpeed * Time.deltaTime);
         RaycastHit2D hit = Physics2D.Raycast(m_Ground.position, Vector2.down, 0.5f, m_Layer);
         // 地面がなかったら方向転換
         if (hit.collider == null)
@@ -95,6 +105,23 @@ public class EnemyScript : MonoBehaviour
         transform.localScale = scale;
     }
 
-
-
+    private void Stop()
+    {
+        m_MoveStop = true;
+    }
+    //プレイヤーが当たったらストップ
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.CompareTag("Player") ){
+            m_MoveStop=true;
+        }
+    }
+    //プレイヤーがいなければ動く
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            m_MoveStop = false;
+        }
+    }
 }
