@@ -122,6 +122,52 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &1381550
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1381552}
+  - component: {fileID: 1381551}
+  m_Layer: 0
+  m_Name: ColorChange
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1381551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28c80c55931db744cafad4d4735c2311, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SR: {fileID: 0}
+  m_2ndColor: {r: 1, g: 0.07450981, b: 0.05882353, a: 1}
+--- !u!4 &1381552
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1381550}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 534079510}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &102860667
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -502,7 +548,7 @@ PrefabInstance:
     - target: {fileID: 1144309875129179548, guid: d130390867b2d3d4686d2ea86022e869, type: 3}
       propertyPath: m_Boss
       value: 
-      objectReference: {fileID: 380834728}
+      objectReference: {fileID: 6773151116598912978, guid: e697d12a864d3bb469e51270b80b0f26, type: 3}
     - target: {fileID: 1524835884665999496, guid: d130390867b2d3d4686d2ea86022e869, type: 3}
       propertyPath: m_FontData.m_MaxSize
       value: 105
@@ -614,6 +660,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1134926527845142743, guid: d130390867b2d3d4686d2ea86022e869, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1343834037}
+    - targetCorrespondingSourceObject: {fileID: 1134926527845142743, guid: d130390867b2d3d4686d2ea86022e869, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1381552}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d130390867b2d3d4686d2ea86022e869, type: 3}
 --- !u!1660057539 &9223372036854775807
