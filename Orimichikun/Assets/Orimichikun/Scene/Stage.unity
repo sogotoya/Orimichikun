@@ -1242,7 +1242,7 @@ GameObject:
   - component: {fileID: 184593648}
   - component: {fileID: 184593647}
   m_Layer: 0
-  m_Name: "\u30AF\u30EA\u30B9\u30BF\u30EB\u9ED2png-removebg-preview"
+  m_Name: "\u30AF\u30EA\u30B9\u30BF\u30EB\u9ED2"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1308,12 +1308,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 184593646}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 31.025, y: 1.542, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.0020008087, y: 0.1910001, z: 0.010401311}
   m_LocalScale: {x: 0.094000004, y: 0.094000004, z: 0.094000004}
   m_ConstrainProportionsScale: 1
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1676022560}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &185696394
 PrefabInstance:
@@ -9724,7 +9724,7 @@ GameObject:
   - component: {fileID: 1541787681}
   - component: {fileID: 1541787682}
   m_Layer: 0
-  m_Name: "\u30AF\u30EA\u30B9\u30BF\u30EB-removebg-preview"
+  m_Name: "\u30AF\u30EA\u30B9\u30BF\u30EB\u30D4\u30F3\u30AF"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10976,6 +10976,7 @@ Transform:
   - {fileID: 1608425082}
   - {fileID: 1541787680}
   - {fileID: 1020354879}
+  - {fileID: 184593648}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1676022561
@@ -14679,4 +14680,3 @@ SceneRoots:
   - {fileID: 107089536}
   - {fileID: 421496659}
   - {fileID: 1676022560}
-  - {fileID: 184593648}
