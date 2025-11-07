@@ -1,6 +1,7 @@
 //Bossに関することを管理しているマネージャー
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BossManager : MonoBehaviour
@@ -80,6 +81,8 @@ public class BossManager : MonoBehaviour
         m_CSFlag = true;
         m_PCM.m_IsPlaying = true;
         m_BTM.m_BTMFlag = true;
+        CameraManager cm=FindObjectOfType(typeof(CameraManager)).GetComponent<CameraManager>();
+        cm.StageCameraChange();
         Destroy(m_FastTextBoss);
         yield return null;
     }

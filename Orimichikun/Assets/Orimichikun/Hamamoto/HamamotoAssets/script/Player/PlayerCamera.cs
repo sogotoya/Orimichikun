@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
-public class Camera : MonoBehaviour
+public class PlayerCamera : MonoBehaviour
 {
     [Header("追跡するターゲット")]
     public Transform m_Player;
