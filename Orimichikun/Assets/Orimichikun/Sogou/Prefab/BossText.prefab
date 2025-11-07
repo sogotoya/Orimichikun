@@ -86,8 +86,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2777075635460223235}
+  - component: {fileID: 743021222575204844}
   m_Layer: 0
-  m_Name: "Boss\u95A2\u9023"
+  m_Name: BossText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -110,6 +111,21 @@ Transform:
   - {fileID: 1477736710252080027}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &743021222575204844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2219795374471144696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe848044ced86354baaa8f1a6e8f876c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Player: {fileID: 0}
+  m_CameraShake: {fileID: 0}
+  m_ApFlag: 0
 --- !u!1 &4736748705059810482
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,8 +138,7 @@ GameObject:
   - component: {fileID: 6297771715212348512}
   - component: {fileID: 2901159880857769179}
   - component: {fileID: 131853449047487317}
-  - component: {fileID: 6301588584079342039}
-  - component: {fileID: 3513520099699450556}
+  - component: {fileID: 2088369966656804500}
   m_Layer: 0
   m_Name: Boss_Fall
   m_TagString: Untagged
@@ -264,7 +279,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5, y: 0.9}
   m_EdgeRadius: 0
---- !u!114 &6301588584079342039
+--- !u!114 &2088369966656804500
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -273,27 +288,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4736748705059810482}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdab74ffba893564e9d2aebf9cb5b961, type: 3}
+  m_Script: {fileID: 11500000, guid: fe848044ced86354baaa8f1a6e8f876c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  area: {fileID: 5506707719428108733}
---- !u!114 &3513520099699450556
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4736748705059810482}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 939d16964affebb42a610c807785bc31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_WaitMin: 1
-  m_WaitMax: 3
-  m_DistanceMin: 1
-  m_DistanceMax: 3
-  m_MoveDuration: 2
-  m_MoveDirection: {x: 1, y: 0, z: 0}
-  m_RandomizeDirection: 1
-  m_UseEaseOut: 1
+  m_Player: {fileID: 0}
+  m_CameraShake: {fileID: 0}
+  m_ApFlag: 0
