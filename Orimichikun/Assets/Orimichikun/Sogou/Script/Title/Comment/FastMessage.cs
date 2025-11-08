@@ -9,6 +9,9 @@ public class FastMessage : MonoBehaviour
     PanelHight m_PH;
 
     [SerializeField]
+    GameObject m_EnemyCoin;
+
+    [SerializeField]
     GameObject[] m_Renderer;
     //‘O‚Ìs“®‚ªI‚í‚Á‚½‚©‚Ì”»’è
     public bool m_MessageFlag=false;
@@ -22,6 +25,7 @@ public class FastMessage : MonoBehaviour
         {
             m_Renderer[i].SetActive(false);
         }
+        m_EnemyCoin.SetActive(false);
     }
 
 
@@ -53,6 +57,7 @@ public class FastMessage : MonoBehaviour
             if(i==0)
             {
                 m_PH.Hight();
+                m_EnemyCoin.SetActive(true);
 
             }
             yield return new WaitForSeconds(1.5f);
