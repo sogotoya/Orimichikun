@@ -582,10 +582,18 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4885093034530753020, guid: 7e260cef67fd236478e0b0e9bfce082d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 117.28
+      objectReference: {fileID: 0}
     - target: {fileID: 5124353276295158686, guid: 7e260cef67fd236478e0b0e9bfce082d, type: 3}
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5549433244634262564, guid: 7e260cef67fd236478e0b0e9bfce082d, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 61afa1627f2d4f447aca1539f632cdda, type: 2}
     - target: {fileID: 5878650926284367411, guid: 7e260cef67fd236478e0b0e9bfce082d, type: 3}
       propertyPath: m_Name
       value: "Boss\u6226"
