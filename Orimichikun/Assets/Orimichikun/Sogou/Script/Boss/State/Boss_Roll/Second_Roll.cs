@@ -68,7 +68,7 @@ public class Second_Roll : MonoBehaviour
             m_Index = 0;
         }
         //端の地点以外待機時間付与
-        if (m_Index != 1 )
+        if (m_Index != 1)
         {
             yield return new WaitForSeconds(0.4f);
             //Debug.Log("ていしーーーー");
