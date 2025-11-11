@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class BossCollarChange : MonoBehaviour
 {
-    [SerializeField]
-    SpriteRenderer m_SR;
+    public SpriteRenderer m_SR;
 
     [Header("第二形態の色")]
     [SerializeField]
@@ -21,7 +20,16 @@ public class BossCollarChange : MonoBehaviour
             Debug.LogError("アタッチしてください", this);
         }
         //最初の色取得
-        m_1stColor=m_SR.color;
+        //m_1stColor=m_SR.color;
+
+        //StartCoroutine(FadeToPhase2());
+    }
+
+    /// <summary>
+    /// 色変化開始処理
+    /// </summary>
+    public void CollarChangeStart()
+    {
 
         StartCoroutine(FadeToPhase2());
     }

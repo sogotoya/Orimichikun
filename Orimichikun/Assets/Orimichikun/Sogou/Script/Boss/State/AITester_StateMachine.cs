@@ -13,18 +13,22 @@ namespace StateMachineAI
     public enum AIState_ActionType
     {
         Idle,
-        Attack,
         Move,
-        Hit,
+        Roll,
+        Spown,
+        Hari,
+        JumpAttack,
+        Houkou,
         Die,
-        Back,
-        Katana,
     }
 
 
     public class AITester_StateMachine
         : StatefulObjectBase<AITester_StateMachine, AIState_ActionType>
     {
+        [Header("BossのHP")]
+        public int m_HP=50;
+
         [Header("StateManagerのListのキャラクター指定番号")]
         public int m_StatemanagerNo;
 
@@ -34,10 +38,14 @@ namespace StateMachineAI
 
         public Animator m_Animator;
 
-        //Hit判定変数
-        public bool m_IsDie;
-        int m_MukasiHP;
+        [Header("第二形態変化フラグ")]
+        public bool m_IsAnger;
 
+
+        public Fast_Roll m_FR;
+        public Second_Roll m_SR;
+        public SummoningMinions m_SM;
+        public BossCollarChange m_BCC;
         /// <summary>
         /// クラス名を元にステートを生成して追加する
         /// </summary>
@@ -105,9 +113,18 @@ namespace StateMachineAI
         {
 
             Debug.Log($"{nameof(AISetUp)}起動", this);
-            //ステートマシACーンを自身として設定
+            //ステートマシーンを自身として設定
             stateMachine = new StateMachine<AITester_StateMachine>();
             m_Animator = GetComponent<Animator>();
+            m_FR = GameObject.Find("Fast_Roll").GetComponent<Fast_Roll>();
+            m_SR = GameObject.Find("Second_Roll").GetComponent<Second_Roll>();
+            m_SM = GameObject.Find("Spown").GetComponent<SummoningMinions>();
+            m_BCC = GameObject.Find("CollarChange").GetComponent<BossCollarChange>();
+            m_BCC.m_SR = gameObject.GetComponent<SpriteRenderer>();
+
+
+
+
             //初期起動時は、「???」に移行させる
             ChangeState(AIState_ActionType.Move);
         }

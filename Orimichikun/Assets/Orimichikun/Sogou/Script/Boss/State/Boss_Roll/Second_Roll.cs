@@ -18,8 +18,8 @@ public class Second_Roll : MonoBehaviour
 
     bool m_IsMoving = false;
 
-    //[SerializeField]
-    //GameObject m_Prefab;
+
+
     private void Update()
     {
         //if (!m_IsMoving)

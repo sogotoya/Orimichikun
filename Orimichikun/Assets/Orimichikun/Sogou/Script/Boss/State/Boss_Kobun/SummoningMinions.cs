@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boss_SummoningMinions : MonoBehaviour
+public class SummoningMinions : MonoBehaviour
 {
     [SerializeField]
     [Header("スポーンさせたいEnemyセット")]
