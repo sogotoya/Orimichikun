@@ -40,8 +40,10 @@ public class RespawnPoint : MonoBehaviour
 
     private void SpawnAllEnemies()
     {
+       
         for (int i = 0; i < m_SpawnPoints.Length; i++)
         {
+            Debug.Log(1111);
             //Žw’èˆÊ’u‚É“G¶¬
             m_CurrentEnemies[i] = Instantiate(m_Enemy, m_SpawnPoints[i].position, Quaternion.identity);
         }

@@ -28,7 +28,7 @@ public class playershoot : MonoBehaviour
     void Update()
     {
         // ç∂ÉNÉäÉbÉNÇ≈î≠éÀ
-        if (Input.GetMouseButtonDown(0)) 
+        if (Input.GetMouseButtonDown(0)|| Input.GetKeyDown("joystick button 1")|| Input.GetKeyDown("joystick button 3")) 
         {
            
             m_Animator.SetTrigger("Attack");

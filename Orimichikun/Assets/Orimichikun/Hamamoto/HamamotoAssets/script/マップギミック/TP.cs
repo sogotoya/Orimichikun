@@ -46,7 +46,7 @@ public class TP : MonoBehaviour
     }
     private void Update()
     {
-        if (m_PlayerTpTrigger && Input.GetKeyDown(KeyCode.E))
+        if ((Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown("joystick button 4")|| Input.GetKeyDown("joystick button 5")) && m_PlayerTpTrigger)
         {
             TpPlayer();
         }
