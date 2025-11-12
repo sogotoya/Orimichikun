@@ -37,6 +37,8 @@ public class PlayScript : MonoBehaviour
     public AudioClip[] m_jump;
     [Header("SavePointのスクリプト")]
     public SavePoint m_SavePoint;
+    [Header("CoinCountManagerのscript")]
+    public CoinCountManager m_Manager;
     private Rigidbody2D m_Rigidbody;
     private Animator m_Animator;
     private Parameta2D m_Parameta;
@@ -97,6 +99,8 @@ public class PlayScript : MonoBehaviour
         // 死んで Enter を押したらリスポーン
         if ( (Input.GetKeyDown(KeyCode.Return)||Input.GetKeyDown("joystick button 6")|| Input.GetKeyDown("joystick button 7")) && CurrentState == State.Die)
         {
+            //コインをリセット
+            m_Manager.m_CoinReset = true;
             PlayerSpawn();
         }
 
