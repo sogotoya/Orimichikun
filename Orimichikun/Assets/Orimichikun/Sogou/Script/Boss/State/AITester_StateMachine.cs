@@ -12,7 +12,6 @@ namespace StateMachineAI
 {
     public enum AIState_ActionType
     {
-        Idle,
         Move,
         Roll,
         Spown,
@@ -32,7 +31,7 @@ namespace StateMachineAI
         [Header("StateManagerのListのキャラクター指定番号")]
         public int m_StatemanagerNo;
 
-        public Transform m_Player;
+        //public Transform m_Player;
 
         public StateManager m_StateManager;
 
@@ -46,6 +45,7 @@ namespace StateMachineAI
         public Second_Roll m_SR;
         public SummoningMinions m_SM;
         public BossCollarChange m_BCC;
+        public Scatter_Shot m_SS;
         /// <summary>
         /// クラス名を元にステートを生成して追加する
         /// </summary>
@@ -121,12 +121,15 @@ namespace StateMachineAI
             m_SM = GameObject.Find("Spown").GetComponent<SummoningMinions>();
             m_BCC = GameObject.Find("CollarChange").GetComponent<BossCollarChange>();
             m_BCC.m_SR = gameObject.GetComponent<SpriteRenderer>();
+            m_SS = GameObject.Find("Scatter_Shot").GetComponent<Scatter_Shot>();
 
-
-
-
+            if(m_FR==null||m_SR==null||m_SM==null||m_BCC==null||m_SS==null)
+            {
+                Debug.LogError("aksaskaskasaksaks");
+            }
+            Debug.Log("生成完了");
             //初期起動時は、「???」に移行させる
-            ChangeState(AIState_ActionType.Move);
+            ChangeState(AIState_ActionType.Hari);
         }
 
     }

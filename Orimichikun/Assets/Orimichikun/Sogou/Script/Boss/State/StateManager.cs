@@ -8,8 +8,9 @@ public class StateManager : MonoBehaviour
     [Header("敵のタイプの変更")]
     public int m_TypeNo = 0;
     public GameObject m_Body;
-    public Transform m_Player;
-
+    //public Transform m_Player;
+    [Header("スポーン地点")]
+    public Transform m_Spown;
 
 
     [System.Serializable]
@@ -27,17 +28,23 @@ public class StateManager : MonoBehaviour
     /// </summary>
     public List<AINames> m_Ainame;
 
+
+    public void Start()
+    {
+        SetUp();
+    }
+
     /// <summary>
     /// AITester_StateMachineのコンポーネントやクラスなど一括装着
     /// </summary>
     public void SetUp()
     {
         //オブジェクト生成
-        GameObject m_Chara = Instantiate(m_Body, transform.position, transform.rotation);
+        GameObject m_Chara = Instantiate(m_Body, m_Spown.transform.position, transform.rotation);
        //キャラクターオブジェクトからステートマシン取得
         AITester_StateMachine m_StateM = m_Chara.GetComponent<AITester_StateMachine>();
         m_StateM.m_StateManager = this;
-        m_StateM.m_Player = m_Player;
+        //m_StateM.m_Player = m_Player;
         //指定番号代入
         m_TypeNo = m_StateM.m_StatemanagerNo;
 
@@ -58,10 +65,5 @@ public class StateManager : MonoBehaviour
 
 
         m_StateM.AISetUp();
-    }
-
-    public void ChangePrefab()
-    {
-
     }
 }

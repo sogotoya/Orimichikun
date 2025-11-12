@@ -1,3 +1,4 @@
+//“G‚ğƒXƒ|[ƒ“‚³‚¹‚éˆ—
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

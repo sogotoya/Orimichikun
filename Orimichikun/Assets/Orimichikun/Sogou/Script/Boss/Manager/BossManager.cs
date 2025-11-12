@@ -7,6 +7,10 @@ using UnityEngine;
 public class BossManager : MonoBehaviour
 {
     [SerializeField]
+    [Header("ステートマシンオブジェクト")]
+    GameObject m_State;
+
+    [SerializeField]
     [Header("ボスの再登場テキスト")]
     GameObject m_FastText;
 
@@ -83,6 +87,7 @@ public class BossManager : MonoBehaviour
         m_BTM.m_BTMFlag = true;
         CameraManager cm=FindObjectOfType(typeof(CameraManager)).GetComponent<CameraManager>();
         cm.StageCameraChange();
+        m_State.SetActive(true);
         Destroy(m_FastTextBoss);
         yield return null;
     }

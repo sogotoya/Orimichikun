@@ -1,3 +1,4 @@
+//1’iŠK–Ú(“{‚Á‚Ä‚¢‚È‚¢)‚Ì‰ñ“]ˆ—
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
