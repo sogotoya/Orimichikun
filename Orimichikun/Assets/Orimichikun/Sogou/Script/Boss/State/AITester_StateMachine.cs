@@ -48,6 +48,7 @@ namespace StateMachineAI
         public Scatter_Shot m_SS;
         public BossManager m_BM;
         public ReturnToStartPosition m_RTSP;
+        public JumpPosition m_JP;
 
         /// <summary>
         /// クラス名を元にステートを生成して追加する
@@ -131,12 +132,12 @@ namespace StateMachineAI
             m_BM.m_BossObj=this.gameObject;
             m_BM.m_AITSM = this.gameObject.GetComponent<AITester_StateMachine>();
             m_RTSP = GameObject.Find("ReturnToStartPosition").GetComponent<ReturnToStartPosition>();
-
+            m_JP = GameObject.Find("JumpPosition").GetComponent<JumpPosition>();
 
             m_MaxHP = m_HP;
             Debug.Log("生成完了");
             //初期起動時は、「???」に移行させる
-            ChangeState(AIState_ActionType.Roll);
+            ChangeState(AIState_ActionType.JumpAttack);
 
         }
 
