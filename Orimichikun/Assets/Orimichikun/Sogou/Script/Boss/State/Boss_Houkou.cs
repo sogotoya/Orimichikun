@@ -12,28 +12,24 @@ public class Boss_Houkou : State<AITester_StateMachine>
     float m_Timer = 0f;
 
     bool m_Flag = false;
-
     public override void Enter()
     {
         Debug.Log("HoukouäJén");
-
+        owner.m_IsAnger = true;
 
     }
 
     public override void Stay()
     {
-        if (owner.m_RTSP.ReturnPosition(owner.gameObject))
+
+        if (!m_Flag && owner.m_RTSP.ReturnPosition(owner.gameObject))
         {
-
-            if (!m_Flag)
-            {
-                m_Flag = true;
-                owner.m_Animator.SetBool("Houkou", true);
-                //ì{ÇËtrue
-                owner.m_BM.m_BossAnger = true;
-            }
+            m_Flag = true;
+            owner.m_Animator.SetBool("Houkou", true);
+            //ì{ÇËèÛë‘true
+            owner.m_BM.m_BossAnger = true;
+            Debug.Log("sasaksaksaksakska");
         }
-
         //HPÇ™0Ç…Ç»Ç¡ÇƒÇ¢ÇÈÇ©ÇÃîªíË
         if (owner.m_HP <= 0)
         {

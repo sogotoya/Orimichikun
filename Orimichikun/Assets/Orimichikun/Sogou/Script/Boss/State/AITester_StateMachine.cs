@@ -128,6 +128,8 @@ namespace StateMachineAI
             m_BCC.m_BossAnimt=this.gameObject.GetComponent<Animator>();
             m_SS = GameObject.Find("Scatter_Shot").GetComponent<Scatter_Shot>();
             m_BM=GameObject.Find("BossManager").GetComponent<BossManager>();
+            m_BM.m_BossObj=this.gameObject;
+            m_BM.m_AITSM = this.gameObject.GetComponent<AITester_StateMachine>();
             m_RTSP = GameObject.Find("ReturnToStartPosition").GetComponent<ReturnToStartPosition>();
 
 

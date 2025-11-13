@@ -17,10 +17,21 @@ public class ReturnToStartPosition : MonoBehaviour
         Vector3 target = m_Tf.position;
         target.y = current.y;
 
-        obj.transform.position = Vector3.MoveTowards(current, target, 4.0f * Time.deltaTime);
+        float distance = Vector3.Distance(obj.transform.position, target);
 
-        // 完了判定
-        return Vector3.Distance(obj.transform.position, target) < 0.05f;
+        if (distance > 0.5f)
+        {
+            // まだ離れてたら近づける
+            obj.transform.position = Vector3.MoveTowards(current, target, 4.0f * Time.deltaTime);
+            Debug.Log("指定された場所に近づく中");
+            return false;
+        }
+        else
+        {
+            // ほぼ同じ位置なら完全に固定する（誤差リセット）
+            obj.transform.position = target;
+            return true;
+        }
 
     }
 }

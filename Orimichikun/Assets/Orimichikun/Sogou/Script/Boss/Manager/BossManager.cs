@@ -1,4 +1,5 @@
 //Bossに関することを管理しているマネージャー
+using StateMachineAI;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -29,7 +30,16 @@ public class BossManager : MonoBehaviour
     [SerializeField]
     CameraShake m_CS;
     [SerializeField]
+    CameraShake m_CS_Boss;
+    [SerializeField]
     BossCollarChange m_BCC;
+    [SerializeField]
+    PlayScript m_PS;
+    [SerializeField]
+    playershoot m_PShoot;
+    [Header("ボス")]
+    public GameObject m_BossObj;
+    public AITester_StateMachine m_AITSM;
     //1回のみ呼び出す対策
     bool m_Flag=false;
     bool m_RoarFlag=false;
@@ -78,11 +88,28 @@ public class BossManager : MonoBehaviour
         }
 
         //怒り状態の変化開始
-        if(m_BossAnger&&!m_BCC.m_CollarChangeFlag)
+        if(m_BossAnger)
         {
-            m_BCC.m_CollarChangeFlag =true;
-            m_BCC.CollarChangeStart();
+            //色変化開始
+            if (!m_BCC.m_CollarChangeFlag)
+            {
+                //プレイヤー操作停止
+                m_PS.enabled = false;
+                m_PShoot.enabled = false;
 
+                m_BCC.m_CollarChangeFlag = true;
+                m_BCC.CollarChangeStart();
+                //画面の揺れ
+                StartCoroutine(m_CS_Boss.BossShake(3f, 0.1f, 0.78f, m_CS_Boss.transform));
+                //プレイヤー操作再開
+                m_PS.enabled = true;
+                m_PShoot.enabled = true;
+                //ステート移行
+                m_AITSM.ChangeState(AIState_ActionType.Move);
+            }
+            //プレイヤー操作停止
+            m_PS.enabled = true;
+            m_PShoot.enabled = true;
         }
     }
 

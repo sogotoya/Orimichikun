@@ -21,32 +21,45 @@ public class Fast_Roll : MonoBehaviour
 
     //何回右の地点に返ってきたかのカウント
     int m_Cnt = 0;
-
+    //判定フラグ
+    bool m_Flag = false;
 
     /// <summary>
-    /// ボスの回転移動攻撃
+    /// ボスの回転移動攻撃(処理を実行させたいオブジェクト、何回させるか)
     /// </summary>
-    public void NormalRoll(GameObject obj)
+    public int NormalRoll(GameObject obj, int cnt)
     {
-        if(m_Cnt!=2)
+
+        if (m_Cnt != cnt)
         {
             //現在の場所の更新
-            Vector3 pos= obj.transform.position;
+            Vector3 pos = obj.transform.position;
             //移動処理
             pos.x += m_MoveSpeed * Time.deltaTime * m_Direction;
 
-            if(pos.x >= m_Right.position.x)
+            if (pos.x >= m_Right.position.x)
             {
-                m_Direction= - 1;
+                m_Direction = -1;
                 m_Cnt++;
             }
-            if(pos.x <= m_Left.position.x)
+            if (pos.x <= m_Left.position.x)
             {
                 m_Direction = 1;
             }
             //座標更新
             obj.transform.position = pos;
+
+            return 0;
+        }
+        else
+        {
+            //初期化
+            m_Cnt = 0;
+            m_Flag = false;
+            return 100;
         }
 
     }
+
+
 }

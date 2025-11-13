@@ -18,7 +18,9 @@ public class Second_Roll : MonoBehaviour
     int m_Index;
 
     bool m_IsMoving = false;
-
+    //
+    bool m_Flag;
+    //何回目か判定変数
     int m_Cnt = 0;
 
     private void Update()
@@ -28,18 +30,28 @@ public class Second_Roll : MonoBehaviour
     }
 
     /// <summary>
-    /// ボスの回転移動攻撃(怒り状態)
+    /// ボスの回転移動攻撃(怒り状態)(処理を実行させたいオブジェクト、何回させるか)
     /// </summary>
-    public void AngrylRoll(GameObject obj)
+    public int AngrylRoll(GameObject obj, int cnt)
     {
-        if (!m_IsMoving&&m_Cnt!=2)
+        StartCoroutine(SequenceMove());
+
+        if (!m_IsMoving && m_Cnt != cnt)
         {
             StartCoroutine(MoveSequence(obj));
+            return 0;
+        }
+        else
+        {
+            //初期化
+            m_Cnt = 0;
+            m_Flag = false;
+            return 100;
         }
     }
 
     /// <summary>
-    /// 回転移動攻撃(怒り状態)移動処理
+    /// 回転移動攻撃(怒り状態)移動処理(処理を実行させたいオブジェクト、何回させるか)
     /// </summary>
     /// <param name="obj"></param>
     /// <returns></returns>
@@ -76,8 +88,22 @@ public class Second_Roll : MonoBehaviour
             yield return new WaitForSeconds(0.4f);
             //Debug.Log("ていしーーーー");
         }
-
         m_IsMoving = false;
+        yield return 0;
     }
 
+
+    /// <summary>
+    /// 動かさない時間
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator SequenceMove()
+    {
+        if (!m_Flag)
+        {
+            yield return new WaitForSeconds(1.0f);
+            m_Flag = true;
+        }
+
+    }
 }

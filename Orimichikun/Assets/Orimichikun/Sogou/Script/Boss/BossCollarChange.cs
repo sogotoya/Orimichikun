@@ -22,7 +22,7 @@ public class BossCollarChange : MonoBehaviour
     {
         if (m_SR == null)
         {
-            Debug.LogError("アタッチしてください", this);
+            //Debug.LogError("アタッチしてください", this);
         }
         //最初の色取得
         //m_1stColor=m_SR.color;

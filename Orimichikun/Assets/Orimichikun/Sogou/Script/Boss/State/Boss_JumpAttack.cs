@@ -23,7 +23,7 @@ public class Boss_JumpAttack : State<AITester_StateMachine>
         }
 
         //HP‚ª”¼•ªØ‚Á‚½‚ç
-        if (owner.m_MaxHP / 2 == owner.m_HP)
+        if (owner.m_MaxHP / 2 == owner.m_HP && !owner.m_IsAnger)
         {
             owner.ChangeState(AIState_ActionType.Houkou);
         }

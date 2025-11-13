@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 770059737214433478}
   - component: {fileID: 3538429051422970341}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\u5F53\u305F\u308A\u5224\u5B9A"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,7 +86,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2811407196510173547}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Scatter_Shot_Obj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,9 +121,9 @@ GameObject:
   - component: {fileID: 8129011958335208058}
   - component: {fileID: 4984440023400090001}
   - component: {fileID: 8098774897004376896}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: BossSen
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -269,3 +269,4 @@ MonoBehaviour:
   m_BCC: {fileID: 0}
   m_SS: {fileID: 0}
   m_BM: {fileID: 0}
+  m_RTSP: {fileID: 0}

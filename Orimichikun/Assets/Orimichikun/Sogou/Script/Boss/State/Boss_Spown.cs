@@ -14,23 +14,19 @@ public class Boss_Spown : State<AITester_StateMachine>
     {
         Debug.Log("Spown開始");
         owner.m_Animator.SetTrigger("Houkou");
-        owner.m_SM.RandomSpown();
+        owner.StartCoroutine(SpownRandom());
+
+        m_Timer = 0f;
     }
 
     public override void Stay()
     {
         m_Timer += Time.deltaTime;
         //4秒たったらMoveに移行
-        if(m_Timer==4)
+        if(m_Timer==2)
         {
-            owner.ChangeState(AIState_ActionType.Move);
+            owner.ChangeState(AIState_ActionType.JumpAttack);
         }
-        //HPが0になっているかの判定
-        if (owner.m_HP <= 0)
-        {
-            owner.ChangeState(AIState_ActionType.Die);
-        }
-
         //HPが0になっているかの判定
         if (owner.m_HP <= 0)
         {
@@ -38,7 +34,7 @@ public class Boss_Spown : State<AITester_StateMachine>
         }
 
         //HPが半分切ったら
-        if (owner.m_MaxHP / 2 == owner.m_HP)
+        if (owner.m_MaxHP / 2 == owner.m_HP && !owner.m_IsAnger)
         {
             owner.ChangeState(AIState_ActionType.Houkou);
         }
@@ -47,5 +43,13 @@ public class Boss_Spown : State<AITester_StateMachine>
     public override void Exit()
     {
         Debug.Log("Spown終了");
+    }
+
+
+    IEnumerator SpownRandom()
+    {
+        yield return new WaitForSeconds(1.5f);
+        owner.m_SM.RandomSpown();
+        yield return null;
     }
 }

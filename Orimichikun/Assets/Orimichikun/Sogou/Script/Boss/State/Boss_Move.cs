@@ -14,6 +14,9 @@ public class Boss_Move : State<AITester_StateMachine>
     bool m_Flag;
     //最初の移動判定フラグ
     bool m_FastFlag = false;
+
+    float m_Timer = 0f;
+
     public override void Enter()
     {
         Debug.Log("Move開始");
@@ -21,21 +24,27 @@ public class Boss_Move : State<AITester_StateMachine>
         //攻撃先ランダム指定
         m_No = Random.Range(1, 5);
         m_Flag = false;
+        m_Timer = 0;
     }
 
     public override void Stay()
     {
-        if (!m_Flag)
+        m_Timer += Time.deltaTime;
+        if (m_Timer >= 0.5)
         {
-            owner.StartCoroutine(NextAction());
+            if (!m_Flag)
+            {
+                owner.StartCoroutine(NextAction());
+            }
         }
+
         //HPが0になっているかの判定
         if (owner.m_HP <= 0)
         {
             owner.ChangeState(AIState_ActionType.Die);
         }
         //HPが半分切ったら
-        if(owner.m_MaxHP/2==owner.m_HP)
+        if(owner.m_MaxHP/2==owner.m_HP&&!owner.m_IsAnger)
         {
             owner.ChangeState(AIState_ActionType.Houkou);
         }
