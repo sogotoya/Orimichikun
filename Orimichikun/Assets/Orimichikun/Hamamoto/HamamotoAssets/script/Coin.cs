@@ -17,6 +17,8 @@ public class Coin : MonoBehaviour
     public bool m_CoinGet=false;
     //エフェクトしたかどうか
     public bool m_Iseffect=false;
+    //コインのカウントをいれたかどうか
+    public bool m_CoinGetCount=false;
     private void Start()
     {
         //非表示
@@ -30,12 +32,11 @@ public class Coin : MonoBehaviour
     private void Update()
     {
         //コインをゲットしていてエフェクトを流してなければエフェクト出現
-        if (m_CoinGet&&!m_Iseffect)
+        if (m_CoinGet &&　m_Iseffect == false)
         {
             m_effect.SetActive(true);
             Destroy(gameObject,0.5f);
             m_Iseffect = true;
-            
         }
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -43,10 +44,12 @@ public class Coin : MonoBehaviour
         //プレイヤーが拾ったらSEを入れてコイン削除
         if (other.CompareTag("Player"))
         {
-            m_CoinGet=true;
             m_CoinSource.PlayOneShot(m_CoinGetSE);
            Destroy(m_Coin);
             GetComponent<Collider2D>().enabled = false;
+            m_CoinGetCount = true;
+            m_CoinGet = true;
+            Debug.Log(m_CoinGet);       
         }
     }
 

@@ -3805,6 +3805,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4504872393987389981, guid: 8cfc13aa5c3d3d840aecac11c65648b3, type: 3}
+      propertyPath: m_Texture
+      value: 
+      objectReference: {fileID: 2800000, guid: e27e1ee19d7603c40b2c079f72c921d0, type: 3}
+    - target: {fileID: 6588138336196232202, guid: 8cfc13aa5c3d3d840aecac11c65648b3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2666795
+      objectReference: {fileID: 0}
+    - target: {fileID: 6588138336196232202, guid: 8cfc13aa5c3d3d840aecac11c65648b3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.40321398
+      objectReference: {fileID: 0}
+    - target: {fileID: 6588138336196232202, guid: 8cfc13aa5c3d3d840aecac11c65648b3, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -53.5
+      objectReference: {fileID: 0}
     - target: {fileID: 9126382262119712105, guid: 8cfc13aa5c3d3d840aecac11c65648b3, type: 3}
       propertyPath: m_Name
       value: CoinUICanvas
@@ -3812,7 +3828,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3634647921151151456, guid: 8cfc13aa5c3d3d840aecac11c65648b3, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2011782557}
   m_SourcePrefab: {fileID: 100100000, guid: 8cfc13aa5c3d3d840aecac11c65648b3, type: 3}
 --- !u!1 &499508112
 GameObject:
@@ -4872,7 +4891,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &605016902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6390,12 +6409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Enemy: {fileID: 4512070056949122670, guid: 38d52ac5841e7484994ad0f9a7b639ff, type: 3}
-  m_SpawnPoints:
-  - {fileID: 1823298960}
-  - {fileID: 961268829}
-  - {fileID: 1612828539}
-  - {fileID: 0}
-  - {fileID: 0}
+  m_SpawnPoints: []
 --- !u!1 &805604475
 GameObject:
   m_ObjectHideFlags: 0
@@ -9210,6 +9224,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1603533470429094067, guid: 38a4803f78078604b9cf7107a1149c16, type: 3}
+      propertyPath: m_RecoveryKey
+      value: 
+      objectReference: {fileID: 2011782553}
     - target: {fileID: 1603533470429094067, guid: 38a4803f78078604b9cf7107a1149c16, type: 3}
       propertyPath: m_CoinCountText
       value: 
@@ -16901,6 +16919,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 971508835}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2011782553 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3634647921151151456, guid: 8cfc13aa5c3d3d840aecac11c65648b3, type: 3}
+  m_PrefabInstance: {fileID: 486786656}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &2011782557
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2011782553}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7c1f4566545377b4387af527e4983e51, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &2013917463
 PrefabInstance:
   m_ObjectHideFlags: 0

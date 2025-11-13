@@ -14,6 +14,8 @@ public class CoinCountManager : MonoBehaviour
     public AudioClip m_RecoverySE;
     [Header("プレイヤーのParameta")]
     public Parameta2D m_PlayerParameta;
+    [Header("回復のKey表示")]
+    public GameObject m_RecoveryKey;
     [Header("コインの獲得数Text")]
     [SerializeField]private Text m_CoinCountText;
     [Header("コインの獲得数Text")]
@@ -31,6 +33,7 @@ public class CoinCountManager : MonoBehaviour
     }
     private void Start()
     {
+        m_RecoveryKey.SetActive(false);
         m_Source = GetComponent<AudioSource>();
     }
     private void Update()
@@ -38,11 +41,11 @@ public class CoinCountManager : MonoBehaviour
 
         //コインを取るたび加算される
         foreach (Coin coin in m_Coins)
-        {
-            if (coin.m_CoinGet)
+        {   
+            if (coin.m_CoinGetCount)
             {
                 m_CoinCount += 1;
-                coin.m_CoinGet = false;
+                coin.m_CoinGetCount = false;
                 //カウントが１０に達したらリセットと回復アイテム加算
                 if (m_CoinCount>=10)
                 {
@@ -61,12 +64,25 @@ public class CoinCountManager : MonoBehaviour
         }
         //回復アイテムを一個以上ゲットしたら使用可能
         if (m_RecoveryCount>=1)
-        {      
-            if (Input.GetKeyDown(KeyCode.E))
+        {
+           //Hpが削れていたら回復Key表示
+            if (m_PlayerParameta.m_Hp < m_PlayerParameta.m_MaxHp)
+            {              
+                m_RecoveryKey.SetActive(true);
+            }
+            else
+            {
+                m_RecoveryKey.SetActive(false);
+            }
+            if (Input.GetKeyDown(KeyCode.E)|| Input.GetKeyDown("joystick button 4"))
             {
                 //回復
                 Recovery();
             }
+        }
+        else
+        {
+            m_RecoveryKey.SetActive(false);
         }
         //死んだらリセット
         if (m_CoinReset)
