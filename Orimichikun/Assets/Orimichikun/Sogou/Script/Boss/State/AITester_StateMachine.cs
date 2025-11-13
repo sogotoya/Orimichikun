@@ -27,7 +27,7 @@ namespace StateMachineAI
     {
         [Header("BossのHP")]
         public int m_HP=50;
-
+        public int m_MaxHP;
         [Header("StateManagerのListのキャラクター指定番号")]
         public int m_StatemanagerNo;
 
@@ -46,6 +46,9 @@ namespace StateMachineAI
         public SummoningMinions m_SM;
         public BossCollarChange m_BCC;
         public Scatter_Shot m_SS;
+        public BossManager m_BM;
+        public ReturnToStartPosition m_RTSP;
+
         /// <summary>
         /// クラス名を元にステートを生成して追加する
         /// </summary>
@@ -120,16 +123,19 @@ namespace StateMachineAI
             m_SR = GameObject.Find("Second_Roll").GetComponent<Second_Roll>();
             m_SM = GameObject.Find("Spown").GetComponent<SummoningMinions>();
             m_BCC = GameObject.Find("CollarChange").GetComponent<BossCollarChange>();
-            m_BCC.m_SR = gameObject.GetComponent<SpriteRenderer>();
+            m_BCC.m_SR = this.gameObject.GetComponent<SpriteRenderer>();
+            m_BCC.m_SR=gameObject.GetComponent<SpriteRenderer>();
+            m_BCC.m_BossAnimt=this.gameObject.GetComponent<Animator>();
             m_SS = GameObject.Find("Scatter_Shot").GetComponent<Scatter_Shot>();
+            m_BM=GameObject.Find("BossManager").GetComponent<BossManager>();
+            m_RTSP = GameObject.Find("ReturnToStartPosition").GetComponent<ReturnToStartPosition>();
 
-            if(m_FR==null||m_SR==null||m_SM==null||m_BCC==null||m_SS==null)
-            {
-                Debug.LogError("aksaskaskasaksaks");
-            }
+
+            m_MaxHP = m_HP;
             Debug.Log("生成完了");
             //初期起動時は、「???」に移行させる
-            ChangeState(AIState_ActionType.Hari);
+            ChangeState(AIState_ActionType.Roll);
+
         }
 
     }

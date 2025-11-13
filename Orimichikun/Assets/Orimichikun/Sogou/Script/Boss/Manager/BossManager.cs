@@ -28,11 +28,13 @@ public class BossManager : MonoBehaviour
     PanelHight m_PH;
     [SerializeField]
     CameraShake m_CS;
+    [SerializeField]
+    BossCollarChange m_BCC;
     //1回のみ呼び出す対策
     bool m_Flag=false;
     bool m_RoarFlag=false;
     bool m_CSFlag = false;
-
+    public bool m_BossAnger = false;//怒り状態かどうかの確認フラグ
 
     [SerializeField]
     PlayerControlManager m_PCM;
@@ -73,6 +75,14 @@ public class BossManager : MonoBehaviour
                 StartCoroutine(EndText());
             }
             StartCoroutine(m_CS.Shake(0.5f, 0.1f,0.78f));
+        }
+
+        //怒り状態の変化開始
+        if(m_BossAnger&&!m_BCC.m_CollarChangeFlag)
+        {
+            m_BCC.m_CollarChangeFlag =true;
+            m_BCC.CollarChangeStart();
+
         }
     }
 

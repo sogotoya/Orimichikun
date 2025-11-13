@@ -21,6 +21,12 @@ public class Boss_JumpAttack : State<AITester_StateMachine>
         {
             owner.ChangeState(AIState_ActionType.Die);
         }
+
+        //HP‚ª”¼•ªØ‚Á‚½‚ç
+        if (owner.m_MaxHP / 2 == owner.m_HP)
+        {
+            owner.ChangeState(AIState_ActionType.Houkou);
+        }
     }
 
     public override void Exit()

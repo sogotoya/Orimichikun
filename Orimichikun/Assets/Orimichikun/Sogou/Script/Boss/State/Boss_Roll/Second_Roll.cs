@@ -19,7 +19,7 @@ public class Second_Roll : MonoBehaviour
 
     bool m_IsMoving = false;
 
-
+    int m_Cnt = 0;
 
     private void Update()
     {
@@ -32,7 +32,7 @@ public class Second_Roll : MonoBehaviour
     /// </summary>
     public void AngrylRoll(GameObject obj)
     {
-        if (!m_IsMoving)
+        if (!m_IsMoving&&m_Cnt!=2)
         {
             StartCoroutine(MoveSequence(obj));
         }
@@ -45,6 +45,7 @@ public class Second_Roll : MonoBehaviour
     /// <returns></returns>
     IEnumerator MoveSequence(GameObject obj)
     {
+
         m_IsMoving = true;
 
         Transform next_Point = m_Tf[m_Index];
@@ -67,6 +68,7 @@ public class Second_Roll : MonoBehaviour
         if (m_Index >= m_Tf.Length)
         {
             m_Index = 0;
+            m_Cnt++;
         }
         //端の地点以外待機時間付与
         if (m_Index != 1)
@@ -77,4 +79,5 @@ public class Second_Roll : MonoBehaviour
 
         m_IsMoving = false;
     }
+
 }

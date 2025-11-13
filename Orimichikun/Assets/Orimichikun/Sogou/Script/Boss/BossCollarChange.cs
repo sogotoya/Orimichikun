@@ -7,13 +7,17 @@ using UnityEngine;
 public class BossCollarChange : MonoBehaviour
 {
     public SpriteRenderer m_SR;
-
+    public BossManager m_BM;
     [Header("第二形態の色")]
     [SerializeField]
     Color m_2ndColor = new Color(1f, 0.6f, 0.6f, 1f); // 少し赤みがかった色
     //最初の色保存先
     Color m_1stColor;
 
+    public Animator m_BossAnimt;
+
+
+    public bool m_CollarChangeFlag=false;
     private void Start()
     {
         if (m_SR == null)
@@ -26,12 +30,12 @@ public class BossCollarChange : MonoBehaviour
         //StartCoroutine(FadeToPhase2());
     }
 
+
     /// <summary>
     /// 色変化開始処理
     /// </summary>
     public void CollarChangeStart()
     {
-
         StartCoroutine(FadeToPhase2());
     }
 
@@ -41,6 +45,7 @@ public class BossCollarChange : MonoBehaviour
     /// <returns></returns>
     public IEnumerator FadeToPhase2()
     {
+        //yield return new WaitForSeconds(1.0f);
         Color end = m_2ndColor;
         float timer = 0f;
 

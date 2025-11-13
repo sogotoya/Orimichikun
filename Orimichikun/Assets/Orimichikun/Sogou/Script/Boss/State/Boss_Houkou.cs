@@ -9,23 +9,29 @@ public class Boss_Houkou : State<AITester_StateMachine>
 {
     public Boss_Houkou(AITester_StateMachine owner) : base(owner) { }
 
-    float m_Timer=0f;
+    float m_Timer = 0f;
+
+    bool m_Flag = false;
+
     public override void Enter()
     {
         Debug.Log("Houkou開始");
-        owner.m_Animator.SetTrigger("Houkou");
-        owner.m_BCC.CollarChangeStart();
-        //Moveに移行
-        owner.ChangeState(AIState_ActionType.Move);
+
+
     }
 
     public override void Stay()
     {
-        m_Timer += Time.deltaTime;
-        //3秒たったら移行
-        if(m_Timer==3)
+        if (owner.m_RTSP.ReturnPosition(owner.gameObject))
         {
-            owner.ChangeState(AIState_ActionType.Move);
+
+            if (!m_Flag)
+            {
+                m_Flag = true;
+                owner.m_Animator.SetBool("Houkou", true);
+                //怒りtrue
+                owner.m_BM.m_BossAnger = true;
+            }
         }
 
         //HPが0になっているかの判定
@@ -38,5 +44,6 @@ public class Boss_Houkou : State<AITester_StateMachine>
     public override void Exit()
     {
         Debug.Log("Houkou終了");
+        owner.m_Animator.SetBool("Houkou", false);
     }
 }

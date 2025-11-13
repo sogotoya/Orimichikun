@@ -1,6 +1,7 @@
 using StateMachineAI;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.UI.GridLayoutGroup;
 
@@ -21,6 +22,12 @@ public class Boss_Hari : State<AITester_StateMachine>
         if (owner.m_HP <= 0)
         {
             owner.ChangeState(AIState_ActionType.Die);
+        }
+
+        //HP‚ª”¼•ªØ‚Á‚½‚ç
+        if (owner.m_MaxHP / 2 == owner.m_HP)
+        {
+            owner.ChangeState(AIState_ActionType.Houkou);
         }
     }
 

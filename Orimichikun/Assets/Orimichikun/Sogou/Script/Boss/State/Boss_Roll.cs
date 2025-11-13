@@ -7,12 +7,20 @@ public class Boss_Roll : State<AITester_StateMachine>
 {
     public Boss_Roll(AITester_StateMachine owner) : base(owner) { }
 
+    bool m_Flag=false;
+
     public override void Enter()
     {
         Debug.Log("回転スタート");
 
-        //Moveに移行
-        //owner.ChangeState(AIState_ActionType.Move);
+        if (!owner.m_IsAnger)
+        {
+            owner.m_Animator.SetTrigger("Roll_1");
+        }
+        else
+        {
+            owner.m_Animator.SetTrigger("Roll_2");
+        }
     }
 
     public override void Stay()
@@ -23,17 +31,23 @@ public class Boss_Roll : State<AITester_StateMachine>
             owner.ChangeState(AIState_ActionType.Die);
         }
 
+        //HPが半分切ったら
+        if (owner.m_MaxHP / 2 == owner.m_HP)
+        {
+            owner.ChangeState(AIState_ActionType.Houkou);
+        }
+
         //初期状態なら
         if (!owner.m_IsAnger)
         {
-            owner.m_Animator.SetTrigger("Roll_1");
             owner.m_FR.NormalRoll(owner.gameObject);
         }
         else//怒り状態なら
         {
-            owner.m_Animator.SetTrigger("Roll_2");
             owner.m_SR.AngrylRoll(owner.gameObject);
         }
+
+
     }
 
     public override void Exit()
