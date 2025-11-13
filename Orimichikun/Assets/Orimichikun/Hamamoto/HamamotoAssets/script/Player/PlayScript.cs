@@ -16,7 +16,7 @@ public class PlayScript : MonoBehaviour
         Die,
         Damage
     }
-    public RespawnPoint m_RespawnPoint;
+    public RespawnPoint[] m_RespawnPoint;
     [Header("移動速度")]
     public float m_runSpeed = 6f;
     [Header("ジャンプ力")]
@@ -37,6 +37,8 @@ public class PlayScript : MonoBehaviour
     public AudioClip[] m_jump;
     [Header("SavePointのスクリプト")]
     public SavePoint m_SavePoint;
+    [Header("CoinCountManagerのscript")]
+    public CoinCountManager m_Manager;
     private Rigidbody2D m_Rigidbody;
     private Animator m_Animator;
     private Parameta2D m_Parameta;
@@ -95,8 +97,10 @@ public class PlayScript : MonoBehaviour
             LockFall();
         }
         // 死んで Enter を押したらリスポーン
-        if (CurrentState == State.Die && Input.GetKeyDown(KeyCode.Return))
+        if ( (Input.GetKeyDown(KeyCode.Return)||Input.GetKeyDown("joystick button 6")|| Input.GetKeyDown("joystick button 7")) && CurrentState == State.Die)
         {
+            //コインをリセット
+            m_Manager.m_CoinReset = true;
             PlayerSpawn();
         }
 
@@ -123,10 +127,19 @@ public class PlayScript : MonoBehaviour
         {
             ChangeState(State.Move);
         }
+        //Input.GetKeyDown(KeyCode.Space)
         //地面を踏んでいてspaceキーを押したらジャンプする
-        if (Input.GetKeyDown(KeyCode.Space) && jumpCount < maxJumpCount)
+        if ((Input.GetKeyDown("joystick button 2")|| Input.GetKeyDown("joystick button 0") || Input.GetKeyDown(KeyCode.Space)) && jumpCount < maxJumpCount)
         {
-              // 上方向に速度を与える
+            if (m_jump != null && m_jump.Length > 0)
+            {
+                int index = Mathf.Clamp(jumpCount, 0, m_jump.Length - 1);
+                if (m_jump[index] != null)
+                {
+                    m_Audio.PlayOneShot(m_jump[index]);
+                }
+            }
+            // 上方向に速度を与える
             m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_jumpForce);
             // ジャンプ回数を増やす
             jumpCount++;
@@ -157,7 +170,7 @@ public class PlayScript : MonoBehaviour
             ChangeState(State.Idle);
         }
         //地面を踏んでいてspaceキーを押したらジャンプする
-        if (Input.GetKeyDown(KeyCode.Space) && jumpCount < maxJumpCount)
+        if ((Input.GetKeyDown("joystick button 2") || Input.GetKeyDown("joystick button 0") || Input.GetKeyDown(KeyCode.Space)) && jumpCount < maxJumpCount)
         {
             if (m_jump != null && m_jump.Length > 0)
             {
@@ -278,6 +291,14 @@ public class PlayScript : MonoBehaviour
     {
         // セーブ位置へ復活
         transform.position = m_LastSavePosition;
+        //すべてのRespawnPointに復活命令を送る
+        foreach (var point in m_RespawnPoint)
+        {
+            if (point!=null)
+            {
+                point.Respawn();
+            }
+        }
         // ステータス挙動リセット
         m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
         CurrentState = State.Idle;

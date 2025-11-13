@@ -13,6 +13,11 @@ public class RespawnPoint : MonoBehaviour
 
     void Start()
     {
+        // 子オブジェクトのTransformを自動登録
+        m_SpawnPoints = GetComponentsInChildren<Transform>();
+
+        // 自分自身（親）のTransformも含まれるので除外
+        m_SpawnPoints = System.Array.FindAll(m_SpawnPoints, t => t != this.transform);
         //配列の長さにあわせて確保
         m_CurrentEnemies = new GameObject[m_SpawnPoints.Length];
 
@@ -40,6 +45,7 @@ public class RespawnPoint : MonoBehaviour
 
     private void SpawnAllEnemies()
     {
+       
         for (int i = 0; i < m_SpawnPoints.Length; i++)
         {
             //指定位置に敵生成
