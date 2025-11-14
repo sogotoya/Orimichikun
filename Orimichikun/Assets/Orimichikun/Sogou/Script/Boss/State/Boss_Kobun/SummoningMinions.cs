@@ -19,8 +19,7 @@ public class SummoningMinions : MonoBehaviour
     {
         for (int i = 0; i < m_Tf.Length; i++)
         {
-            int no = Random.Range(0, m_Enemy.Length);
-            Instantiate(m_Enemy[no], m_Tf[i].transform.position, m_Tf[i].rotation);
+            Instantiate(m_Enemy[i], m_Tf[i].transform.position, m_Tf[i].rotation);
             Debug.Log("•”‰º¢Š«");
         }
 

@@ -1,5 +1,97 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1237203070130310956
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8296591993822501651}
+  - component: {fileID: 8534739434987015903}
+  - component: {fileID: 9027092992333705131}
+  m_Layer: 8
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8296591993822501651
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237203070130310956}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5333624248070672336}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &8534739434987015903
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237203070130310956}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.0061071515, y: 0.099065304}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.42510593, y: 0.5164809}
+  m_EdgeRadius: 0
+--- !u!114 &9027092992333705131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1237203070130310956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c6876fc642ba684fbc1d20a455ffc6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_DamegePoint: 1
+  m_Parameta: {fileID: 6943282032624717383}
 --- !u!1 &1551866101286445567
 GameObject:
   m_ObjectHideFlags: 0
@@ -13,7 +105,7 @@ GameObject:
   - component: {fileID: 2932746123800050559}
   - component: {fileID: 4260355398784907679}
   - component: {fileID: 60721571813875732}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: "\u653B\u6483\u5224\u5B9A\u30A8\u30EA\u30A2"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,7 +177,7 @@ MonoBehaviour:
   m_Player: {fileID: 0}
   m_EnemyBullet: {fileID: 898377958997054433, guid: a9b1b3908dba01348af319a74424e4df, type: 3}
   m_AttackCoolingtime: 5
-  m_Animator: {fileID: 0}
+  m_Animator: {fileID: 1306543222437514424}
 --- !u!82 &4260355398784907679
 AudioSource:
   m_ObjectHideFlags: 0
@@ -210,7 +302,7 @@ GameObject:
   - component: {fileID: 8125833551361322847}
   - component: {fileID: 6943282032624717383}
   - component: {fileID: 8031241177436542122}
-  - component: {fileID: -5867725102064773940}
+  - component: {fileID: 6726569560325028011}
   m_Layer: 8
   m_Name: flyEnemy
   m_TagString: Enemy
@@ -232,6 +324,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8107072121136688282}
+  - {fileID: 8296591993822501651}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4565195875572788
@@ -369,7 +462,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.011192322, y: 0.0951345}
@@ -385,7 +478,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.49653625, y: 0.64203787}
   m_EdgeRadius: 0
---- !u!50 &-5867725102064773940
+--- !u!50 &6726569560325028011
 Rigidbody2D:
   serializedVersion: 4
   m_ObjectHideFlags: 0

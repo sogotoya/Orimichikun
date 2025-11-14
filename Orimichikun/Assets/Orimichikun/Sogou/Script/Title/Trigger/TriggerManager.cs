@@ -13,7 +13,7 @@ public class TriggerManager : MonoBehaviour
     //ダブルジャンプ表示
     public bool m_IsDoubleJump;
 
-
+    public bool m_IsAttackTama;
     //敵表示
     public bool m_IsEnemy;
     [Header("敵の出現位置とプレハブ")]
@@ -30,10 +30,15 @@ public class TriggerManager : MonoBehaviour
     [SerializeField]
     [Header("ゴーストダブルジャンプアニメーションが入っているオブジェクト")]
     GameObject m_GhostDoubleJump;
+    [Header("ゴーストダブルジャンプアニメーションが入っているオブジェクト")]
+    [SerializeField]
+    GameObject m_GhostAttackObj;
+    [SerializeField]
+    GameObject m_GhostTama;
     private void Update()
     {
         //範囲内にいるなら表示・範囲内にいなければ非表示
-        if(m_IsJump)
+        if (m_IsJump)
         {
             m_GhostJump.SetActive(true);
         }
@@ -49,10 +54,20 @@ public class TriggerManager : MonoBehaviour
         {
             m_GhostDoubleJump.SetActive(false);
         }
-
-        if(m_IsEnemy)
+        if (m_IsAttackTama)
         {
-            if(!m_IsSpown)
+            m_GhostAttackObj.SetActive(true);
+            m_GhostTama.SetActive(true);
+        }
+        else
+        {
+            m_GhostAttackObj.SetActive(false);
+            m_GhostTama.SetActive(false);
+        }
+
+        if (m_IsEnemy)
+        {
+            if (!m_IsSpown)
             {
                 EnemySpown();
             }

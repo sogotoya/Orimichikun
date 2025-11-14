@@ -65,7 +65,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.053977966, y: -0.068885624}
+  m_Offset: {x: 0.075351715, y: -0.068885624}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -76,7 +76,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5207472, y: 0.9348421}
+  m_Size: {x: 1.1194992, y: 0.9348421}
   m_EdgeRadius: 0
 --- !u!114 &2548228236328774293
 MonoBehaviour:
@@ -93,6 +93,116 @@ MonoBehaviour:
   m_Boss: {fileID: 6773151116598912978}
   m_AISM: {fileID: 8098774897004376896}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
+--- !u!1 &1309919260370398477
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 984546549921395011}
+  - component: {fileID: 2377369186424744958}
+  - component: {fileID: 7972610382867140374}
+  - component: {fileID: 5079144943680402448}
+  m_Layer: 0
+  m_Name: "Player\u306B\u30D2\u30C3\u30C8\u7528\u5224\u5B9A"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &984546549921395011
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309919260370398477}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6399265359902008968}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2377369186424744958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309919260370398477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c6876fc642ba684fbc1d20a455ffc6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_DamegePoint: 1
+  m_Parameta: {fileID: 7972610382867140374}
+--- !u!114 &7972610382867140374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309919260370398477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96d7ff2016f86164e817610029676a7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Team: Enemy
+  m_Hp: 0
+  m_MaxHp: 0
+  m_InvincibleTime: 0
+  m_Goal: {fileID: 0}
+--- !u!61 &5079144943680402448
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309919260370398477}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.08291626, y: -0.09872007}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.9491577, y: 0.80255985}
+  m_EdgeRadius: 0
 --- !u!1 &1896449867277206532
 GameObject:
   m_ObjectHideFlags: 0
@@ -160,6 +270,7 @@ Transform:
   - {fileID: 770059737214433478}
   - {fileID: 2811407196510173547}
   - {fileID: 5398835385885140497}
+  - {fileID: 984546549921395011}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &953045593087776296
@@ -288,6 +399,7 @@ MonoBehaviour:
   m_BM: {fileID: 0}
   m_RTSP: {fileID: 0}
   m_JP: {fileID: 0}
+  m_Coin: {fileID: 0}
 --- !u!1001 &3510392250062529291
 PrefabInstance:
   m_ObjectHideFlags: 0

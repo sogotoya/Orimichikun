@@ -69,7 +69,7 @@ public class FlyEnemyAttack : MonoBehaviour
             if (!m_HasAttackedOnce) // èââÒÇÃÇ›
             {
                 AttackMode();
-                m_HasAttackedOnce = true;
+                m_HasAttackedOnce = false;
                 m_Count = 0f;
             }
         }

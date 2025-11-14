@@ -20,6 +20,7 @@ public class TriggerEnemy : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             m_TM.m_IsEnemy = true;
+            m_TM.m_IsAttackTama = true;
             Debug.Log("Player”ÍˆÍ“à’†(Enemy)");
         }
     }
@@ -27,5 +28,6 @@ public class TriggerEnemy : MonoBehaviour
     private void OnTriggerExit2D(Collider2D other)
     {
         m_TM.m_IsEnemy=false;
+        m_TM.m_IsAttackTama = false;
     }
 }
