@@ -42,7 +42,7 @@ public class Boss_Roll : State<AITester_StateMachine>
             owner.StartCoroutine(Roll());
             if (owner.m_FR.NormalRoll(owner.gameObject,2)==100)
             {
-                owner.ChangeState(AIState_ActionType.Hari);
+                owner.ChangeState(AIState_ActionType.Spown);
             }
         }
         else//ì{ÇËèÛë‘Ç»ÇÁ
@@ -50,7 +50,7 @@ public class Boss_Roll : State<AITester_StateMachine>
             owner.StartCoroutine(Roll());
             if (owner.m_SR.AngrylRoll(owner.gameObject,2)==100)
             {
-                owner.ChangeState(AIState_ActionType.Hari);
+                owner.ChangeState(AIState_ActionType.Spown);
             }
         }
 

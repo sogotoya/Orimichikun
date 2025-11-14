@@ -12,11 +12,22 @@ public class Boss_JumpAttack : State<AITester_StateMachine>
 
 
     bool m_Flag = false;
-
+    bool m_CntFlag = false;
     public override void Enter()
     {
         Debug.Log("JumpAttackŠJŽn");
         m_Flag=false;
+        m_CntFlag = false;
+
+        owner.StartCoroutine(JumpA());
+        owner.StartCoroutine(owner.m_JP.JumpAttackStart(owner.gameObject, result =>
+        {
+            if (result == 100 && !m_CntFlag)
+            {
+                owner.ChangeState(AIState_ActionType.Hari);
+                m_CntFlag = true;
+            }
+        }));
     }
 
     public override void Stay()
@@ -33,12 +44,7 @@ public class Boss_JumpAttack : State<AITester_StateMachine>
             owner.ChangeState(AIState_ActionType.Houkou);
         }
 
-        owner.StartCoroutine(JumpA());
-        owner.StartCoroutine(owner.m_JP.JumpAttackStart(owner.gameObject, result =>
-        {
-            if (result==100)
-                owner.ChangeState(AIState_ActionType.Hari);
-        }));
+
     }
 
     public override void Exit()

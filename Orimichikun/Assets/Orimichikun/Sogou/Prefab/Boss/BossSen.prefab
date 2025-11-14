@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 770059737214433478}
   - component: {fileID: 3538429051422970341}
+  - component: {fileID: 2548228236328774293}
   m_Layer: 8
   m_Name: "\u5F53\u305F\u308A\u5224\u5B9A"
   m_TagString: Untagged
@@ -61,7 +62,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.053977966, y: -0.068885624}
@@ -77,6 +78,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.5207472, y: 0.9348421}
   m_EdgeRadius: 0
+--- !u!114 &2548228236328774293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 161945242377066254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcc2474938e614a409897a85ee2b3b7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Boss: {fileID: 6773151116598912978}
+  m_AISM: {fileID: 8098774897004376896}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_SR: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1896449867277206532
 GameObject:
   m_ObjectHideFlags: 0
@@ -257,7 +274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 922ebde657e935144ae9901f0b408d6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HP: 50
+  m_HP: 100
   m_MaxHP: 0
   m_StatemanagerNo: 0
   m_StateManager: {fileID: 0}
@@ -270,3 +287,4 @@ MonoBehaviour:
   m_SS: {fileID: 0}
   m_BM: {fileID: 0}
   m_RTSP: {fileID: 0}
+  m_JP: {fileID: 0}

@@ -23,14 +23,18 @@ public class Fast_Roll : MonoBehaviour
     int m_Cnt = 0;
     //判定フラグ
     bool m_Flag = false;
-
+    bool m_Fast = false;
     /// <summary>
     /// ボスの回転移動攻撃(処理を実行させたいオブジェクト、何回させるか)
     /// </summary>
     public int NormalRoll(GameObject obj, int cnt)
     {
-
-        if (m_Cnt != cnt)
+        if (!m_Fast)
+        {
+            StartCoroutine(WaitTime());
+            return 0;
+        }
+        else if (m_Cnt != cnt)
         {
             //現在の場所の更新
             Vector3 pos = obj.transform.position;
@@ -56,10 +60,16 @@ public class Fast_Roll : MonoBehaviour
             //初期化
             m_Cnt = 0;
             m_Flag = false;
+            m_Fast = false;
             return 100;
         }
 
     }
 
-
+    IEnumerator WaitTime()
+    {
+        yield return new WaitForSeconds(1.3f);
+        m_Fast = true;
+        yield return null;
+    }
 }

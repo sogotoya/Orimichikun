@@ -15,18 +15,12 @@ public class Boss_Spown : State<AITester_StateMachine>
         Debug.Log("SpownäJén");
         owner.m_Animator.SetTrigger("Houkou");
         owner.StartCoroutine(SpownRandom());
-
-        m_Timer = 0f;
+        owner.StartCoroutine(CntChange());
     }
 
     public override void Stay()
     {
-        m_Timer += Time.deltaTime;
-        //4ïbÇΩÇ¡ÇΩÇÁMoveÇ…à⁄çs
-        if(m_Timer==2)
-        {
-            owner.ChangeState(AIState_ActionType.JumpAttack);
-        }
+
         //HPÇ™0Ç…Ç»Ç¡ÇƒÇ¢ÇÈÇ©ÇÃîªíË
         if (owner.m_HP <= 0)
         {
@@ -52,4 +46,12 @@ public class Boss_Spown : State<AITester_StateMachine>
         owner.m_SM.RandomSpown();
         yield return null;
     }
+
+    IEnumerator CntChange()
+    {
+        yield return new WaitForSeconds(5.5f);
+        owner.ChangeState(AIState_ActionType.JumpAttack);
+        yield return null;
+    }
+
 }

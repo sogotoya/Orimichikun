@@ -26,7 +26,7 @@ public class Boss_Hari : State<AITester_StateMachine>
         //Žw’èŽžŠÔŒo‰ß‚µ‚½ˆÚs
         if(m_Timer>=1.5)
         {
-            owner.ChangeState(AIState_ActionType.Spown);
+            owner.ChangeState(AIState_ActionType.Roll);
         }
 
         //HP‚ª0‚É‚È‚Á‚Ä‚¢‚é‚©‚Ì”»’è

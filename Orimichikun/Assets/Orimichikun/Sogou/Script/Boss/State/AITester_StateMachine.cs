@@ -137,7 +137,7 @@ namespace StateMachineAI
             m_MaxHP = m_HP;
             Debug.Log("生成完了");
             //初期起動時は、「???」に移行させる
-            ChangeState(AIState_ActionType.JumpAttack);
+            ChangeState(AIState_ActionType.Roll);
 
         }
 
