@@ -23,20 +23,21 @@ public class Boss_Move : State<AITester_StateMachine>
 
         //çUåÇêÊÉâÉìÉ_ÉÄéwíË
         m_No = Random.Range(1, 5);
-        m_Flag = false;
-        m_Timer = 0;
+        //m_Flag = false;
+        //m_Timer = 0;
+        owner.StartCoroutine(NextAction());
     }
 
     public override void Stay()
     {
-        m_Timer += Time.deltaTime;
-        if (m_Timer >= 0.5)
-        {
-            if (!m_Flag)
-            {
-                owner.StartCoroutine(NextAction());
-            }
-        }
+        //m_Timer += Time.deltaTime;
+        //if (m_Timer >= 0.5)
+        //{
+        //    if (!m_Flag)
+        //    {
+        //        owner.StartCoroutine(NextAction());
+        //    }
+        //}
 
         //HPÇ™0Ç…Ç»Ç¡ÇƒÇ¢ÇÈÇ©ÇÃîªíË
         if (owner.m_HP <= 0)
@@ -57,17 +58,17 @@ public class Boss_Move : State<AITester_StateMachine>
 
     IEnumerator NextAction()
     {
-        m_Flag = true;
+        //m_Flag = true;
 
-        if (!m_FastFlag)
-        {
-            m_FastFlag = true;
-            yield return new WaitForSeconds(3.0f);
-        }
-        else
-        {
-            yield return new WaitForSeconds(1.5f);
-        }
+        //if (!m_FastFlag)
+        //{
+        //    m_FastFlag = true;
+        //    yield return new WaitForSeconds(3.0f);
+        //}
+        //else
+        //{
+        //    yield return new WaitForSeconds(1.5f);
+        //}
         //çsìÆêÊ
         switch (m_No)
         {

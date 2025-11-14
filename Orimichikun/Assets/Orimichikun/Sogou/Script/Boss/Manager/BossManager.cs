@@ -40,6 +40,7 @@ public class BossManager : MonoBehaviour
     [Header("ボス")]
     public GameObject m_BossObj;
     public AITester_StateMachine m_AITSM;
+
     //1回のみ呼び出す対策
     bool m_Flag=false;
     bool m_RoarFlag=false;
@@ -93,24 +94,14 @@ public class BossManager : MonoBehaviour
             //色変化開始
             if (!m_BCC.m_CollarChangeFlag)
             {
-                //プレイヤー操作停止
-                m_PS.enabled = false;
-                m_PShoot.enabled = false;
-
                 m_BCC.m_CollarChangeFlag = true;
                 m_BCC.CollarChangeStart();
                 //画面の揺れ
                 StartCoroutine(m_CS_Boss.BossShake(3f, 0.1f, 0.78f, m_CS_Boss.transform));
-                //プレイヤー操作再開
-                m_PS.enabled = true;
-                m_PShoot.enabled = true;
-                //ステート移行
-                m_AITSM.ChangeState(AIState_ActionType.Move);
             }
-            //プレイヤー操作停止
-            m_PS.enabled = true;
-            m_PShoot.enabled = true;
+
         }
+
     }
 
 
@@ -128,4 +119,5 @@ public class BossManager : MonoBehaviour
         Destroy(m_FastTextBoss);
         yield return null;
     }
+
 }

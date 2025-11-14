@@ -16,38 +16,27 @@ public class Second_Roll : MonoBehaviour
 
     //どのポジション(配列)に移動するか指定する変数
     int m_Index;
-
-    bool m_IsMoving = false;
-    //
-    bool m_Flag;
     //何回目か判定変数
     int m_Cnt = 0;
 
-    private void Update()
-    {
-        //if (!m_IsMoving)
-        //    AngrylRoll(m_Prefab);
-    }
+    bool m_IsRunning = false;
 
     /// <summary>
     /// ボスの回転移動攻撃(怒り状態)(処理を実行させたいオブジェクト、何回させるか)
     /// </summary>
     public int AngrylRoll(GameObject obj, int cnt)
     {
-        StartCoroutine(SequenceMove());
-
-        if (!m_IsMoving && m_Cnt != cnt)
-        {
-            StartCoroutine(MoveSequence(obj));
-            return 0;
-        }
-        else
+        if (m_IsRunning) return 0;
+        if(m_Cnt>=cnt)
         {
             //初期化
             m_Cnt = 0;
-            m_Flag = false;
+            m_Index = 0;
             return 100;
         }
+        // コルーチンを1回だけ動かす
+        StartCoroutine(MoveSequence(obj));
+        return 0;
     }
 
     /// <summary>
@@ -58,52 +47,45 @@ public class Second_Roll : MonoBehaviour
     IEnumerator MoveSequence(GameObject obj)
     {
 
-        m_IsMoving = true;
-
+        m_IsRunning= true;
+        yield return new WaitForSeconds(1.0f);
         Transform next_Point = m_Tf[m_Index];
 
         //移動処理(目的地に着くまで)
-        while (Vector3.Distance(obj.transform.position, next_Point.position) > 0.05f)
+        while (true)
         {
-            obj.transform.position = Vector3.MoveTowards(
-                obj.transform.position,
-                next_Point.position,
-                m_MoveSpeed * Time.deltaTime
-            );
-            //1フレーム待機
-            yield return null;
-        }
-        //目的地に着いたら
-        m_Index++;
+            // 次のポイント
+            Transform next = m_Tf[m_Index];
 
+            // 移動
+            while (Vector3.Distance(obj.transform.position, next.position) > 0.05f)
+            {
+                obj.transform.position = Vector3.MoveTowards(
+                    obj.transform.position,
+                    next.position,
+                    m_MoveSpeed * Time.deltaTime
+                );
+                yield return null;
+            }
 
-        if (m_Index >= m_Tf.Length)
-        {
-            m_Index = 0;
-            m_Cnt++;
+            // 目的地ついたら
+            m_Index++;
+
+            // 配列終わったら1周完了
+            if (m_Index >= m_Tf.Length)
+            {
+                m_Index = 0;
+                m_Cnt++;  // 回数増加
+                break;    // 一回のループ終了
+            }
+
+            // 1番目以外で停止
+            if (m_Index != 1)
+                yield return new WaitForSeconds(0.4f);
         }
-        //端の地点以外待機時間付与
-        if (m_Index != 1)
-        {
-            yield return new WaitForSeconds(0.4f);
-            //Debug.Log("ていしーーーー");
-        }
-        m_IsMoving = false;
-        yield return 0;
+
+        m_IsRunning = false;
     }
 
 
-    /// <summary>
-    /// 動かさない時間
-    /// </summary>
-    /// <returns></returns>
-    IEnumerator SequenceMove()
-    {
-        if (!m_Flag)
-        {
-            yield return new WaitForSeconds(1.0f);
-            m_Flag = true;
-        }
-
-    }
 }

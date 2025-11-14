@@ -14,7 +14,7 @@ public class Fast_Roll : MonoBehaviour
     Transform m_Left;
     [SerializeField]
     [Header("移動スピード")]
-    float m_MoveSpeed = 1f;
+    public float m_MoveSpeed = 1f;
     [SerializeField]
     [Header("左右の方向")]
     int m_Direction = -1;

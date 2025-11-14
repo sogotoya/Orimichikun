@@ -13,6 +13,7 @@ public class Boss_Die : State<AITester_StateMachine>
     {
         Debug.Log("Die開始");
         owner.m_Animator.SetTrigger("Die");
+        owner.StartCoroutine(OnCoin());
     }
 
     public override void Stay()
@@ -23,5 +24,15 @@ public class Boss_Die : State<AITester_StateMachine>
     public override void Exit()
     {
         Debug.Log("Die終了");
+    }
+
+    /// <summary>
+    /// コイン出現処理
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator OnCoin()
+    {
+        yield return new WaitForSeconds(1f);
+        owner.m_Coin.SetActive(true);
     }
 }

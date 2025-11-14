@@ -12,6 +12,11 @@ public class Boss_Hari : State<AITester_StateMachine>
     float m_Timer = 0f;
     public override void Enter()
     {
+        //HPが0になっているかの判定
+        if (owner.m_HP <= 0)
+        {
+            owner.ChangeState(AIState_ActionType.Die);
+        }
         Debug.Log("針飛ばすスタート");
         owner.m_Animator.SetTrigger("Hari");
 
@@ -24,7 +29,7 @@ public class Boss_Hari : State<AITester_StateMachine>
         m_Timer += Time.deltaTime;
 
         //指定時間経過した移行
-        if(m_Timer>=1.5)
+        if (m_Timer >= 1.5)
         {
             owner.ChangeState(AIState_ActionType.Roll);
         }
@@ -48,8 +53,17 @@ public class Boss_Hari : State<AITester_StateMachine>
     }
     IEnumerator StartShot()
     {
-        yield return new WaitForSeconds(0.3f);
+        if (!owner.m_IsAnger)
+        {
+            yield return new WaitForSeconds(0.3f);
+        }
+        else
+        {
+            yield return new WaitForSeconds(1.0f);
+        }
         owner.m_SS.ShotStart(owner.m_IsAnger, owner.gameObject);
         yield return null;
     }
+
+
 }

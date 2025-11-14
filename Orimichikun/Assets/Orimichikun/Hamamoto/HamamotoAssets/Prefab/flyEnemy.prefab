@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2932746123800050559}
   - component: {fileID: 4260355398784907679}
   - component: {fileID: 60721571813875732}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: "\u653B\u6483\u5224\u5B9A\u30A8\u30EA\u30A2"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -210,9 +210,10 @@ GameObject:
   - component: {fileID: 8125833551361322847}
   - component: {fileID: 6943282032624717383}
   - component: {fileID: 8031241177436542122}
-  m_Layer: 0
+  - component: {fileID: -5867725102064773940}
+  m_Layer: 8
   m_Name: flyEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -368,7 +369,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.011192322, y: 0.0951345}
@@ -384,3 +385,30 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.49653625, y: 0.64203787}
   m_EdgeRadius: 0
+--- !u!50 &-5867725102064773940
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960917502669511895}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

@@ -50,6 +50,7 @@ namespace StateMachineAI
         public ReturnToStartPosition m_RTSP;
         public JumpPosition m_JP;
 
+        public GameObject m_Coin;
         /// <summary>
         /// クラス名を元にステートを生成して追加する
         /// </summary>
@@ -133,6 +134,9 @@ namespace StateMachineAI
             m_BM.m_AITSM = this.gameObject.GetComponent<AITester_StateMachine>();
             m_RTSP = GameObject.Find("ReturnToStartPosition").GetComponent<ReturnToStartPosition>();
             m_JP = GameObject.Find("JumpPosition").GetComponent<JumpPosition>();
+
+            m_Coin = GameObject.Find("UiCoin_1");
+            m_Coin.SetActive(false);
 
             m_MaxHP = m_HP;
             Debug.Log("生成完了");

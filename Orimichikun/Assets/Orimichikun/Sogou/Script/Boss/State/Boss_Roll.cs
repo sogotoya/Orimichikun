@@ -7,9 +7,15 @@ public class Boss_Roll : State<AITester_StateMachine>
 {
     public Boss_Roll(AITester_StateMachine owner) : base(owner) { }
 
-    bool m_Flag=false;
+    bool m_Flag = false;
+    bool m_Punpun = false;
     public override void Enter()
     {
+        //HPが0になっているかの判定
+        if (owner.m_HP <= 0)
+        {
+            owner.ChangeState(AIState_ActionType.Die);
+        }
         Debug.Log("回転スタート");
         m_Flag = false;
         if (!owner.m_IsAnger)
@@ -40,20 +46,26 @@ public class Boss_Roll : State<AITester_StateMachine>
         if (!owner.m_IsAnger)
         {
             owner.StartCoroutine(Roll());
-            if (owner.m_FR.NormalRoll(owner.gameObject,2)==100)
+            if (owner.m_FR.NormalRoll(owner.gameObject, 2) == 100)
             {
                 owner.ChangeState(AIState_ActionType.Spown);
             }
         }
         else//怒り状態なら
         {
-            owner.StartCoroutine(Roll());
-            if (owner.m_SR.AngrylRoll(owner.gameObject,2)==100)
+            Debug.Log("こなぷんぷん");
+            if(!m_Punpun)owner.StartCoroutine (PunpunWait());
+
+            owner.m_FR.m_MoveSpeed = 5;
+            if (owner.m_FR.NormalRoll(owner.gameObject, 2) == 100)
             {
                 owner.ChangeState(AIState_ActionType.Spown);
             }
+            //if (owner.m_SR.AngrylRoll(owner.gameObject, 2) == 100)
+            //{
+            //    owner.ChangeState(AIState_ActionType.Spown);
+            //}
         }
-
 
     }
 
@@ -74,5 +86,11 @@ public class Boss_Roll : State<AITester_StateMachine>
             m_Flag = true;
         }
 
+    }
+    IEnumerator PunpunWait()
+    {
+
+        yield return new WaitForSeconds(3f);
+        m_Punpun = true;
     }
 }

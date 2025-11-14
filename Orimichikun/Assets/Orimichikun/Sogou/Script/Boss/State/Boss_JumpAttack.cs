@@ -15,7 +15,13 @@ public class Boss_JumpAttack : State<AITester_StateMachine>
     bool m_CntFlag = false;
     public override void Enter()
     {
+        //HP‚ª0‚É‚È‚Á‚Ä‚¢‚é‚©‚Ì”»’è
+        if (owner.m_HP <= 0)
+        {
+            owner.ChangeState(AIState_ActionType.Die);
+        }
         Debug.Log("JumpAttackŠJŽn");
+        owner.m_Animator.SetTrigger("Jump");
         m_Flag=false;
         m_CntFlag = false;
 
