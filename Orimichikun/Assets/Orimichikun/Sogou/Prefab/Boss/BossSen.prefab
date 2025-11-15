@@ -923,7 +923,7 @@ MonoBehaviour:
   m_Jump: {fileID: 7243747894628092114}
   m_Spown: {fileID: 4888369755809800204}
   m_Move: {fileID: 1188016556674919102}
-  m_BoxCollider: {fileID: 3538429051422970341}
+  m_BoxCollider: {fileID: 5079144943680402448}
   m_playershoot: {fileID: 0}
 --- !u!1 &7480892044073040376
 GameObject:

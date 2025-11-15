@@ -26,7 +26,11 @@ public class Boss_Die : State<AITester_StateMachine>
 
     public override void Stay()
     {
-
+        owner.m_Hari.Stop();
+        owner.m_Houkou.Stop();
+        owner.m_Jump.Stop();
+        owner.m_Move.Stop();
+        owner.m_Spown.Stop();
     }
 
     public override void Exit()
