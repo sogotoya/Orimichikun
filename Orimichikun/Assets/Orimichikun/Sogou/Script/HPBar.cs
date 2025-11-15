@@ -10,6 +10,7 @@ public class HPBar : MonoBehaviour
 
     void Start()
     {
+        m_Hp = ChangeSenseHP.m_Instance.PlayerHP;
         // スライダーを取得する
         m_Slider = GameObject.Find("Slider").GetComponent<Slider>();
         if(m_Parameta2 == null )

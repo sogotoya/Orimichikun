@@ -17,13 +17,17 @@ public class Parameta2D : MonoBehaviour
     private Animator m_Animator;
     public Goal m_Goal;
 
+   
     private void Start()
     {
         m_Animator = GetComponent<Animator>();
-        // シーン上のGoalを自動で探す
-        if (m_Goal == null)
+        //ChangeSenseHPがあれば
+        if (m_Team == "Player"&&ChangeSenseHP.m_Instance != null)
         {
-            m_Goal = FindObjectOfType<Goal>();
+            m_Hp = ChangeSenseHP.m_Instance.PlayerHP;
+
+            // もし保存された HP が Max を超えていたら補正
+            if (m_Hp > m_MaxHp) m_Hp = m_MaxHp;
         }
     }
 
@@ -40,22 +44,32 @@ public class Parameta2D : MonoBehaviour
         // 無敵中はダメージ無効
         if (m_InvincibleTimer > 0) return;
         // すでに死んでいる
-        if (m_Hp <= 0) return; 
+        if (m_Hp <= 0) return;
 
         m_Hp -= damage;
-       
+
+        // プレイヤーだけ HP を保存
+        if (m_Team == "Player" && ChangeSenseHP.m_Instance != null)
+        {
+            ChangeSenseHP.m_Instance.PlayerHP = m_Hp;
+        }
 
         // 無敵時間をセット
         m_InvincibleTimer = m_InvincibleTime;
-        // ダメージアニメーションを再生
+
         if (m_Animator)
-        {
             m_Animator.SetTrigger("Damage");
-        }
+
         if (m_Hp <= 0)
         {
-
             m_Hp = 0;
+
+            // 死亡時もプレイヤーだけ HP を保存
+            if (m_Team == "Player" && ChangeSenseHP.m_Instance != null)
+            {
+                ChangeSenseHP.m_Instance.PlayerHP = m_Hp;
+            }
+
             Die();
         }
     }
@@ -76,7 +90,15 @@ public class Parameta2D : MonoBehaviour
 
 
 
-        Destroy(gameObject,2f);
+        // 敵だけ Destroy
+        if (m_Team != "Player")
+        {
+            Destroy(gameObject, 2f); 
+        }
+        else
+        {
+           
+        }
     }
 
 }

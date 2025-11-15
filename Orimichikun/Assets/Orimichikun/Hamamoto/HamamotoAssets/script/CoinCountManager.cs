@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 public class CoinCountManager : MonoBehaviour
@@ -26,15 +27,26 @@ public class CoinCountManager : MonoBehaviour
     public List<Coin> m_Coins = new List<Coin>();
     public bool m_CoinReset=false;
 
+
     public void RegisterCoin(Coin coin)
     {
         if (!m_Coins.Contains(coin))
             m_Coins.Add(coin);
     }
-    private void Start()
+    private void Awake()
     {
         m_RecoveryKey.SetActive(false);
         m_Source = GetComponent<AudioSource>();
+
+        // 値を安全に引き継ぐ
+        if (ChangeSenseCoin.m_InstanceCoin != null)
+        {
+            m_CoinCount = ChangeSenseCoin.m_InstanceCoin.CS_CoinCount;
+            m_RecoveryCount = ChangeSenseCoin.m_InstanceCoin.CS_RecoveryCount;
+        }
+
+        UpdateCoinText();
+        UpdateRecoveryText();
     }
     private void Update()
     {
@@ -51,15 +63,16 @@ public class CoinCountManager : MonoBehaviour
                 {
                     m_RecoveryCount += 1;
                     m_CoinCount = 0;
-                    UpdateCoinText();
-                    UpdateRecoveryText();
+                   
                 }
-                else
+
+                if (ChangeSenseCoin.m_InstanceCoin != null)
                 {
-             
-                    UpdateCoinText();
+                    ChangeSenseCoin.m_InstanceCoin.CS_CoinCount = m_CoinCount;
+                    ChangeSenseCoin.m_InstanceCoin.CS_RecoveryCount = m_RecoveryCount;
                 }
-               
+                UpdateCoinText();
+                UpdateRecoveryText();
             }
         }
         //回復アイテムを一個以上ゲットしたら使用可能
@@ -89,7 +102,10 @@ public class CoinCountManager : MonoBehaviour
         {
             m_CoinReset= false;
             m_RecoveryCount = 0;
-            m_CoinCount = 0; 
+            m_CoinCount = 0;
+            ChangeSenseCoin.m_InstanceCoin.CS_CoinCount = 0;
+            ChangeSenseCoin.m_InstanceCoin.CS_RecoveryCount = 0;
+
             UpdateCoinText(); 
             UpdateRecoveryText();
         }
@@ -111,6 +127,7 @@ public class CoinCountManager : MonoBehaviour
             m_Source.PlayOneShot(m_RecoverySE);
             m_PlayerParameta.m_Hp += m_HPRecovery;
             m_RecoveryCount -= 1;
+            ChangeSenseCoin.m_InstanceCoin.CS_RecoveryCount = m_RecoveryCount;
             UpdateRecoveryText();
         }
         else

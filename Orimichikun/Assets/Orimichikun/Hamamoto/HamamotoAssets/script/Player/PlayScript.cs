@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class PlayScript : MonoBehaviour
 {
@@ -39,12 +40,13 @@ public class PlayScript : MonoBehaviour
     public SavePoint m_SavePoint;
     [Header("CoinCountManagerのscript")]
     public CoinCountManager m_Manager;
+
     private Rigidbody2D m_Rigidbody;
     private Animator m_Animator;
     private Parameta2D m_Parameta;
     private AudioSource m_Audio;
     // 何回ジャンプしたか
-    private int jumpCount = 0; 
+    private int jumpCount = 0;
     //左右入力値
     private float moveX;
     //現在の状態
@@ -58,18 +60,24 @@ public class PlayScript : MonoBehaviour
     private bool m_isTouchingWall;
     private Vector2 m_wallNormal;
     private Vector3 m_LastSavePosition;
+    public bool m_TPPush = false;
 
     private void Start()
     {
-
         m_LastSavePosition = transform.position;
         m_Animator = GetComponent<Animator>();
         m_Rigidbody = GetComponent<Rigidbody2D>();
         m_Parameta = GetComponent<Parameta2D>();
         m_Audio = GetComponent<AudioSource>();
-        m_image.SetActive(false);
-    }
 
+        // UI は消す
+        m_image.SetActive(false);
+
+        // 移動の制約だけ初期化
+        m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+        m_Rigidbody.velocity = Vector2.zero;
+        CurrentState = State.Idle;
+    }
     private void Update()
     {
         // 入力取得
@@ -78,7 +86,7 @@ public class PlayScript : MonoBehaviour
         // 接地判定（Raycast のみ使用）
         isGrounded = CheckGrounded();
 
-        
+
         // 接地したらジャンプ回数リセット
         if (isGrounded)
         {
@@ -97,7 +105,7 @@ public class PlayScript : MonoBehaviour
             LockFall();
         }
         // 死んで Enter を押したらリスポーン
-        if ( (Input.GetKeyDown(KeyCode.Return)||Input.GetKeyDown("joystick button 6")|| Input.GetKeyDown("joystick button 7")) && CurrentState == State.Die)
+        if ((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown("joystick button 6") || Input.GetKeyDown("joystick button 7")) && CurrentState == State.Die)
         {
             //コインをリセット
             m_Manager.m_CoinReset = true;
@@ -129,7 +137,7 @@ public class PlayScript : MonoBehaviour
         }
         //Input.GetKeyDown(KeyCode.Space)
         //地面を踏んでいてspaceキーを押したらジャンプする
-        if ((Input.GetKeyDown("joystick button 2")|| Input.GetKeyDown("joystick button 0") || Input.GetKeyDown(KeyCode.Space)) && jumpCount < maxJumpCount)
+        if ((Input.GetKeyDown("joystick button 2") || Input.GetKeyDown("joystick button 0") || Input.GetKeyDown(KeyCode.Space)) && jumpCount < maxJumpCount)
         {
             if (m_jump != null && m_jump.Length > 0)
             {
@@ -186,7 +194,7 @@ public class PlayScript : MonoBehaviour
             jumpCount++;
             ChangeState(State.Jump);
         }
-        
+
     }
     void ModeJump()
     {
@@ -210,12 +218,12 @@ public class PlayScript : MonoBehaviour
     }
     void ModeAttack() { }
 
-    void ModeDie(){}
+    void ModeDie() { }
     void ModeDamage()
     {
 
     }
-    
+
     //ステートチェンジ関数
     void ChangeState(State newState)
     {
@@ -231,19 +239,18 @@ public class PlayScript : MonoBehaviour
     }
     void LockFall()
     {
-        //移動やジャンプを止める
-        CurrentState=State.Die;
-        // X方向の移動を無効化して、重力だけで落下させる
-        m_Rigidbody.velocity = new Vector2(0,0);
+        // 移動やジャンプを止める
+        CurrentState = State.Die;
+        m_Rigidbody.velocity = Vector2.zero;
 
-        // もし水平移動も一切できないようにしたいなら：
+        // X方向の移動も凍結して落下のみ
         m_Rigidbody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
 
-        // UIを表示
+        // UI表示
         m_image.SetActive(true);
     }
-    
-   
+
+
     bool CheckGrounded()
     {
         // 足元から下方向にRayを飛ばす
@@ -280,7 +287,7 @@ public class PlayScript : MonoBehaviour
     //壁のcollisionに触れたら
     private void OnCollisionExit2D(Collision2D collision)
     {
-        m_isTouchingWall=false;
+        m_isTouchingWall = false;
     }
     //セーブポイントに触れたらプレイヤーのスポーンの位置変更
     public void UpdateSavePoint(Vector3 pos)
@@ -289,22 +296,29 @@ public class PlayScript : MonoBehaviour
     }
     public void PlayerSpawn()
     {
-        // セーブ位置へ復活
-        transform.position = m_LastSavePosition;
-        //すべてのRespawnPointに復活命令を送る
-        foreach (var point in m_RespawnPoint)
+        string currentScene = SceneManager.GetActiveScene().name;
+
+        // BossStage なら Stage に戻す
+        if (currentScene == "BossStage")
         {
-            if (point!=null)
-            {
-                point.Respawn();
-            }
+            // 状態を即Idleにしておく
+            CurrentState = State.Idle;
+            m_image.SetActive(false);
+
+            SceneManager.LoadScene("Stage");
+            return;
         }
-        // ステータス挙動リセット
+
+        // 通常のセーブポイントリスポーン
+        m_image.SetActive(false);
+        transform.position = m_LastSavePosition;
+        foreach (var point in m_RespawnPoint)
+            point?.Respawn();
+
         m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+        m_Rigidbody.velocity = Vector2.zero;
         CurrentState = State.Idle;
         m_Parameta.m_Hp = m_Parameta.m_MaxHp;
-        // UIを消す
-        m_image.SetActive(false);
 
         Debug.Log("リスポーン！");
     }

@@ -14,8 +14,11 @@ public class TP : MonoBehaviour
     public GameObject m_Player;
     [Header("テレポート先")]
     public Transform m_TP;
+    [Header("プレイヤーのscript")]
+    public PlayScript m_PlayScript;
     //プレイヤーがTPエリアに入ったか？
     private bool m_PlayerTpTrigger = false;
+    
 
     private void Start()
     {
@@ -49,6 +52,7 @@ public class TP : MonoBehaviour
         if ((Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown("joystick button 4")|| Input.GetKeyDown("joystick button 5")) && m_PlayerTpTrigger)
         {
             TpPlayer();
+            
         }
     }
     private void TpPlayer()
@@ -57,8 +61,8 @@ public class TP : MonoBehaviour
         {
             m_Bgm1.Stop();
             //シーンに移動
-            SceneManager.LoadScene("TestSense");
-
+            SceneManager.LoadScene("BossStage");
+            m_PlayScript.m_TPPush=true;
             m_Bgm2.Play();
         }
     }
