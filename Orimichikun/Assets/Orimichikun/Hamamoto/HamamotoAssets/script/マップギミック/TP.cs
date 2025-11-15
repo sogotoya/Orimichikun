@@ -22,6 +22,7 @@ public class TP : MonoBehaviour
 
     private void Start()
     {
+        
         m_Image.SetActive(false);
         m_Image2.SetActive(false);
     }
@@ -62,7 +63,6 @@ public class TP : MonoBehaviour
             m_Bgm1.Stop();
             //ƒV[ƒ“‚ÉˆÚ“®
             SceneManager.LoadScene("BossStage");
-            m_PlayScript.m_TPPush=true;
             m_Bgm2.Play();
         }
     }

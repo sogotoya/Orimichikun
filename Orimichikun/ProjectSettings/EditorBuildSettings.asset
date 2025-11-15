@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Orimichikun/Scene/BossStage.unity
     guid: 5a929e4a949cd064f99760aa2e884c92
+  - enabled: 1
+    path: Assets/Orimichikun/Hamamoto/HamamotoAssets/Scene/Boo.unity
+    guid: edfaa9fd9d0a7234e99c260c7697b5d3
   m_configObjects: {}

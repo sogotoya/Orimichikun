@@ -67,6 +67,7 @@ public class PlayScript : MonoBehaviour
 
     private void Start()
     {
+        
         m_LastSavePosition = transform.position;
         m_Animator = GetComponent<Animator>();
         m_Rigidbody = GetComponent<Rigidbody2D>();
@@ -80,9 +81,15 @@ public class PlayScript : MonoBehaviour
         m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
         m_Rigidbody.velocity = Vector2.zero;
         CurrentState = State.Idle;
+        if (SceneManager.GetActiveScene().name == "Stage")
+        {
+            m_Parameta.m_Hp = m_Parameta.m_MaxHp;
+        }
+      
     }
     private void Update()
     {
+     
         if (m_IsRespawning) return;
 
 
@@ -102,7 +109,7 @@ public class PlayScript : MonoBehaviour
         // 今回の接地判定を保存
         wasGrounded = isGrounded;
 
-        if (m_Parameta.m_Hp <= 1)
+        if (m_Parameta.m_Hp <= 0)
         {
             LockFall();
         }
@@ -110,10 +117,10 @@ public class PlayScript : MonoBehaviour
         {
             LockFall();
         }
-        // 死んで Enter を押したらリスポーン
-        if ((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown("joystick button 6") || Input.GetKeyDown("joystick button 7")) && CurrentState == State.Die)
+        if ((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown("joystick button 6") || Input.GetKeyDown("joystick button 7"))
+    && CurrentState == State.Die
+    && !m_IsRespawning)
         {
-            //コインをリセット
             m_Manager.m_CoinReset = true;
             PlayerSpawn();
         }
@@ -302,31 +309,13 @@ public class PlayScript : MonoBehaviour
     }
     public void PlayerSpawn()
     {
-        m_IsRespawning = true;
-
-        string currentScene = SceneManager.GetActiveScene().name;
-
-        // BossStage なら Stage に戻す
-        if (currentScene == "BossStage")
+        if (SceneManager.GetActiveScene().name=="BossStage")
         {
-            // 状態を即Idleにしておく
-            CurrentState = State.Idle;
-            m_image.SetActive(false);
-
-
-            // 通常のセーブポイントリスポーン
-            m_image.SetActive(false);
+            m_Parameta.m_Hp = m_Parameta.m_MaxHp;
+            SceneManager.LoadScene("Stage");
             transform.position = m_LastSavePosition;
             foreach (var point in m_RespawnPoint)
                 point?.Respawn();
-
-            m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
-            m_Rigidbody.velocity = Vector2.zero;
-            CurrentState = State.Idle;
-            m_Parameta.m_Hp = m_Parameta.m_MaxHp;
-
-            SceneManager.LoadScene("Stage");
-            return;
         }
 
         // 通常のセーブポイントリスポーン
