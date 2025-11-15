@@ -26,6 +26,8 @@ public class CoinMove : MonoBehaviour
     [SerializeField]
     GameObject m_Player;
 
+    [SerializeField]
+    AudioSource m_MoveAS;
     //繰り返し呼ばれる対策
     bool m_ShakeFlag;
 
@@ -34,6 +36,7 @@ public class CoinMove : MonoBehaviour
         if (m_Coin == null) return;
         if (m_CameraShake == null) return;
         if (m_FM == null) return;
+        m_MoveAS.enabled = false;
     }
 
     void Update()
@@ -41,13 +44,16 @@ public class CoinMove : MonoBehaviour
         //コインをとられた、メッセージ表示される前まで
         if (m_Coin == null && !m_FM.m_MessageFlag)
         {
-            MoveStart();
+            m_MoveAS.enabled = true;
+            MoveStart(); 
         }
         //FastMessageのContact()が終わったら起動
         if (m_FM.m_ContactFlag)
         {
+            m_MoveAS.enabled = true;
             StartCoroutine(BackMoveStart());
         }
+        
     }
 
     /// <summary>
@@ -55,6 +61,7 @@ public class CoinMove : MonoBehaviour
     /// </summary>
     void MoveStart()
     {
+       
         //コルーチン止めるための保存
         Coroutine shakeCoroutine = StartCoroutine(m_CameraShake.Shake(0.5f, 0.1f, 0.5f));
 
@@ -74,7 +81,7 @@ public class CoinMove : MonoBehaviour
         {
             //対策
             StopCoroutine(shakeCoroutine);
-
+            m_MoveAS.enabled = false;
             //コメント表示
             m_FM.m_MessageFlag = true;
         }
@@ -101,6 +108,7 @@ public class CoinMove : MonoBehaviour
         }
         //4秒たったら削除
         yield return new WaitForSeconds(4f);
+        m_MoveAS.enabled = false;
         //対策
         StopCoroutine(shakeCoroutine);
         Destroy(gameObject);

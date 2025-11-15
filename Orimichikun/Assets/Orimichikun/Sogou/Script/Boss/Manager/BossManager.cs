@@ -41,17 +41,25 @@ public class BossManager : MonoBehaviour
     public GameObject m_BossObj;
     public AITester_StateMachine m_AITSM;
 
+    [SerializeField]
+    AudioSource m_Move;
+    [SerializeField]
+    AudioSource m_Houkou;
+
     //1回のみ呼び出す対策
     bool m_Flag=false;
     bool m_RoarFlag=false;
     bool m_CSFlag = false;
     public bool m_BossAnger = false;//怒り状態かどうかの確認フラグ
-
+    public bool m_BossDie=false;
+    [SerializeField]
+    public GameObject m_Clear;
     [SerializeField]
     PlayerControlManager m_PCM;
     [SerializeField]
     BattleTextManager m_BTM;
-
+    [SerializeField]
+    GameObject m_Coin;
     private void Start()
     {
         m_AB = m_FastTextBoss.GetComponentInChildren<ApproachBoss>();
@@ -59,7 +67,6 @@ public class BossManager : MonoBehaviour
         {
             Debug.LogError("アタッチしてください",this);
         }
-
         m_FastText.SetActive(false);
     }
 
@@ -72,20 +79,24 @@ public class BossManager : MonoBehaviour
             //移動完了したら会話開始
             if (m_AB.m_ApFlag)
             {
+                m_Move.Stop();
                 m_FastText.SetActive(true);
             }
         }
         //会話終わり間際咆哮開始
         if(m_STM.m_ContactFlag == true&&!m_CSFlag)
         {
+            m_Houkou.enabled = true;
             if (!m_RoarFlag)
             {
+                
                 m_RoarFlag = true;
                 Animator anim = m_FastTextBoss.GetComponentInChildren<Animator>();
                 anim.SetTrigger("Roar");
                 StartCoroutine(EndText());
             }
             StartCoroutine(m_CS.Shake(0.5f, 0.1f,0.78f));
+            m_Houkou.Stop();
         }
 
         //怒り状態の変化開始
@@ -101,7 +112,10 @@ public class BossManager : MonoBehaviour
             }
 
         }
-
+        if(m_BossDie)
+        {
+            m_Coin.SetActive(true);
+        }
     }
 
 

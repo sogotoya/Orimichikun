@@ -25,6 +25,7 @@ public class Boss_Houkou : State<AITester_StateMachine>
         owner.m_Animator.SetBool("Houkou", true);
         //ì{ÇËèÛë‘true
         owner.m_BM.m_BossAnger = true;
+        owner.StartCoroutine(SoundStart());
         owner.StartCoroutine(PunpunRoll());
     }
 
@@ -53,5 +54,12 @@ public class Boss_Houkou : State<AITester_StateMachine>
         owner.ChangeState(AIState_ActionType.Roll);
         Debug.Log("í‚é~íÜ");
 
+    }
+
+    IEnumerator SoundStart()
+    {
+        yield return new WaitForSeconds(0.5f);
+        owner.m_Houkou.Stop();
+        owner.m_Houkou.Play();
     }
 }

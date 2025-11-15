@@ -11,6 +11,14 @@ public class Boss_Die : State<AITester_StateMachine>
     float m_Timer = 0f;
     public override void Enter()
     {
+        owner.m_GC.m_BossDie=true;
+        owner.m_Hari.Stop();
+        owner.m_Houkou.Stop();
+        owner.m_Jump.Stop();
+        owner.m_Move.Stop();
+        owner.m_Spown.Stop();
+        owner.m_BoxCollider.enabled = false;
+        owner.m_playershoot.enabled = false;  
         Debug.Log("DieŠJŽn");
         owner.m_Animator.SetTrigger("Die");
         owner.StartCoroutine(OnCoin());
@@ -33,6 +41,8 @@ public class Boss_Die : State<AITester_StateMachine>
     public IEnumerator OnCoin()
     {
         yield return new WaitForSeconds(1f);
-        owner.m_Coin.SetActive(true);
+        owner.m_Die.Play();
+        owner.m_BoxCollider.enabled = false;
+        owner.m_BM.m_BossDie=true ;
     }
 }

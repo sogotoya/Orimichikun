@@ -24,7 +24,8 @@ public class Boss_JumpAttack : State<AITester_StateMachine>
         owner.m_Animator.SetTrigger("Jump");
         m_Flag=false;
         m_CntFlag = false;
-
+        owner.m_Jump.Stop();
+        owner.m_Jump.Play();
         owner.StartCoroutine(JumpA());
         owner.StartCoroutine(owner.m_JP.JumpAttackStart(owner.gameObject, result =>
         {

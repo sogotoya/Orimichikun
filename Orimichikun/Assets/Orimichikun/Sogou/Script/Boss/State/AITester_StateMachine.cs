@@ -49,8 +49,17 @@ namespace StateMachineAI
         public BossManager m_BM;
         public ReturnToStartPosition m_RTSP;
         public JumpPosition m_JP;
+        public GameClear m_GC;
 
-        public GameObject m_Coin;
+        public AudioSource m_Die;
+        public AudioSource m_Hari;
+        public AudioSource m_Houkou;
+        public AudioSource m_Jump;
+        public AudioSource m_Spown;
+        public AudioSource m_Move;
+        public BoxCollider2D m_BoxCollider;
+
+        public playershoot m_playershoot;
         /// <summary>
         /// クラス名を元にステートを生成して追加する
         /// </summary>
@@ -134,9 +143,10 @@ namespace StateMachineAI
             m_BM.m_AITSM = this.gameObject.GetComponent<AITester_StateMachine>();
             m_RTSP = GameObject.Find("ReturnToStartPosition").GetComponent<ReturnToStartPosition>();
             m_JP = GameObject.Find("JumpPosition").GetComponent<JumpPosition>();
+            m_GC = GameObject.Find("GameClearEnemy").GetComponent<GameClear>();
 
-            m_Coin = GameObject.Find("UiCoin_1");
-            m_Coin.SetActive(false);
+
+            m_playershoot = GameObject.Find("プレイヤ-").GetComponent<playershoot>();
 
             m_MaxHP = m_HP;
             Debug.Log("生成完了");

@@ -8,12 +8,13 @@ public class Boss_Spown : State<AITester_StateMachine>
 {
     public Boss_Spown(AITester_StateMachine owner) : base(owner) { }
 
-    float m_Timer=0f;
+    float m_Timer = 0f;
 
     public override void Enter()
     {
         Debug.Log("SpownŠJŽn");
         owner.m_Animator.SetTrigger("Houkou");
+        owner.StartCoroutine(SoundStart());
         owner.StartCoroutine(SpownRandom());
         owner.StartCoroutine(CntChange());
     }
@@ -53,5 +54,10 @@ public class Boss_Spown : State<AITester_StateMachine>
         owner.ChangeState(AIState_ActionType.JumpAttack);
         yield return null;
     }
-
+    IEnumerator SoundStart()
+    {
+        yield return new WaitForSeconds(0.5f);
+        owner.m_Spown.Stop();
+        owner.m_Spown.Play();
+    }
 }

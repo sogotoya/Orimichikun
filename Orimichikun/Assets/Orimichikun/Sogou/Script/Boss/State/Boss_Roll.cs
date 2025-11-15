@@ -18,6 +18,7 @@ public class Boss_Roll : State<AITester_StateMachine>
         }
         Debug.Log("回転スタート");
         m_Flag = false;
+        owner.StartCoroutine(SoundStart());
         if (!owner.m_IsAnger)
         {
             owner.m_Animator.SetTrigger("Roll_1");
@@ -92,5 +93,12 @@ public class Boss_Roll : State<AITester_StateMachine>
 
         yield return new WaitForSeconds(3f);
         m_Punpun = true;
+    }
+
+    IEnumerator SoundStart()
+    {
+        yield return new WaitForSeconds(1f);
+        owner.m_Move.Stop();
+        owner.m_Move.Play();
     }
 }

@@ -18,6 +18,8 @@ public class Boss_Hari : State<AITester_StateMachine>
             owner.ChangeState(AIState_ActionType.Die);
         }
         Debug.Log("針飛ばすスタート");
+        owner.m_Hari.Stop();
+        owner.m_Hari.Play();
         owner.m_Animator.SetTrigger("Hari");
 
         owner.StartCoroutine(StartShot());
