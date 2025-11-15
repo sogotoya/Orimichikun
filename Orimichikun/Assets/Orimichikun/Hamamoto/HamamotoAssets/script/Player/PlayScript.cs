@@ -62,6 +62,9 @@ public class PlayScript : MonoBehaviour
     private Vector3 m_LastSavePosition;
     public bool m_TPPush = false;
 
+    //復活中フラグToya
+    private bool m_IsRespawning = false;
+
     private void Start()
     {
         m_LastSavePosition = transform.position;
@@ -80,6 +83,9 @@ public class PlayScript : MonoBehaviour
     }
     private void Update()
     {
+        if (m_IsRespawning) return;
+
+
         // 入力取得
         moveX = Input.GetAxisRaw("Horizontal");
 
@@ -296,6 +302,8 @@ public class PlayScript : MonoBehaviour
     }
     public void PlayerSpawn()
     {
+        m_IsRespawning = true;
+
         string currentScene = SceneManager.GetActiveScene().name;
 
         // BossStage なら Stage に戻す
@@ -304,6 +312,18 @@ public class PlayScript : MonoBehaviour
             // 状態を即Idleにしておく
             CurrentState = State.Idle;
             m_image.SetActive(false);
+
+
+            // 通常のセーブポイントリスポーン
+            m_image.SetActive(false);
+            transform.position = m_LastSavePosition;
+            foreach (var point in m_RespawnPoint)
+                point?.Respawn();
+
+            m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+            m_Rigidbody.velocity = Vector2.zero;
+            CurrentState = State.Idle;
+            m_Parameta.m_Hp = m_Parameta.m_MaxHp;
 
             SceneManager.LoadScene("Stage");
             return;
@@ -319,6 +339,8 @@ public class PlayScript : MonoBehaviour
         m_Rigidbody.velocity = Vector2.zero;
         CurrentState = State.Idle;
         m_Parameta.m_Hp = m_Parameta.m_MaxHp;
+
+        m_IsRespawning = false;
 
         Debug.Log("リスポーン！");
     }
