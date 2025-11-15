@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,37 +10,17 @@ public class HPBar : MonoBehaviour
 
     void Start()
     {
-        m_Hp = ChangeSenseHP.m_Instance.PlayerHP;
-        // ƒXƒ‰ƒCƒ_[‚ğæ“¾‚·‚é
+        // ã‚¹ãƒ©ã‚¤ãƒ€ãƒ¼å–å¾—
         m_Slider = GameObject.Find("Slider").GetComponent<Slider>();
-        if(m_Parameta2 == null )
-        {
-            Debug.Log("Parameta2DƒAƒ^ƒbƒ`‚³‚ê‚Ä‚Ü‚¹‚ñ");
-        }
+
+        // ã‚¹ã‚¿ãƒ¼ãƒˆæ™‚ã«ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼HPã‚’ã‚»ãƒƒãƒˆ
+        m_Slider.maxValue = m_Parameta2.m_MaxHp;
+        m_Slider.value = m_Parameta2.m_Hp;
     }
 
-    float m_Hp = 0;
-    bool m_Switch = false;
     void Update()
     {
-        if ((!m_Switch))
-        {
-            // HPã¸
-            m_Hp += 0.003f;
-            if (m_Hp > 1)
-            {
-                m_Switch = true;
-                m_Slider.maxValue = m_Parameta2.m_MaxHp;
-                m_Slider.value = m_Parameta2.m_Hp;
-            }
-
-            // HPƒQ[ƒW‚É’l‚ğİ’è
-            m_Slider.value = m_Hp;
-        }
-        else
-        {
-            m_Slider.value = m_Parameta2.m_Hp;
-        }
+        // å¸¸ã«æœ€æ–°HPã‚’è¡¨ç¤º
+        m_Slider.value = m_Parameta2.m_Hp;
     }
-
 }
