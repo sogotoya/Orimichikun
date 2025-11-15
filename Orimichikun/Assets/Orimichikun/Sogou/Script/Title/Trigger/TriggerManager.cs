@@ -12,8 +12,10 @@ public class TriggerManager : MonoBehaviour
 
     //ダブルジャンプ表示
     public bool m_IsDoubleJump;
-
+    //弾表示
     public bool m_IsAttackTama;
+    //背景動き開始
+    public bool m_IsMoveTitle;
     //敵表示
     public bool m_IsEnemy;
     [Header("敵の出現位置とプレハブ")]
@@ -35,6 +37,17 @@ public class TriggerManager : MonoBehaviour
     GameObject m_GhostAttackObj;
     [SerializeField]
     GameObject m_GhostTama;
+    [Header("背景を動かすオブジェクト")]
+    [SerializeField]
+    GameObject m_HaikeiMoveObj;
+    [SerializeField]
+    PlayScript m_PS;
+    [SerializeField]
+    playershoot m_PST;
+    [SerializeField]
+    Animator m_Animator;
+    [SerializeField]
+    GameObject m_Title;
     private void Update()
     {
         //範囲内にいるなら表示・範囲内にいなければ非表示
@@ -72,6 +85,16 @@ public class TriggerManager : MonoBehaviour
                 EnemySpown();
             }
         }
+
+        if(m_IsMoveTitle)
+        {
+            m_HaikeiMoveObj.SetActive(true);
+            m_PS.enabled = false;
+            m_PST.enabled = false;
+            m_Animator.SetTrigger("TitleMove");
+            m_Title.SetActive(true);
+        }
+       
     }
 
 
