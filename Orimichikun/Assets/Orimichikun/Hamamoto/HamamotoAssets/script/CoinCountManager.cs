@@ -126,7 +126,8 @@ public class CoinCountManager : MonoBehaviour
         {
             m_Source.PlayOneShot(m_RecoverySE);
             m_PlayerParameta.m_Hp += m_HPRecovery;
-            m_RecoveryCount -= 1;
+            ChangeSenseHP.m_Instance.PlayerHP+=m_HPRecovery; 
+           m_RecoveryCount -= 1;
             ChangeSenseCoin.m_InstanceCoin.CS_RecoveryCount = m_RecoveryCount;
             UpdateRecoveryText();
         }

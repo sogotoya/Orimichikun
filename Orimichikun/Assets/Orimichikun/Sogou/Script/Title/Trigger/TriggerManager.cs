@@ -18,6 +18,8 @@ public class TriggerManager : MonoBehaviour
     public bool m_IsMoveTitle;
     //敵表示
     public bool m_IsEnemy;
+    //タイトルからの移行フラグ
+    public bool m_IsTitle=false;
     [Header("敵の出現位置とプレハブ")]
     [SerializeField]
     GameObject m_Enemy;
@@ -93,6 +95,7 @@ public class TriggerManager : MonoBehaviour
             m_PST.enabled = false;
             m_Animator.SetTrigger("TitleMove");
             m_Title.SetActive(true);
+            m_IsTitle = true;
         }
        
     }
