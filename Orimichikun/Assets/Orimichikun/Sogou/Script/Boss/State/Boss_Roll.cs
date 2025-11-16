@@ -18,6 +18,7 @@ public class Boss_Roll : State<AITester_StateMachine>
         }
         Debug.Log("回転スタート");
         m_Flag = false;
+        m_Punpun = false;
         owner.StartCoroutine(SoundStart());
         if (!owner.m_IsAnger)
         {
@@ -55,8 +56,10 @@ public class Boss_Roll : State<AITester_StateMachine>
         else//怒り状態なら
         {
             Debug.Log("こなぷんぷん");
-            if(!m_Punpun)owner.StartCoroutine (PunpunWait());
-
+            if (!m_Punpun)
+            {
+                owner.StartCoroutine(PunpunWait());
+            }
             owner.m_FR.m_MoveSpeed = 5;
             if (owner.m_FR.NormalRoll(owner.gameObject, 2) == 100)
             {
@@ -93,6 +96,7 @@ public class Boss_Roll : State<AITester_StateMachine>
 
         yield return new WaitForSeconds(3f);
         m_Punpun = true;
+        yield return null;
     }
 
     IEnumerator SoundStart()
