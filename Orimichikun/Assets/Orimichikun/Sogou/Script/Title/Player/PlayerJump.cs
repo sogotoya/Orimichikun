@@ -20,7 +20,7 @@ public class PlayerJump : MonoBehaviour
         if (!m_Jumping)
         {
             //spaceキーを押したらジャンプする
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown("joystick button 2") || Input.GetKeyDown("joystick button 0") )
             {
                 float jumpPower = 4.0f;
                 m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, jumpPower);
