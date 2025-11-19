@@ -271,7 +271,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 105297744}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b3d2ade5bbfcef48977c4bedce4daa2, type: 3}
   m_Name: 
@@ -280,6 +280,7 @@ MonoBehaviour:
   m_TextUI: {fileID: 1186096741}
   m_Scenario:
   - "\u4FFA\u306E\u5192\u967A\u306E\u8A18\u5FF5\u3060\u3041!? \u306A\u3089\u3070\u53D6\u308A\u8FD4\u3057\u3066\u307F\u308D\u3001\u5C0F\u866B\u3088\u2026\u2026"
+  m_IsComentStart: 0
 --- !u!224 &105297746
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4314,8 +4315,9 @@ MonoBehaviour:
   m_TextSpeed: 0.1
   m_TextUI: {fileID: 1186096741}
   m_Scenario:
-  - "\u305D\u306E\u30B3\u30A4\u30F3\u2026\u6211\u304C\u5DE3\u306E\u5B9D\u3060\u2026\u2026
-    \u8FD4\u3057\u3066\u3082\u3089\u304A\u3046\u304B\u2026\u2026"
+  - "\u305D\u306E\u30B3\u30A4\u30F3\u2026\u6211\u304C\u5DE3\u306E\u5B9D\u3060\u2026\u2026"
+  - "\u8FD4\u3057\u3066\u3082\u3089\u304A\u3046\u304B\u2026\u2026"
+  m_IsComentStart: 0
 --- !u!224 &1593772489
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4587,8 +4589,8 @@ MonoBehaviour:
   m_CameraShake: {fileID: 1152278008}
   m_Player: {fileID: 1852336418}
   m_Boss: {fileID: 688478184}
-  m_FirstCM: {fileID: 0}
-  m_SecondCM: {fileID: 0}
+  m_FirstCM: {fileID: 1593772488}
+  m_SecondCM: {fileID: 105297745}
   m_MoveAS: {fileID: 201478917}
   m_IsCoin: 0
 --- !u!4 &1692556244
