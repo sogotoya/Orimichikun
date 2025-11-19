@@ -1,3 +1,4 @@
+//１文字づつ流れていく処理
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,10 +22,10 @@ public class CommentManager : MonoBehaviour
     [Tooltip("文字を流している最中かどうか")]
     bool m_IsPlaying = false;
 
-    private void Start()
-    {
-        StartScenario();
-    }
+    //private void Start()
+    //{
+        //StartScenario();
+    //}
     private void Update()
     {
         //クリックされたら次のテキストへ
@@ -66,13 +67,14 @@ public class CommentManager : MonoBehaviour
     /// <summary>
     /// テキスト呼び出し関数
     /// </summary>
-    public void StartScenario()
+    public bool StartScenario()
     {
         m_TextUI.enabled = true;
         //0番目のセリフからスタート
         m_CurrentIndex = 0;
         //表示開始
         StartCoroutine(DrawText(m_Scenario[m_CurrentIndex]));
+        return true;
     }
 
     /// <summary>
