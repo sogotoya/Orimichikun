@@ -50,6 +50,7 @@ namespace StateMachineAI
         public ReturnToStartPosition m_RTSP;
         public JumpPosition m_JP;
         public GameClear m_GC;
+        public SpownWarning m_SW;
 
         public AudioSource m_Die;
         public AudioSource m_Hari;
@@ -144,7 +145,7 @@ namespace StateMachineAI
             m_RTSP = GameObject.Find("ReturnToStartPosition").GetComponent<ReturnToStartPosition>();
             m_JP = GameObject.Find("JumpPosition").GetComponent<JumpPosition>();
             m_GC = GameObject.Find("GameClearEnemy").GetComponent<GameClear>();
-
+            m_SW = GameObject.Find("SpownWarning").GetComponent<SpownWarning>();
 
             m_playershoot = GameObject.Find("プレイヤ-").GetComponent<playershoot>();
 

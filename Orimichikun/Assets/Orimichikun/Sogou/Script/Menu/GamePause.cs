@@ -9,7 +9,8 @@ public class GamePause : MonoBehaviour
     GameObject m_PauseOnobj;
     [SerializeField]
     GameObject m_PauseOffobj;
-
+    [SerializeField]
+    AudioSource m_PauseAS;
     [Tooltip("ˆêŽž’âŽ~’†‚©‚Ç‚¤‚©”»’èƒtƒ‰ƒO")]
     bool m_IsPause=false;
 
@@ -41,6 +42,8 @@ public class GamePause : MonoBehaviour
     public void OnPause()
     {
         Time.timeScale = 0;
+        m_PauseAS.Stop();
+        m_PauseAS.Play();
         m_PauseOnobj.SetActive(false);
         m_PauseOffobj.SetActive(true);
     }
@@ -52,6 +55,8 @@ public class GamePause : MonoBehaviour
     public void OffPause()
     {
         Time.timeScale = 1;
+        m_PauseAS.Stop();
+        m_PauseAS.Play();
         m_PauseOnobj.SetActive(true);
         m_PauseOffobj.SetActive(false);
     }
