@@ -20,12 +20,21 @@ public class BossFastManager : MonoBehaviour
     GameObject m_Boss;
 
     [SerializeField]
+    CommentManager m_FirstCM;
+    [SerializeField]
+    CommentManager m_SecondCM;
+
+
+    [SerializeField]
     AudioSource m_MoveAS;
     //繰り返し呼ばれる対策
     bool m_ShakeFlag;
 
     [Tooltip("最初にプレイヤーが取得するコイン")]
     public bool m_IsCoin=false;
+
+    [Tooltip("最初にボスがプレイヤーに話しかけるテキスト")]
+    bool m_IsFirstText = false;
 
     void Start()
     {
@@ -34,9 +43,16 @@ public class BossFastManager : MonoBehaviour
 
     void Update()
     {
+        //最初のコインがとられた
         if(m_IsCoin)
         {
             MoveStart();
+        }
+
+        //最初のテキスト表示
+        if(m_IsFirstText)
+        {
+            m_FirstCM.StartScenario();
         }
     }
 
@@ -68,6 +84,8 @@ public class BossFastManager : MonoBehaviour
             m_MoveAS.enabled = false;
             //呼び出し停止
             m_IsCoin = false;
+
+            m_IsFirstText=true;
         }
     }
 
