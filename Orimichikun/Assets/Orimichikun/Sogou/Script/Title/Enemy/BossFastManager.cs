@@ -48,12 +48,6 @@ public class BossFastManager : MonoBehaviour
         {
             MoveStart();
         }
-
-        //最初のテキスト表示
-        if(m_IsFirstText)
-        {
-            m_FirstCM.StartScenario();
-        }
     }
 
     /// <summary>
@@ -84,8 +78,8 @@ public class BossFastManager : MonoBehaviour
             m_MoveAS.enabled = false;
             //呼び出し停止
             m_IsCoin = false;
-
-            m_IsFirstText=true;
+            //会話開始
+            m_FirstCM.StartScenario();
         }
     }
 

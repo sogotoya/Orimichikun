@@ -22,16 +22,21 @@ public class CommentManager : MonoBehaviour
     [Tooltip("文字を流している最中かどうか")]
     bool m_IsPlaying = false;
 
+    [Tooltip("コメントが開始されたかどうか")]
+    public bool m_IsComentStart = false;
     //private void Start()
     //{
         //StartScenario();
     //}
     private void Update()
     {
-        //クリックされたら次のテキストへ
-        if (Input.GetMouseButtonDown(0))
+        if(m_IsComentStart)
         {
-            OnClick();
+            //クリックされたら次のテキストへ
+            if (Input.GetMouseButtonDown(0))
+            {
+                OnClick();
+            }
         }
     }
 
@@ -61,6 +66,8 @@ public class CommentManager : MonoBehaviour
         {
             Debug.Log("会話終了しました。");
             m_TextUI.enabled = false;
+            //コメントクリックスキップ停止
+            m_IsComentStart = true;
         }
     }
 
@@ -69,6 +76,9 @@ public class CommentManager : MonoBehaviour
     /// </summary>
     public bool StartScenario()
     {
+        //コメントクリックスキップできるように
+        m_IsComentStart=true;
+
         m_TextUI.enabled = true;
         //0番目のセリフからスタート
         m_CurrentIndex = 0;
