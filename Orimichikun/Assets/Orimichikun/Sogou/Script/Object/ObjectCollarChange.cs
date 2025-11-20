@@ -20,11 +20,19 @@ public class ObjectCollarChange : MonoBehaviour
     //{
     //    ObjectCollarChangeStart();
     //}
+
+    /// <summary>
+    /// 色を徐々に変える処理を発動させる関数(1回呼び出せばOK)
+    /// </summary>
     public  void ObjectCollarChangeStart()
     {
         StartCoroutine(ChangeObjCollar());
     }
 
+    /// <summary>
+    /// 徐々に色を変化させる処理
+    /// </summary>
+    /// <returns></returns>
     IEnumerator ChangeObjCollar()
     {
         float timer = 0;
