@@ -27,7 +27,8 @@ public class JumpPosition : MonoBehaviour
 
     bool m_Flag;
     //同時に複数コルーチン起動しないよう制御
-    bool m_IsJumping = false; 
+    bool m_IsJumping = false;
+
 
     public IEnumerator JumpAttackStart(GameObject obj,System.Action<int>callback)
     {

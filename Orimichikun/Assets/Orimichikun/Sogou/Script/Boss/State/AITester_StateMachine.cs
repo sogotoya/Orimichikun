@@ -50,6 +50,8 @@ namespace StateMachineAI
         public ReturnToStartPosition m_RTSP;
         public JumpPosition m_JP;
         public GameClear m_GC;
+        public ZoomObject m_ZO;
+
 
         public AudioSource m_Die;
         public AudioSource m_Hari;
@@ -144,7 +146,8 @@ namespace StateMachineAI
             m_RTSP = GameObject.Find("ReturnToStartPosition").GetComponent<ReturnToStartPosition>();
             m_JP = GameObject.Find("JumpPosition").GetComponent<JumpPosition>();
             m_GC = GameObject.Find("GameClearEnemy").GetComponent<GameClear>();
-
+            m_ZO = GameObject.Find("ZoomObjectEnemy").GetComponent<ZoomObject>();
+            m_ZO.m_ZoomObj = this.gameObject;
 
             m_playershoot = GameObject.Find("プレイヤ-").GetComponent<playershoot>();
 

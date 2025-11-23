@@ -22,6 +22,8 @@ public class Boss_Houkou : State<AITester_StateMachine>
         }
         Debug.Log("Houkou開始");
         owner.m_IsAnger = true;
+        //カメラズームON
+        owner.m_ZO.m_IsZoomFlag = true;
         owner.m_Animator.SetBool("Houkou", true);
         //怒り状態true
         owner.m_BM.m_BossAnger = true;
@@ -51,7 +53,10 @@ public class Boss_Houkou : State<AITester_StateMachine>
     IEnumerator PunpunRoll()
     {
         yield return new WaitForSeconds(3.0f);
-        owner.ChangeState(AIState_ActionType.Roll);
+        //カメラズームOFF
+        owner.m_ZO.m_IsZoomFlag = false;
+        yield return new WaitForSeconds(1.5f);
+        owner.ChangeState(AIState_ActionType.JumpAttack);
         Debug.Log("停止中");
 
     }

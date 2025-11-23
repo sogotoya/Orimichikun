@@ -13,6 +13,7 @@ public class Boss_JumpAttack : State<AITester_StateMachine>
 
     bool m_Flag = false;
     bool m_CntFlag = false;
+
     public override void Enter()
     {
         //HP‚ª0‚É‚È‚Á‚Ä‚¢‚é‚©‚Ì”»’è
@@ -27,6 +28,7 @@ public class Boss_JumpAttack : State<AITester_StateMachine>
         owner.m_Jump.Stop();
         owner.m_Jump.Play();
         owner.StartCoroutine(JumpA());
+
         owner.StartCoroutine(owner.m_JP.JumpAttackStart(owner.gameObject, result =>
         {
             if (result == 100 && !m_CntFlag)

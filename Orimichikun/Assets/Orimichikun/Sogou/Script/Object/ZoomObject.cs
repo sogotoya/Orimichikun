@@ -6,7 +6,7 @@ public class ZoomObject : MonoBehaviour
 {
     [SerializeField]
     [Header("ズームしたいオブジェクト")]
-    GameObject m_ZoomObj;
+    public GameObject m_ZoomObj;
 
     [SerializeField]
     [Header("ズームするカメラ")]
