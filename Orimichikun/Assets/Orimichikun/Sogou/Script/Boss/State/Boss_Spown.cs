@@ -14,6 +14,7 @@ public class Boss_Spown : State<AITester_StateMachine>
     {
         Debug.Log("Spown開始");
         owner.m_Animator.SetTrigger("Houkou");
+        owner.m_SW.m_IsSpownWarning = true;//危険マークの表示ON
         owner.StartCoroutine(SoundStart());
         owner.StartCoroutine(SpownRandom());
         owner.StartCoroutine(CntChange());
@@ -40,20 +41,31 @@ public class Boss_Spown : State<AITester_StateMachine>
         Debug.Log("Spown終了");
     }
 
-
+    /// <summary>
+    /// スポーン生成
+    /// </summary>
+    /// <returns></returns>
     IEnumerator SpownRandom()
     {
         yield return new WaitForSeconds(1.5f);
         owner.m_SM.RandomSpown();
         yield return null;
+        owner.m_SW.m_IsSpownWarning = false;//危険マークの表示OFF
     }
-
+    /// <summary>
+    /// 時間経過でステート変化
+    /// </summary>
+    /// <returns></returns>
     IEnumerator CntChange()
     {
         yield return new WaitForSeconds(5.5f);
         owner.ChangeState(AIState_ActionType.JumpAttack);
         yield return null;
     }
+    /// <summary>
+    /// サウンドの開始
+    /// </summary>
+    /// <returns></returns>
     IEnumerator SoundStart()
     {
         yield return new WaitForSeconds(0.5f);
