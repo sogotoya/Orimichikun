@@ -17,8 +17,7 @@ public class Boss_Die : State<AITester_StateMachine>
         owner.m_Jump.Stop();
         owner.m_Move.Stop();
         owner.m_Spown.Stop();
-        owner.m_BoxCollider.enabled = false;
-        owner.m_playershoot.enabled = false;  
+        owner.m_BoxCollider.enabled = false; 
         Debug.Log("DieŠJŽn");
         owner.m_Animator.SetTrigger("Die");
         owner.StartCoroutine(OnCoin());

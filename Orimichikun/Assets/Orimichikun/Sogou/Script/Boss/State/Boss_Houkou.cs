@@ -21,6 +21,11 @@ public class Boss_Houkou : State<AITester_StateMachine>
             owner.ChangeState(AIState_ActionType.Die);
         }
         Debug.Log("Houkou開始");
+
+        //敵モブ削除
+        owner.m_BM.m_BossDie = true;
+        owner.m_BM.m_BossDie = false;
+
         owner.m_IsAnger = true;
         //カメラズームON
         owner.m_ZO.m_IsZoomFlag = true;
@@ -43,6 +48,7 @@ public class Boss_Houkou : State<AITester_StateMachine>
 
     public override void Exit()
     {
+        owner.StopAllCoroutines();
         Debug.Log("Houkou終了");
         owner.m_Animator.SetBool("Houkou", false);
     }
@@ -56,7 +62,7 @@ public class Boss_Houkou : State<AITester_StateMachine>
         //カメラズームOFF
         owner.m_ZO.m_IsZoomFlag = false;
         yield return new WaitForSeconds(1.5f);
-        owner.ChangeState(AIState_ActionType.JumpAttack);
+        owner.ChangeState(AIState_ActionType.Kaminari);
         Debug.Log("停止中");
 
     }

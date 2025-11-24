@@ -18,6 +18,7 @@ namespace StateMachineAI
         Hari,
         JumpAttack,
         Houkou,
+        Kaminari,
         Die,
     }
 
@@ -52,6 +53,8 @@ namespace StateMachineAI
         public GameClear m_GC;
         public ZoomObject m_ZO;
         public SpownWarning m_SW;
+        public Thunder_Position m_TP;
+
 
         public AudioSource m_Die;
         public AudioSource m_Hari;
@@ -61,7 +64,6 @@ namespace StateMachineAI
         public AudioSource m_Move;
         public BoxCollider2D m_BoxCollider;
 
-        public playershoot m_playershoot;
         /// <summary>
         /// クラス名を元にステートを生成して追加する
         /// </summary>
@@ -149,9 +151,8 @@ namespace StateMachineAI
             m_ZO = GameObject.Find("ZoomObjectEnemy").GetComponent<ZoomObject>();
             m_ZO.m_ZoomObj = this.gameObject;
             m_SW = GameObject.Find("SpownWarning").GetComponent<SpownWarning>();
+            m_TP = GameObject.Find("ThunderAttackPosition").GetComponent<Thunder_Position>();
 
-
-            m_playershoot = GameObject.Find("プレイヤ-").GetComponent<playershoot>();
 
             m_MaxHP = m_HP;
             Debug.Log("生成完了");

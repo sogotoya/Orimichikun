@@ -75,6 +75,7 @@ public class Boss_Roll : State<AITester_StateMachine>
 
     public override void Exit()
     {
+        owner.StopAllCoroutines();
         Debug.Log("‰ñ“]I—¹");
     }
 

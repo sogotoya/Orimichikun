@@ -33,10 +33,6 @@ public class BossManager : MonoBehaviour
     CameraShake m_CS_Boss;
     [SerializeField]
     BossCollarChange m_BCC;
-    [SerializeField]
-    PlayScript m_PS;
-    [SerializeField]
-    playershoot m_PShoot;
     [Header("É{ÉX")]
     public GameObject m_BossObj;
     public AITester_StateMachine m_AITSM;

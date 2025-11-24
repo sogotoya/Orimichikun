@@ -58,6 +58,7 @@ public class Boss_JumpAttack : State<AITester_StateMachine>
 
     public override void Exit()
     {
+        owner.StopAllCoroutines();
         Debug.Log("JumpAttackèIóπ");
     }
     /// <summary>

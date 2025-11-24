@@ -38,6 +38,8 @@ public class Boss_Spown : State<AITester_StateMachine>
 
     public override void Exit()
     {
+        owner.m_SW.m_IsSpownWarning = false;
+        owner.StopAllCoroutines();
         Debug.Log("SpownèIóπ");
     }
 

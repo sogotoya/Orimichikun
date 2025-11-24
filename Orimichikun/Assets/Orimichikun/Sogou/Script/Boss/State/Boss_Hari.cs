@@ -51,6 +51,7 @@ public class Boss_Hari : State<AITester_StateMachine>
 
     public override void Exit()
     {
+        owner.StopAllCoroutines();
         Debug.Log("êjîÚÇŒÇ∑èIóπ");
     }
     IEnumerator StartShot()
