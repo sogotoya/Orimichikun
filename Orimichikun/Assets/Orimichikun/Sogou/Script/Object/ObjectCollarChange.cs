@@ -16,6 +16,8 @@ public class ObjectCollarChange : MonoBehaviour
     [Header("変化に必要な時間")]
     [SerializeField]
     float m_CollarTimer=1.5f;
+
+    Color m_ChangeColor;
     //private void Start()
     //{
     //    ObjectCollarChangeStart();
@@ -26,6 +28,12 @@ public class ObjectCollarChange : MonoBehaviour
     /// </summary>
     public  void ObjectCollarChangeStart()
     {
+        m_ChangeColor=m_Color;
+        StartCoroutine(ChangeObjCollar());
+    }
+    public void ObjectCollarResetChangeStart()
+    {
+        m_ChangeColor = Color.white;
         StartCoroutine(ChangeObjCollar());
     }
 
@@ -54,7 +62,7 @@ public class ObjectCollarChange : MonoBehaviour
             for (int i = 0; i < m_HaikeiObj.Length; i++)
             {
                 SpriteRenderer sr = m_HaikeiObj[i].GetComponent<SpriteRenderer>();
-                sr.color = Color.Lerp(startcolors[i], m_Color, t);
+                sr.color = Color.Lerp(startcolors[i], m_ChangeColor, t);
             }
             //無限ループ対策 1フレイム待つ
             yield return null;

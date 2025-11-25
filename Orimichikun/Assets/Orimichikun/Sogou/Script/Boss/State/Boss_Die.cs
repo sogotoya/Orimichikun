@@ -15,6 +15,7 @@ public class Boss_Die : State<AITester_StateMachine>
         Debug.Log("Die開始");
         owner.m_ETM.EndBoss = () =>
         {
+            owner.m_OCC.ObjectCollarResetChangeStart();
             //カメラズームON
             owner.m_ZO.m_IsZoomFlag = true;
             owner.m_Animator.SetTrigger("Die");
@@ -22,6 +23,8 @@ public class Boss_Die : State<AITester_StateMachine>
 
         };
         owner.m_Animator.SetTrigger("Idle");
+
+     
 
         owner.m_GC.m_BossDie = true;
         owner.m_Hari.Stop();
@@ -35,8 +38,6 @@ public class Boss_Die : State<AITester_StateMachine>
 
         //操作停止
         owner.m_PCC.m_IsPSPlaying = true;
-
-
     }
 
     public override void Stay()
