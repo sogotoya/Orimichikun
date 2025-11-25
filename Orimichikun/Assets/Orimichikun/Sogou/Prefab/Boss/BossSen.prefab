@@ -917,14 +917,16 @@ MonoBehaviour:
   m_RTSP: {fileID: 0}
   m_JP: {fileID: 0}
   m_GC: {fileID: 0}
+  m_ZO: {fileID: 0}
+  m_SW: {fileID: 0}
+  m_TP: {fileID: 0}
   m_Die: {fileID: 7442892845025452129}
   m_Hari: {fileID: 1303757116263548564}
   m_Houkou: {fileID: 9058659716826304705}
   m_Jump: {fileID: 7243747894628092114}
   m_Spown: {fileID: 4888369755809800204}
   m_Move: {fileID: 1188016556674919102}
-  m_BoxCollider: {fileID: 3538429051422970341}
-  m_playershoot: {fileID: 0}
+  m_BoxColliderObj: {fileID: 1309919260370398477}
 --- !u!1 &7480892044073040376
 GameObject:
   m_ObjectHideFlags: 0

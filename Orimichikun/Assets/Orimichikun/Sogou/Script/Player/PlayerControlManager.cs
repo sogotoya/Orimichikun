@@ -11,7 +11,10 @@ public class PlayerControlManager : MonoBehaviour
     playershoot m_PS;
 
     [Header("操作可能判断フラグ")]
-    public bool m_IsPlaying = false;
+    public bool m_IsAllPlaying = false;
+    public bool m_IsSPPlaying = false;
+    public bool m_IsPSPlaying = false;
+
     private void Start()
     {
         if (m_SP == null || m_PS == null)
@@ -25,12 +28,20 @@ public class PlayerControlManager : MonoBehaviour
     private void Update()
     {
         //m_IsPlayingがtrueだったらON、falseならOFF
-        if (m_IsPlaying)
+        if (m_IsAllPlaying&&!m_IsSPPlaying&&!m_IsPSPlaying)
         {
             m_SP.enabled = true;
             m_PS.enabled = true;
         }
-        else
+        else if (m_IsAllPlaying&&m_IsSPPlaying)
+        {
+            m_SP.enabled=false;
+        }
+        else if (m_IsAllPlaying&&m_IsPSPlaying)
+        {
+            m_PS.enabled = false;
+        }
+        else if(!m_IsAllPlaying)
         {
             m_SP.enabled = false;
             m_PS.enabled = false;

@@ -85,7 +85,7 @@ public class BossManager : MonoBehaviour
             m_Houkou.enabled = true;
             if (!m_RoarFlag)
             {
-                
+
                 m_RoarFlag = true;
                 Animator anim = m_FastTextBoss.GetComponentInChildren<Animator>();
                 anim.SetTrigger("Roar");
@@ -110,7 +110,8 @@ public class BossManager : MonoBehaviour
         }
         if(m_BossDie)
         {
-            m_Coin.SetActive(true);
+
+            m_Coin?.SetActive(true);
         }
     }
 
@@ -121,7 +122,7 @@ public class BossManager : MonoBehaviour
         yield return new WaitForSeconds(2.0f);
         m_PH.Hight();
         m_CSFlag = true;
-        m_PCM.m_IsPlaying = true;
+        m_PCM.m_IsAllPlaying = true;
         m_BTM.m_BTMFlag = true;
         CameraManager cm=FindObjectOfType(typeof(CameraManager)).GetComponent<CameraManager>();
         cm.StageCameraChange();

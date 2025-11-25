@@ -54,6 +54,8 @@ namespace StateMachineAI
         public ZoomObject m_ZO;
         public SpownWarning m_SW;
         public Thunder_Position m_TP;
+        public ObjectCollarChange m_OCC;
+        public PlayerControlManager m_PCC;
 
 
         public AudioSource m_Die;
@@ -62,7 +64,7 @@ namespace StateMachineAI
         public AudioSource m_Jump;
         public AudioSource m_Spown;
         public AudioSource m_Move;
-        public BoxCollider2D m_BoxCollider;
+        public GameObject m_BoxColliderObj;
 
         /// <summary>
         /// クラス名を元にステートを生成して追加する
@@ -152,6 +154,8 @@ namespace StateMachineAI
             m_ZO.m_ZoomObj = this.gameObject;
             m_SW = GameObject.Find("SpownWarning").GetComponent<SpownWarning>();
             m_TP = GameObject.Find("ThunderAttackPosition").GetComponent<Thunder_Position>();
+            m_OCC = GameObject.Find("ObjectCollarChange").GetComponent<ObjectCollarChange>();
+            m_PCC = GameObject.Find("PlayerControlManager").GetComponent<PlayerControlManager>();
 
 
             m_MaxHP = m_HP;

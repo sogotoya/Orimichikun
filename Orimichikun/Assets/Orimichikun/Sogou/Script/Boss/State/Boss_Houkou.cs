@@ -27,9 +27,13 @@ public class Boss_Houkou : State<AITester_StateMachine>
         owner.m_BM.m_BossDie = false;
 
         owner.m_IsAnger = true;
+        //操作停止
+        owner.m_PCC.m_IsAllPlaying = false;
         //カメラズームON
         owner.m_ZO.m_IsZoomFlag = true;
         owner.m_Animator.SetBool("Houkou", true);
+        //背景色変化
+        owner.m_OCC.ObjectCollarChangeStart();
         //怒り状態true
         owner.m_BM.m_BossAnger = true;
         owner.StartCoroutine(SoundStart());
@@ -50,6 +54,8 @@ public class Boss_Houkou : State<AITester_StateMachine>
     {
         owner.StopAllCoroutines();
         Debug.Log("Houkou終了");
+        //操作開始
+        owner.m_PCC.m_IsAllPlaying = true;
         owner.m_Animator.SetBool("Houkou", false);
     }
     /// <summary>

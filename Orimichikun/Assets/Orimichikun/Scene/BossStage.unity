@@ -542,6 +542,7 @@ GameObject:
   - component: {fileID: 199924696}
   - component: {fileID: 199924698}
   - component: {fileID: 199924697}
+  - component: {fileID: 199924699}
   m_Layer: 0
   m_Name: "\u96F7\u3000\u5F53\u305F\u308A\u5224\u5B9A"
   m_TagString: Untagged
@@ -640,6 +641,20 @@ MonoBehaviour:
   m_MaxHp: 0
   m_InvincibleTime: 1
   m_Goal: {fileID: 0}
+--- !u!114 &199924699
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 199924694}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53d71990de07b9479bb19caab6716b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parameta: {fileID: 199924698}
+  m_Thunder: []
 --- !u!1001 &205814085
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -781,7 +796,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_SP: {fileID: 88940556}
   m_PS: {fileID: 88940550}
-  m_IsPlaying: 0
+  m_IsAllPlaying: 0
+  m_IsSPPlaying: 0
+  m_IsPSPlaying: 0
 --- !u!1 &225448318
 GameObject:
   m_ObjectHideFlags: 0
@@ -2309,6 +2326,7 @@ GameObject:
   - component: {fileID: 923298865}
   - component: {fileID: 923298864}
   - component: {fileID: 923298863}
+  - component: {fileID: 923298866}
   m_Layer: 0
   m_Name: "\u96F7\u3000\u5F53\u305F\u308A\u5224\u5B9A"
   m_TagString: Untagged
@@ -2407,6 +2425,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 6.7167664}
   m_EdgeRadius: 0
+--- !u!114 &923298866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 923298861}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53d71990de07b9479bb19caab6716b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parameta: {fileID: 923298864}
+  m_Thunder: []
 --- !u!4 &1013014063 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5256991042448131269, guid: 7e260cef67fd236478e0b0e9bfce082d, type: 3}
@@ -3400,7 +3432,7 @@ MonoBehaviour:
   - {fileID: 724568114}
   - {fileID: 1676268906}
   m_Color: {r: 0.5176471, g: 0.101960786, b: 0.101960786, a: 1}
-  m_CollarTimer: 1.5
+  m_CollarTimer: 3
 --- !u!1 &1410336281 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6826305227689032187, guid: 7e260cef67fd236478e0b0e9bfce082d, type: 3}
@@ -3792,6 +3824,7 @@ GameObject:
   - component: {fileID: 1465815576}
   - component: {fileID: 1465815575}
   - component: {fileID: 1465815574}
+  - component: {fileID: 1465815577}
   m_Layer: 0
   m_Name: "\u96F7\u3000\u5F53\u305F\u308A\u5224\u5B9A"
   m_TagString: Untagged
@@ -3890,6 +3923,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 6.7167664}
   m_EdgeRadius: 0
+--- !u!114 &1465815577
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1465815572}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53d71990de07b9479bb19caab6716b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parameta: {fileID: 1465815575}
+  m_Thunder: []
 --- !u!1 &1468760743
 GameObject:
   m_ObjectHideFlags: 0
@@ -4880,6 +4927,7 @@ GameObject:
   - component: {fileID: 1600555192}
   - component: {fileID: 1600555191}
   - component: {fileID: 1600555190}
+  - component: {fileID: 1600555193}
   m_Layer: 0
   m_Name: "\u96F7\u3000\u5F53\u305F\u308A\u5224\u5B9A"
   m_TagString: Untagged
@@ -4978,6 +5026,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 6.7167664}
   m_EdgeRadius: 0
+--- !u!114 &1600555193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1600555188}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d53d71990de07b9479bb19caab6716b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Parameta: {fileID: 1600555191}
+  m_Thunder: []
 --- !u!1 &1623180536 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3090241030164866113, guid: 7e260cef67fd236478e0b0e9bfce082d, type: 3}

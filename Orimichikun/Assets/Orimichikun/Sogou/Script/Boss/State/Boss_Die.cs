@@ -17,10 +17,12 @@ public class Boss_Die : State<AITester_StateMachine>
         owner.m_Jump.Stop();
         owner.m_Move.Stop();
         owner.m_Spown.Stop();
-        owner.m_BoxCollider.enabled = false; 
+        owner.m_BoxColliderObj.SetActive(false);
         Debug.Log("DieäJén");
         owner.m_Animator.SetTrigger("Die");
         owner.StartCoroutine(OnCoin());
+        //ëÄçÏí‚é~
+        owner.m_PCC.m_IsPSPlaying=true;
     }
 
     public override void Stay()
@@ -41,7 +43,7 @@ public class Boss_Die : State<AITester_StateMachine>
     {
         yield return new WaitForSeconds(1f);
         owner.m_Die.Play();
-        owner.m_BoxCollider.enabled = false;
+        owner.m_BoxColliderObj.SetActive(false);
         owner.m_BM.m_BossDie=true ;
     }
 }
