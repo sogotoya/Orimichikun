@@ -31,6 +31,7 @@ public class Boss_Houkou : State<AITester_StateMachine>
         owner.m_PCC.m_IsAllPlaying = false;
         //カメラズームON
         owner.m_ZO.m_IsZoomFlag = true;
+
         owner.m_Animator.SetBool("Houkou", true);
         //背景色変化
         owner.m_OCC.ObjectCollarChangeStart();
