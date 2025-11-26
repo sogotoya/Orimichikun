@@ -57,6 +57,7 @@ namespace StateMachineAI
         public ObjectCollarChange m_OCC;
         public PlayerControlManager m_PCC;
         public EndTextManager m_ETM;
+        public BGM m_BGM;
 
         public AudioSource m_Die;
         public AudioSource m_Hari;
@@ -159,6 +160,7 @@ namespace StateMachineAI
             m_OCC = GameObject.Find("ObjectCollarChange").GetComponent<ObjectCollarChange>();
             m_PCC = GameObject.Find("PlayerControlManager").GetComponent<PlayerControlManager>();
             m_ETM = GameObject.Find("EndTextManager").GetComponent<EndTextManager>();
+            m_BGM = GameObject.Find("BossBGM").GetComponent<BGM>();
 
             m_MaxHP = m_HP;
             Debug.Log("生成完了");

@@ -6,7 +6,7 @@ using UnityEngine;
 public class BGM : MonoBehaviour
 {
     public AITester_StateMachine m_test;
-    private AudioSource bgm;
+    public AudioSource bgm;
     public GameObject m_pl;
 
     void Start()

@@ -16,6 +16,7 @@ public class Boss_Die : State<AITester_StateMachine>
         owner.m_ETM.EndBoss = () =>
         {
             owner.m_OCC.ObjectCollarResetChangeStart();
+            owner.m_BGM.bgm.Stop();
             //ƒJƒƒ‰ƒY[ƒ€ON
             owner.m_ZO.m_IsZoomFlag = true;
             owner.m_Animator.SetTrigger("Die");
