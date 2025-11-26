@@ -140,7 +140,7 @@ namespace StateMachineAI
             m_Animator = GetComponent<Animator>();
             m_FR = GameObject.Find("Fast_Roll").GetComponent<Fast_Roll>();
             m_SR = GameObject.Find("Second_Roll").GetComponent<Second_Roll>();
-            m_SM = GameObject.Find("Spown").GetComponent<SummoningMinions>();
+            m_SM = GameObject.Find("SpownEnemy").GetComponent<SummoningMinions>();
             m_BCC = GameObject.Find("CollarChange").GetComponent<BossCollarChange>();
             m_BCC.m_SR = this.gameObject.GetComponent<SpriteRenderer>();
             m_BCC.m_SR=gameObject.GetComponent<SpriteRenderer>();
