@@ -649,7 +649,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4102725188693893409, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4295554499599561461, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_SortingOrder
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7343989752187795498, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
       propertyPath: m_Pivot.x
