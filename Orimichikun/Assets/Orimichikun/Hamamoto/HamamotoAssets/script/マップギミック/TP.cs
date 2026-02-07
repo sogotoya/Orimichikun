@@ -7,16 +7,18 @@ public class TP : MonoBehaviour
 {
     public AudioSource m_Bgm1;
     public AudioSource m_Bgm2;
-    [Header("‰æ‘œ")]
+    [Header("ç”»åƒ")]
     public GameObject m_Image;
     public GameObject m_Image2;
-    [Header("ƒLƒƒƒ‰ƒNƒ^[")]
+    [Header("ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼")]
     public GameObject m_Player;
-    [Header("ƒeƒŒƒ|[ƒgæ")]
+    [Header("ãƒ†ãƒ¬ãƒãƒ¼ãƒˆå…ˆ")]
     public Transform m_TP;
-    [Header("ƒvƒŒƒCƒ„[‚Ìscript")]
+    [Header("ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®script")]
     public PlayScript m_PlayScript;
-    //ƒvƒŒƒCƒ„[‚ªTPƒGƒŠƒA‚É“ü‚Á‚½‚©H
+    [Header("ã‚¹ãƒãƒ›UIã®å‚ç…§")]
+    public SmartPhoneUI m_SmartPhoneUI;
+    //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒTPã‚¨ãƒªã‚¢ã«å…¥ã£ãŸã‹ï¼Ÿ
     private bool m_PlayerTpTrigger = false;
     
 
@@ -28,24 +30,36 @@ public class TP : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        //ƒvƒŒƒCƒ„[‚ªƒGƒŠƒA‚É“ü‚Á‚½‚ç
+        //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã‚¨ãƒªã‚¢ã«å…¥ã£ãŸã‚‰
         if (collision.gameObject == m_Player)
         {
             m_PlayerTpTrigger = true;
-            //•\¦
+            //è¡¨ç¤º
             m_Image.SetActive(true);
             m_Image2.SetActive(true);
+
+            // ã‚¹ãƒãƒ›UIã®ã€Œæ¬¡ã¸ã€ãƒœã‚¿ãƒ³ã‚’è¡¨ç¤ºï¼ˆãƒ†ãƒ¬ãƒãƒ¼ãƒˆç”¨ãƒœã‚¿ãƒ³ã¨ã—ã¦æµç”¨ï¼‰
+            if (m_SmartPhoneUI != null)
+            {
+                m_SmartPhoneUI.ShowNextStageUI(true, TpPlayerFromMobile);
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        //ƒvƒŒƒCƒ„[‚ªƒGƒŠƒA‚ÉŠO‚ê‚½‚ç
+        //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒã‚¨ãƒªã‚¢ã«å¤–ã‚ŒãŸã‚‰
         if (collision.gameObject == m_Player)
         {
             m_PlayerTpTrigger = false;
-            //”ñ•\¦
+            //éè¡¨ç¤º
             m_Image.SetActive(false);
             m_Image2.SetActive(false);
+
+            // ã‚¹ãƒãƒ›UIã®ã€Œæ¬¡ã¸ã€ãƒœã‚¿ãƒ³ã‚’éè¡¨ç¤º
+            if (m_SmartPhoneUI != null)
+            {
+                m_SmartPhoneUI.ShowNextStageUI(false);
+            }
         }
     }
     private void Update()
@@ -61,9 +75,20 @@ public class TP : MonoBehaviour
         if (m_TP != null)
         {
             m_Bgm1.Stop();
-            //ƒV[ƒ“‚ÉˆÚ“®
+            //ã‚·ãƒ¼ãƒ³ã«ç§»å‹•
             SceneManager.LoadScene("BossStage");
             m_Bgm2.Play();
+        }
+    }
+
+    /// <summary>
+    /// ã‚¹ãƒãƒ›UIã‹ã‚‰ãƒ†ãƒ¬ãƒãƒ¼ãƒˆã‚’å®Ÿè¡Œã™ã‚‹ãŸã‚ã®é–¢æ•°
+    /// </summary>
+    public void TpPlayerFromMobile()
+    {
+        if (m_PlayerTpTrigger)
+        {
+            TpPlayer();
         }
     }
 }

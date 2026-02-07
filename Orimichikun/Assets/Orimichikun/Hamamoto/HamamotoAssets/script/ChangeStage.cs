@@ -11,7 +11,7 @@ public class ChangeStage : MonoBehaviour
         if(m_TM.m_IsTitle)
         if (( Input.GetKeyDown(KeyCode.E)|| Input.GetKeyDown("joystick button 4") || Input.GetKeyDown("joystick button 5")&&m_TM.m_IsMoveTitle ))
         {
-            Debug.Log("ƒXƒe[ƒWˆÚs‰Â”\iEƒL[j");
+            Debug.Log("ã‚¹ãƒ†ãƒ¼ã‚¸ç§»è¡Œå¯èƒ½ï¼ˆEã‚­ãƒ¼ï¼‰");
             SceneManager.LoadScene("Stage");
         }
     }

@@ -50,6 +50,8 @@ public class TriggerManager : MonoBehaviour
     Animator m_Animator;
     [SerializeField]
     GameObject m_Title;
+    [SerializeField]
+    SmartPhoneUI m_SmartPhoneUI;
     private void Update()
     {
         //範囲内にいるなら表示・範囲内にいなければ非表示
@@ -96,6 +98,12 @@ public class TriggerManager : MonoBehaviour
             m_Animator.SetTrigger("TitleMove");
             m_Title.SetActive(true);
             m_IsTitle = true;
+            
+            // スマホUIに「次のステージへ」ボタンを表示させる
+            if (m_SmartPhoneUI != null)
+            {
+                m_SmartPhoneUI.ShowNextStageUI(true);
+            }
         }
        
     }

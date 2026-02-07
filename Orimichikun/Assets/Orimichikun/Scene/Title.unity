@@ -586,6 +586,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3629316852945015936, guid: 3deb7706c6b092340a89200b8455df1f, type: 3}
   m_PrefabInstance: {fileID: 155924000}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &406042218 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 399364658811873955, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+  m_PrefabInstance: {fileID: 994782065}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b79b5b79c73112941b754fab68e665a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &429947423
 GameObject:
   m_ObjectHideFlags: 0
@@ -2780,6 +2791,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 399364658811873955, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: playerScript
+      value: 
+      objectReference: {fileID: 1852336426}
+    - target: {fileID: 399364658811873955, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: titleJumpScript
+      value: 
+      objectReference: {fileID: 1852336429}
     - target: {fileID: 3426623150375527382, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
       propertyPath: playerScript
       value: 
@@ -2791,18 +2810,6 @@ PrefabInstance:
     - target: {fileID: 4102725188693893409, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
       propertyPath: m_Name
       value: SmartPhoneUICanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 4102725188693893409, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4295554499599561461, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
-      propertyPath: m_SortingOrder
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 6795007878913505812, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
-      propertyPath: m_Delegates.Array.data[0].callback.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Jamp
       objectReference: {fileID: 0}
     - target: {fileID: 7343989752187795498, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
       propertyPath: m_Pivot.x
@@ -4225,6 +4232,7 @@ MonoBehaviour:
   m_PST: {fileID: 1852336420}
   m_Animator: {fileID: 1852336434}
   m_Title: {fileID: 984523127}
+  m_SmartPhoneUI: {fileID: 406042218}
 --- !u!4 &1578756909
 Transform:
   m_ObjectHideFlags: 0

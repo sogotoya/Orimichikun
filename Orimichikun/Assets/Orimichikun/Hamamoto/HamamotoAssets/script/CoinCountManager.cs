@@ -5,24 +5,26 @@ using UnityEngine;
 using UnityEngine.UI;
 public class CoinCountManager : MonoBehaviour
 {
-    [Header("ƒRƒCƒ“‚Ì”")]
+    [Header("ã‚³ã‚¤ãƒ³ã®æ•°")]
     public float m_CoinCount=0;
-    [Header("‰ñ•œƒAƒCƒeƒ€‚Ì”")]
+    [Header("å›å¾©ã‚¢ã‚¤ãƒ†ãƒ ã®æ•°")]
     public float m_RecoveryCount = 0;
-    [Header("‰ñ•œ—Ê")]
+    [Header("å›å¾©é‡")]
     public int m_HPRecovery = 2;
-    [Header("‰ñ•œSE")]
+    [Header("å›å¾©SE")]
     public AudioClip m_RecoverySE;
-    [Header("ƒvƒŒƒCƒ„[‚ÌParameta")]
+    [Header("ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®Parameta")]
     public Parameta2D m_PlayerParameta;
-    [Header("‰ñ•œ‚ÌKey•\¦")]
+    [Header("ã‚¹ãƒãƒ›UIã®å‚ç…§")]
+    public SmartPhoneUI m_SmartPhoneUI;
+    [Header("å›å¾©ã®Keyè¡¨ç¤º")]
     public GameObject m_RecoveryKey;
-    [Header("ƒRƒCƒ“‚ÌŠl“¾”Text")]
+    [Header("ã‚³ã‚¤ãƒ³ã®ç²å¾—æ•°Text")]
     [SerializeField]private Text m_CoinCountText;
-    [Header("ƒRƒCƒ“‚ÌŠl“¾”Text")]
+    [Header("ã‚³ã‚¤ãƒ³ã®ç²å¾—æ•°Text")]
     [SerializeField] private Text m_RecoveryCountText;
     private AudioSource m_Source;
-    //ƒRƒCƒ“‚Ìscript
+    //ã‚³ã‚¤ãƒ³ã®script
     private Coin[] m_Coin;
     public List<Coin> m_Coins = new List<Coin>();
     public bool m_CoinReset=false;
@@ -38,7 +40,7 @@ public class CoinCountManager : MonoBehaviour
         m_RecoveryKey.SetActive(false);
         m_Source = GetComponent<AudioSource>();
 
-        // ’l‚ğˆÀ‘S‚Éˆø‚«Œp‚®
+        // å€¤ã‚’å®‰å…¨ã«å¼•ãç¶™ã
         if (ChangeSenseCoin.m_InstanceCoin != null)
         {
             m_CoinCount = ChangeSenseCoin.m_InstanceCoin.CS_CoinCount;
@@ -51,14 +53,14 @@ public class CoinCountManager : MonoBehaviour
     private void Update()
     {
 
-        //ƒRƒCƒ“‚ğæ‚é‚½‚Ñ‰ÁZ‚³‚ê‚é
+        //ã‚³ã‚¤ãƒ³ã‚’å–ã‚‹ãŸã³åŠ ç®—ã•ã‚Œã‚‹
         foreach (Coin coin in m_Coins)
         {   
             if (coin.m_CoinGetCount)
             {
                 m_CoinCount += 1;
                 coin.m_CoinGetCount = false;
-                //ƒJƒEƒ“ƒg‚ª‚P‚O‚É’B‚µ‚½‚çƒŠƒZƒbƒg‚Æ‰ñ•œƒAƒCƒeƒ€‰ÁZ
+                //ã‚«ã‚¦ãƒ³ãƒˆãŒï¼‘ï¼ã«é”ã—ãŸã‚‰ãƒªã‚»ãƒƒãƒˆã¨å›å¾©ã‚¢ã‚¤ãƒ†ãƒ åŠ ç®—
                 if (m_CoinCount>=10)
                 {
                     m_RecoveryCount += 1;
@@ -75,29 +77,32 @@ public class CoinCountManager : MonoBehaviour
                 UpdateRecoveryText();
             }
         }
-        //‰ñ•œƒAƒCƒeƒ€‚ğˆêŒÂˆÈãƒQƒbƒg‚µ‚½‚çg—p‰Â”\
+        //å›å¾©ã‚¢ã‚¤ãƒ†ãƒ ã‚’ä¸€å€‹ä»¥ä¸Šã‚²ãƒƒãƒˆã—ãŸã‚‰ä½¿ç”¨å¯èƒ½
         if (m_RecoveryCount>=1)
         {
-           //Hp‚ªí‚ê‚Ä‚¢‚½‚ç‰ñ•œKey•\¦
+           //HpãŒå‰Šã‚Œã¦ã„ãŸã‚‰å›å¾©Keyè¡¨ç¤º
             if (m_PlayerParameta.m_Hp < m_PlayerParameta.m_MaxHp)
             {              
                 m_RecoveryKey.SetActive(true);
+                if (m_SmartPhoneUI != null) m_SmartPhoneUI.ShowHeelUI(true);
             }
             else
             {
                 m_RecoveryKey.SetActive(false);
+                if (m_SmartPhoneUI != null) m_SmartPhoneUI.ShowHeelUI(false);
             }
             if (Input.GetKeyDown(KeyCode.E)|| Input.GetKeyDown("joystick button 4"))
             {
-                //‰ñ•œ
+                //å›å¾©
                 Recovery();
             }
         }
         else
         {
             m_RecoveryKey.SetActive(false);
+            if (m_SmartPhoneUI != null) m_SmartPhoneUI.ShowHeelUI(false);
         }
-        //€‚ñ‚¾‚çƒŠƒZƒbƒg
+        //æ­»ã‚“ã ã‚‰ãƒªã‚»ãƒƒãƒˆ
         if (m_CoinReset)
         {
             m_CoinReset= false;
@@ -112,15 +117,15 @@ public class CoinCountManager : MonoBehaviour
     }
     void UpdateCoinText()
     {
-        //Text‚ÉƒRƒCƒ“‰ÁZ‚ğ•\¦
+        //Textã«ã‚³ã‚¤ãƒ³åŠ ç®—ã‚’è¡¨ç¤º
         m_CoinCountText.text="x"+((int)m_CoinCount).ToString();
     }
     void UpdateRecoveryText()
     {
-        //Text‚É‰ñ•œ‰ÁZ‚ğ•\¦
+        //Textã«å›å¾©åŠ ç®—ã‚’è¡¨ç¤º
         m_RecoveryCountText.text = "x" + ((int)m_RecoveryCount).ToString();
     }
-    void Recovery()
+    public void Recovery()
     {
         if (m_PlayerParameta.m_Hp<m_PlayerParameta.m_MaxHp)
         {
@@ -133,7 +138,7 @@ public class CoinCountManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("HP‚Í–ƒ^ƒ“‚È‚Ì‚Å‰ñ•œ‚Å‚«‚Ü‚¹‚ñ");
+            Debug.Log("HPã¯æº€ã‚¿ãƒ³ãªã®ã§å›å¾©ã§ãã¾ã›ã‚“");
         }
     }
 }
