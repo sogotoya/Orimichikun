@@ -1,0 +1,336 @@
+﻿//using Microsoft.Unity.VisualStudio.Editor;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
+
+public class PlayScript : MonoBehaviour
+{
+    //��Ԃ̒�`
+    public enum State
+    {
+        Idle,
+        Move,
+        Jump,
+        Attack,
+        Die,
+        Damage
+    }
+    public RespawnPoint[] m_RespawnPoint;
+    [Header("�ړ����x")]
+    public float m_runSpeed = 6f;
+    [Header("�W�����v��")]
+    public float m_jumpForce = 7f;
+    [Header("�n�ʔ���p���C���[")]
+    public LayerMask m_Layer;
+    [Header("�n�ʃ`�F�b�N�ʒu")]
+    public Transform m_Ground;
+    [Header("���n����")]
+    public float m_groundCheck;
+    [Header("�ő�W�����v��")]
+    public int maxJumpCount = 2;
+    [Header("��������")]
+    public float m_deathY = -10f;
+    [Header("UI�摜")]
+    public GameObject m_image;
+    [Header("jump�̉�")]
+    public AudioClip[] m_jump;
+    [Header("SavePoint�̃X�N���v�g")]
+    public SavePoint m_SavePoint;
+    [Header("CoinCountManager��script")]
+    public CoinCountManager m_Manager;
+
+    private Rigidbody2D m_Rigidbody;
+    private Animator m_Animator;
+    private Parameta2D m_Parameta;
+    private AudioSource m_Audio;
+    // ����W�����v������
+    private int jumpCount = 0;
+    //���E���͒l
+    private float moveX;
+    //���݂̏��
+    private State CurrentState = State.Idle;
+    //�L�����N�^�[�̌����͉E������
+    private bool facingRight = true;
+    //���n���Ă��邩�H
+    private bool isGrounded;
+    // �n�ʂɂ������ǂ���
+    private bool wasGrounded = false;
+    private bool m_isTouchingWall;
+    private Vector2 m_wallNormal;
+    private Vector3 m_LastSavePosition;
+    public bool m_TPPush = false;
+
+    //�������t���OToya
+    private bool m_IsRespawning = false;
+
+    private void Start()
+    {
+        
+        m_LastSavePosition = transform.position;
+        m_Animator = GetComponent<Animator>();
+        m_Rigidbody = GetComponent<Rigidbody2D>();
+        m_Parameta = GetComponent<Parameta2D>();
+        m_Audio = GetComponent<AudioSource>();
+
+        // UI �͏���
+        m_image.SetActive(false);
+
+        // �ړ��̐��񂾂�������
+        m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+        m_Rigidbody.velocity = Vector2.zero;
+        CurrentState = State.Idle;
+        if (SceneManager.GetActiveScene().name == "Stage")
+        {
+            m_Parameta.m_Hp = m_Parameta.m_MaxHp;
+        }
+      
+    }
+    private void Update()
+    {
+     
+        if (m_IsRespawning) return;
+
+
+        // ���͎擾
+        moveX = Input.GetAxisRaw("Horizontal");
+
+        // �ڒn����iRaycast �̂ݎg�p�j
+        isGrounded = CheckGrounded();
+
+
+        // �ڒn������W�����v�񐔃��Z�b�g
+        if (isGrounded)
+        {
+            jumpCount = 0;
+        }
+
+        // ����̐ڒn�����ۑ�
+        wasGrounded = isGrounded;
+
+        if (m_Parameta.m_Hp <= 0)
+        {
+            LockFall();
+        }
+        if (transform.position.y < m_deathY)
+        {
+            LockFall();
+        }
+        if ((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown("joystick button 6") || Input.GetKeyDown("joystick button 7"))
+    && CurrentState == State.Die
+    && !m_IsRespawning)
+        {
+            m_Manager.m_CoinReset = true;
+            PlayerSpawn();
+        }
+
+        if (CurrentState != State.Die)
+        {
+            switch (CurrentState)
+            {
+                case State.Idle: ModeIdle(); break;
+                case State.Move: ModeMove(); break;
+                case State.Jump: ModeJump(); break;
+                case State.Attack: ModeAttack(); break;
+                case State.Die: ModeDie(); break;
+                case State.Damage: ModeDamage(); break;
+            }
+        }
+    }
+
+    void ModeIdle()
+    {
+        m_Animator.SetFloat("Speed", 0f);
+
+        // ���͂�����Ȃ�Move�ɐ؂�ւ�
+        if (Mathf.Abs(moveX) > 0f)
+        {
+            ChangeState(State.Move);
+        }
+        //Input.GetKeyDown(KeyCode.Space)
+        //�n�ʂ𓥂�ł���space�L�[���������W�����v����
+        if ((Input.GetKeyDown("joystick button 2") || Input.GetKeyDown("joystick button 0") || Input.GetKeyDown(KeyCode.Space)) && jumpCount < maxJumpCount)
+        {
+            if (m_jump != null && m_jump.Length > 0)
+            {
+                int index = Mathf.Clamp(jumpCount, 0, m_jump.Length - 1);
+                if (m_jump[index] != null)
+                {
+                    m_Audio.PlayOneShot(m_jump[index]);
+                }
+            }
+            // ������ɑ��x��^����
+            m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_jumpForce);
+            // �W�����v�񐔂𑝂₷
+            jumpCount++;
+            ChangeState(State.Jump);
+        }
+    }
+
+    void ModeMove()
+    {
+        // �ǂɐڐG���Ă��� ���������ɓ��͂��Ă���ꍇ
+        if (m_isTouchingWall && Mathf.Sign(moveX) == -Mathf.Sign(m_wallNormal.x))
+        {
+            moveX = 0; // �Ǖ������͂𖳌���
+        }
+        // Rigidbody2D �̑��x�ݒ�iY���x�͈ێ��j
+        m_Rigidbody.velocity = new Vector2(moveX * m_runSpeed, m_Rigidbody.velocity.y);
+
+        // �L�����̌������]
+        if (moveX > 0 && !facingRight) Flip();
+        else if (moveX < 0 && facingRight) Flip();
+
+        // Blend Tree�p�p�����[�^�i���K���j
+        m_Animator.SetFloat("Speed", Mathf.Abs(moveX));
+
+        // ���͂��Ȃ��Ȃ�����Idle�ɖ߂�
+        if (Mathf.Abs(moveX) < 0.01f)  // �����]�T���������
+        {
+            ChangeState(State.Idle);
+        }
+        //�n�ʂ𓥂�ł���space�L�[���������W�����v����
+        if ((Input.GetKeyDown("joystick button 2") || Input.GetKeyDown("joystick button 0") || Input.GetKeyDown(KeyCode.Space)) && jumpCount < maxJumpCount)
+        {
+            if (m_jump != null && m_jump.Length > 0)
+            {
+                int index = Mathf.Clamp(jumpCount - 1, 0, m_jump.Length - 1);
+                if (m_jump[index] != null)
+                {
+                    m_Audio.PlayOneShot(m_jump[index]);
+                }
+            }
+            // ������ɑ��x��^����
+            m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_jumpForce);
+            // �W�����v�񐔂𑝂₷
+            jumpCount++;
+            ChangeState(State.Jump);
+        }
+
+    }
+    void ModeJump()
+    {
+        // �ǂɐڐG���Ă��� ���������ɓ��͂��Ă���ꍇ
+        if (m_isTouchingWall && Mathf.Sign(moveX) == -Mathf.Sign(m_wallNormal.x))
+        {
+            moveX = 0; // �Ǖ������͂𖳌���
+        }
+        // �󒆂ł���E�ړ��ł���悤�ɂ���
+        m_Rigidbody.velocity = new Vector2(moveX * m_runSpeed, m_Rigidbody.velocity.y);
+
+        // �������]
+        if (moveX > 0 && !facingRight) Flip();
+        else if (moveX < 0 && facingRight) Flip();
+
+        // �A�j���[�^�[�ɑ��x�𔽉f�i�󒆂ł���������鎞�ɃA�j���[�V�����ς���p�j
+        m_Animator.SetFloat("Speed", Mathf.Abs(moveX));
+
+        // ��Ԃ�Idle�ɖ߂��̂́u���n������v
+        StartCoroutine(CheckLanding());
+    }
+    void ModeAttack() { }
+
+    void ModeDie() { }
+    void ModeDamage()
+    {
+
+    }
+
+    //�X�e�[�g�`�F���W�֐�
+    void ChangeState(State newState)
+    {
+        CurrentState = newState;
+    }
+    //���]�̊֐�
+    void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
+    }
+    void LockFall()
+    {
+        // �ړ���W�����v��~�߂�
+        CurrentState = State.Die;
+        m_Rigidbody.velocity = Vector2.zero;
+
+        // X�����̈ړ���������ė����̂�
+        m_Rigidbody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+
+        // UI�\��
+        m_image.SetActive(true);
+    }
+
+
+    bool CheckGrounded()
+    {
+        // �������牺������Ray���΂�
+        RaycastHit2D hit = Physics2D.Raycast(m_Ground.position, Vector2.down, m_groundCheck, m_Layer);
+        return hit.collider != null;
+    }
+    public bool IsFacingRight()
+    {
+        return facingRight;
+    }
+    IEnumerator CheckLanding()
+    {
+        // �󒆂ɂ���Ԃ͑ҋ@
+        yield return new WaitUntil(() => isGrounded);
+
+        // ���n������Idle�ɖ߂�
+        ChangeState(State.Idle);
+    }
+    //�ǂ�collision�ɐG�ꂽ��
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        //���ׂĂ̐ڐG�_��1�����o���Ă��̐ڐG�_�̌����𒲂ׂĂ���
+        foreach (var contact in collision.contacts)
+        {
+            // ���E�����̕ǂ�����
+            if (Mathf.Abs(contact.normal.x) > 0.5f)
+            {
+                m_isTouchingWall = true;
+                m_wallNormal = contact.normal;
+                return;
+            }
+        }
+    }
+    //�ǂ�collision�ɐG�ꂽ��
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        m_isTouchingWall = false;
+    }
+    //�Z�[�u�|�C���g�ɐG�ꂽ��v���C���[�̃X�|�[���̈ʒu�ύX
+    public void UpdateSavePoint(Vector3 pos)
+    {
+        m_LastSavePosition = pos;
+    }
+    public void PlayerSpawn()
+    {
+        if (SceneManager.GetActiveScene().name=="BossStage")
+        {
+            m_Parameta.m_Hp = m_Parameta.m_MaxHp;
+            SceneManager.LoadScene("Stage");
+            transform.position = m_LastSavePosition;
+            foreach (var point in m_RespawnPoint)
+                point?.Respawn();
+        }
+
+        // �ʏ�̃Z�[�u�|�C���g���X�|�[��
+        m_image.SetActive(false);
+        transform.position = m_LastSavePosition;
+        foreach (var point in m_RespawnPoint)
+            point?.Respawn();
+
+        m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+        m_Rigidbody.velocity = Vector2.zero;
+        CurrentState = State.Idle;
+        m_Parameta.m_Hp = m_Parameta.m_MaxHp;
+
+        m_IsRespawning = false;
+
+        Debug.Log("���X�|�[���I");
+    }
+}

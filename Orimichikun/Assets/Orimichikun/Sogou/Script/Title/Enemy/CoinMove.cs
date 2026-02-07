@@ -1,4 +1,4 @@
-//ƒRƒCƒ“‚ğæ‚Á‚½‚ÌBoss‚ÌˆÚ“®ˆ—
+//ã‚³ã‚¤ãƒ³ã‚’å–ã£ãŸæ™‚ã®Bossã®ç§»å‹•å‡¦ç†
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -9,15 +9,15 @@ public class CoinMove : MonoBehaviour
 {
     [SerializeField]
     FastMessage m_FM;
-    //‰½‰ñŒÄ‚Î‚ê‚½‚©‚ÌƒJƒEƒ“ƒg
+    //ä½•å›å‘¼ã°ã‚ŒãŸã‹ã®ã‚«ã‚¦ãƒ³ãƒˆ
     int m_FlagCount = 0;
 
     [SerializeField]
     CameraShake m_CameraShake;
-    // ƒvƒŒƒCƒ„[‚É‹ß‚Ã‚­ƒXƒs[ƒh
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«è¿‘ã¥ãã‚¹ãƒ”ãƒ¼ãƒ‰
     float m_MoveSpeed = 1.0f;
 
-    // ƒvƒŒƒCƒ„[‚É‚Ç‚±‚Ü‚Å‹ß‚Ã‚­‚©i’â~‹——£j
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ã©ã“ã¾ã§è¿‘ã¥ãã‹ï¼ˆåœæ­¢è·é›¢ï¼‰
     float m_StopDistance = 2f;
 
     [SerializeField]
@@ -28,7 +28,7 @@ public class CoinMove : MonoBehaviour
 
     [SerializeField]
     AudioSource m_MoveAS;
-    //ŒJ‚è•Ô‚µŒÄ‚Î‚ê‚é‘Îô
+    //ç¹°ã‚Šè¿”ã—å‘¼ã°ã‚Œã‚‹å¯¾ç­–
     bool m_ShakeFlag;
 
     void Start()
@@ -41,13 +41,13 @@ public class CoinMove : MonoBehaviour
 
     void Update()
     {
-        //ƒRƒCƒ“‚ğ‚Æ‚ç‚ê‚½AƒƒbƒZ[ƒW•\¦‚³‚ê‚é‘O‚Ü‚Å
+        //ã‚³ã‚¤ãƒ³ã‚’ã¨ã‚‰ã‚ŒãŸã€ãƒ¡ãƒƒã‚»ãƒ¼ã‚¸è¡¨ç¤ºã•ã‚Œã‚‹å‰ã¾ã§
         if (m_Coin == null && !m_FM.m_MessageFlag)
         {
             m_MoveAS.enabled = true;
             MoveStart(); 
         }
-        //FastMessage‚ÌContact()‚ªI‚í‚Á‚½‚ç‹N“®
+        //FastMessageã®Contact()ãŒçµ‚ã‚ã£ãŸã‚‰èµ·å‹•
         if (m_FM.m_ContactFlag)
         {
             m_MoveAS.enabled = true;
@@ -57,59 +57,59 @@ public class CoinMove : MonoBehaviour
     }
 
     /// <summary>
-    /// Å‰‚Ì“®‚«
+    /// æœ€åˆã®å‹•ã
     /// </summary>
     void MoveStart()
     {
        
-        //ƒRƒ‹[ƒ`ƒ“~‚ß‚é‚½‚ß‚Ì•Û‘¶
+        //ã‚³ãƒ«ãƒ¼ãƒãƒ³æ­¢ã‚ã‚‹ãŸã‚ã®ä¿å­˜
         Coroutine shakeCoroutine = StartCoroutine(m_CameraShake.Shake(0.5f, 0.1f, 0.5f));
 
         Vector2 dir = m_Player.transform.position - transform.position;
-        //À•W‚ª‹ó’†‚É‚È‚é‚½‚ßY‚Í0
+        //åº§æ¨™ãŒç©ºä¸­ã«ãªã‚‹ãŸã‚Yã¯0
         dir.y = 0f;
         float distance = dir.magnitude;
-        //Debug.Log($"‹——£: {m_Distance}, ’â~‹——£: {m_StopDistance}");
+        //Debug.Log($"è·é›¢: {m_Distance}, åœæ­¢è·é›¢: {m_StopDistance}");
 
         if (distance > m_StopDistance)
         {
-            // ˆÚ“®
+            // ç§»å‹•
             Vector3 move = dir.normalized * m_MoveSpeed * Time.deltaTime;
             transform.position += move;
         }
-        else//w’è‚µ‚½’n“_‚É‚Â‚¢‚½
+        else//æŒ‡å®šã—ãŸåœ°ç‚¹ã«ã¤ã„ãŸ
         {
-            //‘Îô
+            //å¯¾ç­–
             StopCoroutine(shakeCoroutine);
             m_MoveAS.enabled = false;
-            //ƒRƒƒ“ƒg•\¦
+            //ã‚³ãƒ¡ãƒ³ãƒˆè¡¨ç¤º
             m_FM.m_MessageFlag = true;
         }
     }
 
     /// <summary>
-    /// Œã‘Ş‚·‚é
+    /// å¾Œé€€ã™ã‚‹
     /// </summary>
     IEnumerator BackMoveStart()
     {
-        //ƒRƒ‹[ƒ`ƒ“~‚ß‚é‚½‚ß‚Ì•Û‘¶
+        //ã‚³ãƒ«ãƒ¼ãƒãƒ³æ­¢ã‚ã‚‹ãŸã‚ã®ä¿å­˜
         Coroutine shakeCoroutine = StartCoroutine(m_CameraShake.Shake(0.5f, 0.1f,0.5f));
         yield return new WaitForSeconds(0.7f);
         Vector2 dir = new Vector3(Screen.width, 0, 0) - transform.position;
-        //À•W‚ª‹ó’†‚É‚È‚é‚½‚ßY‚Í0
+        //åº§æ¨™ãŒç©ºä¸­ã«ãªã‚‹ãŸã‚Yã¯0
         dir.y = 0f;
         float distance = dir.magnitude;
 
         if (distance > m_StopDistance)
         {
-            // ˆÚ“®
+            // ç§»å‹•
             Vector3 move = dir.normalized * m_MoveSpeed * Time.deltaTime;
             transform.position += move;
         }
-        //4•b‚½‚Á‚½‚çíœ
+        //4ç§’ãŸã£ãŸã‚‰å‰Šé™¤
         yield return new WaitForSeconds(4f);
         m_MoveAS.enabled = false;
-        //‘Îô
+        //å¯¾ç­–
         StopCoroutine(shakeCoroutine);
         Destroy(gameObject);
     }

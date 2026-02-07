@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class playershoot : MonoBehaviour
 {
-    // ’eƒvƒŒƒnƒu
+    // å¼¾ãƒ—ãƒ¬ãƒãƒ–
     public GameObject m_bulletPrefab;
-    // ”­ËˆÊ’ui‹óƒIƒuƒWƒFƒNƒg‚ğq‚Æ‚µ‚Ä’u‚­j
+    // ç™ºå°„ä½ç½®ï¼ˆç©ºã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’å­ã¨ã—ã¦ç½®ãï¼‰
     public Transform m_firePoint;
     public AudioClip m_Shoot;
     private AudioSource m_Source;
@@ -15,11 +15,11 @@ public class playershoot : MonoBehaviour
     {
         m_Player = GetComponent<PlayScript>();
         m_Animator = GetComponent<Animator>();
-        //  AudioSource‚ğæ“¾
+        //  AudioSourceã‚’å–å¾—
         m_Source = GetComponent<AudioSource>();
         if (m_Source == null)
         {
-            // ‚È‚¯‚ê‚Î©“®‚Å’Ç‰Ái”CˆÓj
+            // ãªã‘ã‚Œã°è‡ªå‹•ã§è¿½åŠ ï¼ˆä»»æ„ï¼‰
             m_Source = gameObject.AddComponent<AudioSource>();
         }
         
@@ -27,17 +27,20 @@ public class playershoot : MonoBehaviour
 
     void Update()
     {
-        // ¶ƒNƒŠƒbƒN‚Å”­Ë
-        if (Input.GetMouseButtonDown(0)|| Input.GetKeyDown("joystick button 1")|| Input.GetKeyDown("joystick button 3")) 
+        // å·¦ã‚¯ãƒªãƒƒã‚¯ã€ã‚¸ãƒ§ã‚¤ã‚¹ãƒ†ã‚£ãƒƒã‚¯ã€ã¾ãŸã¯ã‚¹ãƒãƒ›UIã‹ã‚‰ã®æ”»æ’ƒå…¥åŠ›ã§ç™ºå°„
+        bool attackInput = Input.GetMouseButtonDown(0) || 
+                           Input.GetKeyDown("joystick button 1") || 
+                           Input.GetKeyDown("joystick button 3") ||
+                           m_Player.ConsumeMobileAttack();
+        
+        if (attackInput) 
         {
-           
             m_Animator.SetTrigger("Attack");
-            GameObject bullet=Instantiate(m_bulletPrefab, m_firePoint.position, m_firePoint.rotation);
-            // Œü‚«‚ğƒZƒbƒg
+            GameObject bullet = Instantiate(m_bulletPrefab, m_firePoint.position, m_firePoint.rotation);
+            // å‘ãã‚’ã‚»ãƒƒãƒˆ
             int direction = m_Player.IsFacingRight() ? 1 : -1;
             bullet.GetComponent<Bullet>().SetDirection(direction);
             m_Source.PlayOneShot(m_Shoot);
-            
         }
     }
 

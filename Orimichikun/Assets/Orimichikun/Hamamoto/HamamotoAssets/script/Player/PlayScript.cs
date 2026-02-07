@@ -1,4 +1,4 @@
-//using Microsoft.Unity.VisualStudio.Editor;
+ï»¿//using Microsoft.Unity.VisualStudio.Editor;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class PlayScript : MonoBehaviour
 {
-    //ó‘Ô‚Ì’è‹`
+    //çŠ¶æ…‹ã®å®šç¾©
     public enum State
     {
         Idle,
@@ -18,70 +18,75 @@ public class PlayScript : MonoBehaviour
         Damage
     }
     public RespawnPoint[] m_RespawnPoint;
-    [Header("ˆÚ“®‘¬“x")]
+    [Header("ç§»å‹•é€Ÿåº¦")]
     public float m_runSpeed = 6f;
-    [Header("ƒWƒƒƒ“ƒv—Í")]
+    [Header("ã‚¸ãƒ£ãƒ³ãƒ—åŠ›")]
     public float m_jumpForce = 7f;
-    [Header("’n–Ê”»’è—pƒŒƒCƒ„[")]
+    [Header("åœ°é¢åˆ¤å®šç”¨ãƒ¬ã‚¤ãƒ¤ãƒ¼")]
     public LayerMask m_Layer;
-    [Header("’n–Êƒ`ƒFƒbƒNˆÊ’u")]
+    [Header("åœ°é¢ãƒã‚§ãƒƒã‚¯ä½ç½®")]
     public Transform m_Ground;
-    [Header("’…’n”»’è")]
+    [Header("ç€åœ°åˆ¤å®š")]
     public float m_groundCheck;
-    [Header("Å‘åƒWƒƒƒ“ƒv‰ñ”")]
+    [Header("æœ€å¤§ã‚¸ãƒ£ãƒ³ãƒ—å›æ•°")]
     public int maxJumpCount = 2;
-    [Header("—‰º”»’è")]
+    [Header("è½ä¸‹åˆ¤å®š")]
     public float m_deathY = -10f;
-    [Header("UI‰æ‘œ")]
+    [Header("UIç”»åƒ")]
     public GameObject m_image;
-    [Header("jump‚Ì‰¹")]
+    [Header("jumpã®éŸ³")]
     public AudioClip[] m_jump;
-    [Header("SavePoint‚ÌƒXƒNƒŠƒvƒg")]
+    [Header("SavePointã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆ")]
     public SavePoint m_SavePoint;
-    [Header("CoinCountManager‚Ìscript")]
+    [Header("CoinCountManagerã®script")]
     public CoinCountManager m_Manager;
 
     private Rigidbody2D m_Rigidbody;
     private Animator m_Animator;
     private Parameta2D m_Parameta;
     private AudioSource m_Audio;
-    // ‰½‰ñƒWƒƒƒ“ƒv‚µ‚½‚©
+    // ä½•å›ã‚¸ãƒ£ãƒ³ãƒ—ã—ãŸã‹
     private int jumpCount = 0;
-    //¶‰E“ü—Í’l
+    //å·¦å³å…¥åŠ›å€¤
     private float moveX;
-    //Œ»İ‚Ìó‘Ô
+    //ç¾åœ¨ã®çŠ¶æ…‹
     private State CurrentState = State.Idle;
-    //ƒLƒƒƒ‰ƒNƒ^[‚ÌŒü‚«‚Í‰EŒü‚«‚©
+    //ã‚­ãƒ£ãƒ©ã‚¯ã‚¿ãƒ¼ã®å‘ãã¯å³å‘ãã‹
     private bool facingRight = true;
-    //’…’n‚µ‚Ä‚¢‚é‚©H
+    //ç€åœ°ã—ã¦ã„ã‚‹ã‹ï¼Ÿ
     private bool isGrounded;
-    // ’n–Ê‚É‚¢‚½‚©‚Ç‚¤‚©
+    // åœ°é¢ã«ã„ãŸã‹ã©ã†ã‹
     private bool wasGrounded = false;
     private bool m_isTouchingWall;
     private Vector2 m_wallNormal;
     private Vector3 m_LastSavePosition;
     public bool m_TPPush = false;
 
-    //•œŠˆ’†ƒtƒ‰ƒOToya
+    //å¾©æ´»ä¸­ãƒ•ãƒ©ã‚°Toya
     private bool m_IsRespawning = false;
+
+    // ã‚¹ãƒãƒ›æ“ä½œç”¨ã®æ°´å¹³å…¥åŠ›
+    private float m_MobileHorizontal = 0f;
 
     private void Start()
     {
-        
         m_LastSavePosition = transform.position;
         m_Animator = GetComponent<Animator>();
         m_Rigidbody = GetComponent<Rigidbody2D>();
         m_Parameta = GetComponent<Parameta2D>();
         m_Audio = GetComponent<AudioSource>();
 
-        // UI ‚ÍÁ‚·
-        m_image.SetActive(false);
+        // UI ã¯æ¶ˆã™
+        if (m_image != null) m_image.SetActive(false);
 
-        // ˆÚ“®‚Ì§–ñ‚¾‚¯‰Šú‰»
-        m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
-        m_Rigidbody.velocity = Vector2.zero;
+        // ç§»å‹•ã®åˆ¶ç´„ã ã‘åˆæœŸåŒ–
+        if (m_Rigidbody != null)
+        {
+            m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+            m_Rigidbody.velocity = Vector2.zero;
+        }
         CurrentState = State.Idle;
-        if (SceneManager.GetActiveScene().name == "Stage")
+        if (m_Parameta != null && SceneManager.GetActiveScene().name == "Stage")
         {
             m_Parameta.m_Hp = m_Parameta.m_MaxHp;
         }
@@ -93,23 +98,24 @@ public class PlayScript : MonoBehaviour
         if (m_IsRespawning) return;
 
 
-        // “ü—Íæ“¾
+        // å…¥åŠ›å–å¾—
         moveX = Input.GetAxisRaw("Horizontal");
+        if (Mathf.Abs(m_MobileHorizontal) > 0.01f) moveX = m_MobileHorizontal;
 
-        // Ú’n”»’èiRaycast ‚Ì‚İg—pj
+        // æ¥åœ°åˆ¤å®šï¼ˆRaycast ã®ã¿ä½¿ç”¨ï¼‰
         isGrounded = CheckGrounded();
 
 
-        // Ú’n‚µ‚½‚çƒWƒƒƒ“ƒv‰ñ”ƒŠƒZƒbƒg
+        // æ¥åœ°ã—ãŸã‚‰ã‚¸ãƒ£ãƒ³ãƒ—å›æ•°ãƒªã‚»ãƒƒãƒˆ
         if (isGrounded)
         {
             jumpCount = 0;
         }
 
-        // ¡‰ñ‚ÌÚ’n”»’è‚ğ•Û‘¶
+        // ä»Šå›ã®æ¥åœ°åˆ¤å®šã‚’ä¿å­˜
         wasGrounded = isGrounded;
 
-        if (m_Parameta.m_Hp <= 0)
+        if (m_Parameta != null && m_Parameta.m_Hp <= 0)
         {
             LockFall();
         }
@@ -141,28 +147,28 @@ public class PlayScript : MonoBehaviour
 
     void ModeIdle()
     {
-        m_Animator.SetFloat("Speed", 0f);
+        if (m_Animator != null) m_Animator.SetFloat("Speed", 0f);
 
-        // “ü—Í‚ª‚ ‚é‚È‚çMove‚ÉØ‚è‘Ö‚¦
+        // å…¥åŠ›ãŒã‚ã‚‹ãªã‚‰Moveã«åˆ‡ã‚Šæ›¿ãˆ
         if (Mathf.Abs(moveX) > 0f)
         {
             ChangeState(State.Move);
         }
         //Input.GetKeyDown(KeyCode.Space)
-        //’n–Ê‚ğ“¥‚ñ‚Å‚¢‚ÄspaceƒL[‚ğ‰Ÿ‚µ‚½‚çƒWƒƒƒ“ƒv‚·‚é
+        //åœ°é¢ã‚’è¸ã‚“ã§ã„ã¦spaceã‚­ãƒ¼ã‚’æŠ¼ã—ãŸã‚‰ã‚¸ãƒ£ãƒ³ãƒ—ã™ã‚‹
         if ((Input.GetKeyDown("joystick button 2") || Input.GetKeyDown("joystick button 0") || Input.GetKeyDown(KeyCode.Space)) && jumpCount < maxJumpCount)
         {
             if (m_jump != null && m_jump.Length > 0)
             {
                 int index = Mathf.Clamp(jumpCount, 0, m_jump.Length - 1);
-                if (m_jump[index] != null)
+                if (m_Audio != null && m_jump[index] != null)
                 {
                     m_Audio.PlayOneShot(m_jump[index]);
                 }
             }
-            // ã•ûŒü‚É‘¬“x‚ğ—^‚¦‚é
-            m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_jumpForce);
-            // ƒWƒƒƒ“ƒv‰ñ”‚ğ‘‚â‚·
+            // ä¸Šæ–¹å‘ã«é€Ÿåº¦ã‚’ä¸ãˆã‚‹
+            if (m_Rigidbody != null) m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_jumpForce);
+            // ã‚¸ãƒ£ãƒ³ãƒ—å›æ•°ã‚’å¢—ã‚„ã™
             jumpCount++;
             ChangeState(State.Jump);
         }
@@ -170,27 +176,27 @@ public class PlayScript : MonoBehaviour
 
     void ModeMove()
     {
-        // •Ç‚ÉÚG‚µ‚Ä‚¨‚è “¯‚¶•ûŒü‚É“ü—Í‚µ‚Ä‚¢‚éê‡
+        // å£ã«æ¥è§¦ã—ã¦ãŠã‚Š åŒã˜æ–¹å‘ã«å…¥åŠ›ã—ã¦ã„ã‚‹å ´åˆ
         if (m_isTouchingWall && Mathf.Sign(moveX) == -Mathf.Sign(m_wallNormal.x))
         {
-            moveX = 0; // •Ç•ûŒü“ü—Í‚ğ–³Œø‰»
+            moveX = 0; // å£æ–¹å‘å…¥åŠ›ã‚’ç„¡åŠ¹åŒ–
         }
-        // Rigidbody2D ‚Ì‘¬“xİ’èiY‘¬“x‚ÍˆÛj
+        // Rigidbody2D ã®é€Ÿåº¦è¨­å®šï¼ˆYé€Ÿåº¦ã¯ç¶­æŒï¼‰
         m_Rigidbody.velocity = new Vector2(moveX * m_runSpeed, m_Rigidbody.velocity.y);
 
-        // ƒLƒƒƒ‰‚ÌŒü‚«”½“]
+        // ã‚­ãƒ£ãƒ©ã®å‘ãåè»¢
         if (moveX > 0 && !facingRight) Flip();
         else if (moveX < 0 && facingRight) Flip();
 
-        // Blend Tree—pƒpƒ‰ƒ[ƒ^i³‹K‰»j
-        m_Animator.SetFloat("Speed", Mathf.Abs(moveX));
+        // Blend Treeç”¨ãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ï¼ˆæ­£è¦åŒ–ï¼‰
+        if (m_Animator != null) m_Animator.SetFloat("Speed", Mathf.Abs(moveX));
 
-        // “ü—Í‚ª‚È‚­‚È‚Á‚½‚çIdle‚É–ß‚·
-        if (Mathf.Abs(moveX) < 0.01f)  // ­‚µ—]—T‚ğ‚½‚¹‚é
+        // å…¥åŠ›ãŒãªããªã£ãŸã‚‰Idleã«æˆ»ã™
+        if (Mathf.Abs(moveX) < 0.01f)  // å°‘ã—ä½™è£•ã‚’æŒãŸã›ã‚‹
         {
             ChangeState(State.Idle);
         }
-        //’n–Ê‚ğ“¥‚ñ‚Å‚¢‚ÄspaceƒL[‚ğ‰Ÿ‚µ‚½‚çƒWƒƒƒ“ƒv‚·‚é
+        //åœ°é¢ã‚’è¸ã‚“ã§ã„ã¦spaceã‚­ãƒ¼ã‚’æŠ¼ã—ãŸã‚‰ã‚¸ãƒ£ãƒ³ãƒ—ã™ã‚‹
         if ((Input.GetKeyDown("joystick button 2") || Input.GetKeyDown("joystick button 0") || Input.GetKeyDown(KeyCode.Space)) && jumpCount < maxJumpCount)
         {
             if (m_jump != null && m_jump.Length > 0)
@@ -201,9 +207,9 @@ public class PlayScript : MonoBehaviour
                     m_Audio.PlayOneShot(m_jump[index]);
                 }
             }
-            // ã•ûŒü‚É‘¬“x‚ğ—^‚¦‚é
-            m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_jumpForce);
-            // ƒWƒƒƒ“ƒv‰ñ”‚ğ‘‚â‚·
+            // ä¸Šæ–¹å‘ã«é€Ÿåº¦ã‚’ä¸ãˆã‚‹
+            if (m_Rigidbody != null) m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_jumpForce);
+            // ã‚¸ãƒ£ãƒ³ãƒ—å›æ•°ã‚’å¢—ã‚„ã™
             jumpCount++;
             ChangeState(State.Jump);
         }
@@ -211,22 +217,22 @@ public class PlayScript : MonoBehaviour
     }
     void ModeJump()
     {
-        // •Ç‚ÉÚG‚µ‚Ä‚¨‚è “¯‚¶•ûŒü‚É“ü—Í‚µ‚Ä‚¢‚éê‡
+        // å£ã«æ¥è§¦ã—ã¦ãŠã‚Š åŒã˜æ–¹å‘ã«å…¥åŠ›ã—ã¦ã„ã‚‹å ´åˆ
         if (m_isTouchingWall && Mathf.Sign(moveX) == -Mathf.Sign(m_wallNormal.x))
         {
-            moveX = 0; // •Ç•ûŒü“ü—Í‚ğ–³Œø‰»
+            moveX = 0; // å£æ–¹å‘å…¥åŠ›ã‚’ç„¡åŠ¹åŒ–
         }
-        // ‹ó’†‚Å‚à¶‰EˆÚ“®‚Å‚«‚é‚æ‚¤‚É‚·‚é
+        // ç©ºä¸­ã§ã‚‚å·¦å³ç§»å‹•ã§ãã‚‹ã‚ˆã†ã«ã™ã‚‹
         m_Rigidbody.velocity = new Vector2(moveX * m_runSpeed, m_Rigidbody.velocity.y);
 
-        // Œü‚«”½“]
+        // å‘ãåè»¢
         if (moveX > 0 && !facingRight) Flip();
         else if (moveX < 0 && facingRight) Flip();
 
-        // ƒAƒjƒ[ƒ^[‚É‘¬“x‚ğ”½‰fi‹ó’†‚Å‚à“®‚«‚ª‚ ‚é‚ÉƒAƒjƒ[ƒVƒ‡ƒ“•Ï‚¦‚é—pj
-        m_Animator.SetFloat("Speed", Mathf.Abs(moveX));
+        // ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚¿ãƒ¼ã«é€Ÿåº¦ã‚’åæ˜ ï¼ˆç©ºä¸­ã§ã‚‚å‹•ããŒã‚ã‚‹æ™‚ã«ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³å¤‰ãˆã‚‹ç”¨ï¼‰
+        if (m_Animator != null) m_Animator.SetFloat("Speed", Mathf.Abs(moveX));
 
-        // ó‘Ô‚ğIdle‚É–ß‚·‚Ì‚Íu’…’n‚µ‚½‚çv
+        // çŠ¶æ…‹ã‚’Idleã«æˆ»ã™ã®ã¯ã€Œç€åœ°ã—ãŸã‚‰ã€
         StartCoroutine(CheckLanding());
     }
     void ModeAttack() { }
@@ -237,12 +243,12 @@ public class PlayScript : MonoBehaviour
 
     }
 
-    //ƒXƒe[ƒgƒ`ƒFƒ“ƒWŠÖ”
+    //ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚§ãƒ³ã‚¸é–¢æ•°
     void ChangeState(State newState)
     {
         CurrentState = newState;
     }
-    //”½“]‚ÌŠÖ”
+    //åè»¢ã®é–¢æ•°
     void Flip()
     {
         facingRight = !facingRight;
@@ -252,21 +258,24 @@ public class PlayScript : MonoBehaviour
     }
     void LockFall()
     {
-        // ˆÚ“®‚âƒWƒƒƒ“ƒv‚ğ~‚ß‚é
+        // ç§»å‹•ã‚„ã‚¸ãƒ£ãƒ³ãƒ—ã‚’æ­¢ã‚ã‚‹
         CurrentState = State.Die;
-        m_Rigidbody.velocity = Vector2.zero;
+        if (m_Rigidbody != null)
+        {
+            m_Rigidbody.velocity = Vector2.zero;
 
-        // X•ûŒü‚ÌˆÚ“®‚à“€Œ‹‚µ‚Ä—‰º‚Ì‚İ
-        m_Rigidbody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+            // Xæ–¹å‘ã®ç§»å‹•ã‚‚å‡çµã—ã¦è½ä¸‹ã®ã¿
+            m_Rigidbody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
+        }
 
-        // UI•\¦
-        m_image.SetActive(true);
+        // UIè¡¨ç¤º
+        if (m_image != null) m_image.SetActive(true);
     }
 
 
     bool CheckGrounded()
     {
-        // ‘«Œ³‚©‚ç‰º•ûŒü‚ÉRay‚ğ”ò‚Î‚·
+        // è¶³å…ƒã‹ã‚‰ä¸‹æ–¹å‘ã«Rayã‚’é£›ã°ã™
         RaycastHit2D hit = Physics2D.Raycast(m_Ground.position, Vector2.down, m_groundCheck, m_Layer);
         return hit.collider != null;
     }
@@ -276,19 +285,19 @@ public class PlayScript : MonoBehaviour
     }
     IEnumerator CheckLanding()
     {
-        // ‹ó’†‚É‚¢‚éŠÔ‚Í‘Ò‹@
+        // ç©ºä¸­ã«ã„ã‚‹é–“ã¯å¾…æ©Ÿ
         yield return new WaitUntil(() => isGrounded);
 
-        // ’…’n‚µ‚½‚çIdle‚É–ß‚·
+        // ç€åœ°ã—ãŸã‚‰Idleã«æˆ»ã™
         ChangeState(State.Idle);
     }
-    //•Ç‚Ìcollision‚ÉG‚ê‚½‚ç
+    //å£ã®collisionã«è§¦ã‚ŒãŸã‚‰
     private void OnCollisionStay2D(Collision2D collision)
     {
-        //‚·‚×‚Ä‚ÌÚG“_‚ğ1‚Â‚¸‚Âæ‚èo‚µ‚Ä‚»‚ÌÚG“_‚ÌŒü‚«‚ğ’²‚×‚Ä‚¢‚é
+        //ã™ã¹ã¦ã®æ¥è§¦ç‚¹ã‚’1ã¤ãšã¤å–ã‚Šå‡ºã—ã¦ãã®æ¥è§¦ç‚¹ã®å‘ãã‚’èª¿ã¹ã¦ã„ã‚‹
         foreach (var contact in collision.contacts)
         {
-            // ¶‰E•ûŒü‚Ì•Ç‚©”»’è
+            // å·¦å³æ–¹å‘ã®å£ã‹åˆ¤å®š
             if (Mathf.Abs(contact.normal.x) > 0.5f)
             {
                 m_isTouchingWall = true;
@@ -297,12 +306,12 @@ public class PlayScript : MonoBehaviour
             }
         }
     }
-    //•Ç‚Ìcollision‚ÉG‚ê‚½‚ç
+    //å£ã®collisionã«è§¦ã‚ŒãŸã‚‰
     private void OnCollisionExit2D(Collision2D collision)
     {
         m_isTouchingWall = false;
     }
-    //ƒZ[ƒuƒ|ƒCƒ“ƒg‚ÉG‚ê‚½‚çƒvƒŒƒCƒ„[‚ÌƒXƒ|[ƒ“‚ÌˆÊ’u•ÏX
+    //ã‚»ãƒ¼ãƒ–ãƒã‚¤ãƒ³ãƒˆã«è§¦ã‚ŒãŸã‚‰ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ã‚¹ãƒãƒ¼ãƒ³ã®ä½ç½®å¤‰æ›´
     public void UpdateSavePoint(Vector3 pos)
     {
         m_LastSavePosition = pos;
@@ -318,19 +327,76 @@ public class PlayScript : MonoBehaviour
                 point?.Respawn();
         }
 
-        // ’Êí‚ÌƒZ[ƒuƒ|ƒCƒ“ƒgƒŠƒXƒ|[ƒ“
-        m_image.SetActive(false);
+        // é€šå¸¸ã®ã‚»ãƒ¼ãƒ–ãƒã‚¤ãƒ³ãƒˆãƒªã‚¹ãƒãƒ¼ãƒ³
+        if (m_image != null) m_image.SetActive(false);
         transform.position = m_LastSavePosition;
         foreach (var point in m_RespawnPoint)
             point?.Respawn();
 
-        m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
-        m_Rigidbody.velocity = Vector2.zero;
+        if (m_Rigidbody != null)
+        {
+            m_Rigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+            m_Rigidbody.velocity = Vector2.zero;
+        }
         CurrentState = State.Idle;
-        m_Parameta.m_Hp = m_Parameta.m_MaxHp;
+        if (m_Parameta != null) m_Parameta.m_Hp = m_Parameta.m_MaxHp;
 
         m_IsRespawning = false;
 
-        Debug.Log("ƒŠƒXƒ|[ƒ“I");
+        Debug.Log("ãƒªã‚¹ãƒãƒ¼ãƒ³ï¼");
+    }    /// <summary>
+    /// ã‚¹ãƒãƒ›UIã‹ã‚‰ç§»å‹•å…¥åŠ›ã‚’å—ã‘å–ã‚‹é–¢æ•°
+    /// </summary>
+    public void SetMobileInput(float horizontalInput)
+    {
+        m_MobileHorizontal = horizontalInput;
+    }
+
+    /// <summary>
+    /// ã‚¹ãƒãƒ›UIã‹ã‚‰ã‚¸ãƒ£ãƒ³ãƒ—ã‚’å‘¼ã³å‡ºã™ãŸã‚ã®é–¢æ•°
+    /// </summary>
+    public void MobileJump()
+    {
+        if (CurrentState == State.Die || m_IsRespawning) return;
+
+        if (jumpCount < maxJumpCount)
+        {
+            if (m_jump != null && m_jump.Length > 0)
+            {
+                int index = Mathf.Clamp(jumpCount, 0, m_jump.Length - 1);
+                if (m_Audio != null && m_jump[index] != null)
+                {
+                    m_Audio.PlayOneShot(m_jump[index]);
+                }
+            }
+            if (m_Rigidbody != null) m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_jumpForce);
+            jumpCount++;
+            ChangeState(State.Jump);
+        }
+    }
+
+    // ã‚¹ãƒãƒ›æ“ä½œç”¨ã®æ”»æ’ƒãƒ•ãƒ©ã‚°
+    private bool m_MobileAttackFlag = false;
+
+    /// <summary>
+    /// ã‚¹ãƒãƒ›UIã‹ã‚‰æ”»æ’ƒã‚’å‘¼ã³å‡ºã™ãŸã‚ã®é–¢æ•°
+    /// </summary>
+    public void MobileAttack()
+    {
+        if (CurrentState == State.Die || m_IsRespawning) return;
+        m_MobileAttackFlag = true;
+    }
+
+    /// <summary>
+    /// ãƒ¢ãƒã‚¤ãƒ«æ”»æ’ƒãƒ•ãƒ©ã‚°ã‚’å–å¾—ã—ã¦ãƒªã‚»ãƒƒãƒˆã™ã‚‹ï¼ˆplayershootã‹ã‚‰å‘¼ã°ã‚Œã‚‹ï¼‰
+    /// </summary>
+    public bool ConsumeMobileAttack()
+    {
+        if (m_MobileAttackFlag)
+        {
+            m_MobileAttackFlag = false;
+            return true;
+        }
+        return false;
     }
 }

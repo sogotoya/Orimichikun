@@ -5,17 +5,17 @@ using UnityEngine;
 public class PlayerMoveStart : MonoBehaviour
 {
     [SerializeField]
-    [Header("Boss���A�^�b�`")]
+    [Header("Bossをアタッチ")]
     GameObject m_Boss;
 
-    [Header("Player�ɂ��Ă���X�N���v�g���A�^�b�`")]
+    [Header("Playerについているスクリプトをアタッチ")]
     [SerializeField]
     PlayScript m_PalyerController;
     [SerializeField]
     playershoot m_TutorialPlayershoot;
     [SerializeField]
     PlayerJump m_PlayerJump;
-    //1��݂̂̋N���p
+    //1回のみの起動用
     bool m_ChangeFlag=false;
     private void Awake()
     {

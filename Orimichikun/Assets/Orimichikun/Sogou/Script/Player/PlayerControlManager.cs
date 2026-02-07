@@ -1,4 +1,4 @@
-//ƒvƒŒƒCƒ„[‚Ì‘€ìonAoff‚Å‚«‚éƒXƒNƒŠƒvƒg
+//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®æ“ä½œonã€offã§ãã‚‹ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +10,7 @@ public class PlayerControlManager : MonoBehaviour
     [SerializeField]
     playershoot m_PS;
 
-    [Header("‘€ì‰Â”\”»’fƒtƒ‰ƒO")]
+    [Header("æ“ä½œå¯èƒ½åˆ¤æ–­ãƒ•ãƒ©ã‚°")]
     public bool m_IsAllPlaying = false;
     public bool m_IsSPPlaying = false;
     public bool m_IsPSPlaying = false;
@@ -19,7 +19,7 @@ public class PlayerControlManager : MonoBehaviour
     {
         if (m_SP == null || m_PS == null)
         {
-            Debug.LogError("ƒAƒ^ƒbƒ`‚µ‚Ä‰º‚³‚¢", this);
+            Debug.LogError("ã‚¢ã‚¿ãƒƒãƒã—ã¦ä¸‹ã•ã„", this);
         }
         m_SP.enabled = false;
         m_PS.enabled = false;
@@ -27,7 +27,7 @@ public class PlayerControlManager : MonoBehaviour
 
     private void Update()
     {
-        //m_IsPlaying‚ªtrue‚¾‚Á‚½‚çONAfalse‚È‚çOFF
+        //m_IsPlayingãŒtrueã ã£ãŸã‚‰ONã€falseãªã‚‰OFF
         if (m_IsAllPlaying&&!m_IsSPPlaying&&!m_IsPSPlaying)
         {
             m_SP.enabled = true;

@@ -2,44 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// ƒ`ƒ…[ƒgƒŠƒAƒ‹‚Ì•\¦‚âƒXƒ|[ƒ“ŠÇ—
+/// ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«ã®è¡¨ç¤ºã‚„ã‚¹ãƒãƒ¼ãƒ³ç®¡ç†
 /// </summary>
 public class TriggerManager : MonoBehaviour
 {
-    //ƒWƒƒƒ“ƒv•\¦
+    //ã‚¸ãƒ£ãƒ³ãƒ—è¡¨ç¤º
     public bool m_IsJump;
 
 
-    //ƒ_ƒuƒ‹ƒWƒƒƒ“ƒv•\¦
+    //ãƒ€ãƒ–ãƒ«ã‚¸ãƒ£ãƒ³ãƒ—è¡¨ç¤º
     public bool m_IsDoubleJump;
-    //’e•\¦
+    //å¼¾è¡¨ç¤º
     public bool m_IsAttackTama;
-    //”wŒi“®‚«ŠJn
+    //èƒŒæ™¯å‹•ãé–‹å§‹
     public bool m_IsMoveTitle;
-    //“G•\¦
+    //æ•µè¡¨ç¤º
     public bool m_IsEnemy;
-    //ƒ^ƒCƒgƒ‹‚©‚ç‚ÌˆÚsƒtƒ‰ƒO
+    //ã‚¿ã‚¤ãƒˆãƒ«ã‹ã‚‰ã®ç§»è¡Œãƒ•ãƒ©ã‚°
     public bool m_IsTitle=false;
-    [Header("“G‚ÌoŒ»ˆÊ’u‚ÆƒvƒŒƒnƒu")]
+    [Header("æ•µã®å‡ºç¾ä½ç½®ã¨ãƒ—ãƒ¬ãƒãƒ–")]
     [SerializeField]
     GameObject m_Enemy;
     [SerializeField]
     Transform m_Tf;
-    bool m_IsSpown;//1‰ñ‚Ì‚İ¶¬
+    bool m_IsSpown;//1å›ã®ã¿ç”Ÿæˆ
 
 
     [SerializeField]
-    [Header("ƒS[ƒXƒgƒWƒƒƒ“ƒvƒAƒjƒ[ƒVƒ‡ƒ“‚ª“ü‚Á‚Ä‚¢‚éƒIƒuƒWƒFƒNƒg")]
+    [Header("ã‚´ãƒ¼ã‚¹ãƒˆã‚¸ãƒ£ãƒ³ãƒ—ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒå…¥ã£ã¦ã„ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ")]
     GameObject m_GhostJump;
     [SerializeField]
-    [Header("ƒS[ƒXƒgƒ_ƒuƒ‹ƒWƒƒƒ“ƒvƒAƒjƒ[ƒVƒ‡ƒ“‚ª“ü‚Á‚Ä‚¢‚éƒIƒuƒWƒFƒNƒg")]
+    [Header("ã‚´ãƒ¼ã‚¹ãƒˆãƒ€ãƒ–ãƒ«ã‚¸ãƒ£ãƒ³ãƒ—ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒå…¥ã£ã¦ã„ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ")]
     GameObject m_GhostDoubleJump;
-    [Header("ƒS[ƒXƒgƒ_ƒuƒ‹ƒWƒƒƒ“ƒvƒAƒjƒ[ƒVƒ‡ƒ“‚ª“ü‚Á‚Ä‚¢‚éƒIƒuƒWƒFƒNƒg")]
+    [Header("ã‚´ãƒ¼ã‚¹ãƒˆãƒ€ãƒ–ãƒ«ã‚¸ãƒ£ãƒ³ãƒ—ã‚¢ãƒ‹ãƒ¡ãƒ¼ã‚·ãƒ§ãƒ³ãŒå…¥ã£ã¦ã„ã‚‹ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ")]
     [SerializeField]
     GameObject m_GhostAttackObj;
     [SerializeField]
     GameObject m_GhostTama;
-    [Header("”wŒi‚ğ“®‚©‚·ƒIƒuƒWƒFƒNƒg")]
+    [Header("èƒŒæ™¯ã‚’å‹•ã‹ã™ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ")]
     [SerializeField]
     GameObject m_HaikeiMoveObj;
     [SerializeField]
@@ -52,7 +52,7 @@ public class TriggerManager : MonoBehaviour
     GameObject m_Title;
     private void Update()
     {
-        //”ÍˆÍ“à‚É‚¢‚é‚È‚ç•\¦E”ÍˆÍ“à‚É‚¢‚È‚¯‚ê‚Î”ñ•\¦
+        //ç¯„å›²å†…ã«ã„ã‚‹ãªã‚‰è¡¨ç¤ºãƒ»ç¯„å›²å†…ã«ã„ãªã‘ã‚Œã°éè¡¨ç¤º
         if (m_IsJump)
         {
             m_GhostJump.SetActive(true);
@@ -102,7 +102,7 @@ public class TriggerManager : MonoBehaviour
 
 
     /// <summary>
-    /// “G‚Ì¶¬
+    /// æ•µã®ç”Ÿæˆ
     /// </summary>
     void EnemySpown()
     {

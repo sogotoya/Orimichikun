@@ -1,4 +1,4 @@
-//ƒWƒƒƒ“ƒvˆ—
+//ã‚¸ãƒ£ãƒ³ãƒ—å‡¦ç†
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,14 +12,14 @@ public class PlayerJump : MonoBehaviour
     {
         if(m_Rigidbody2D == null)
         {
-            Debug.LogError("Rigidbody‚ªƒAƒ^ƒbƒ`‚³‚ê‚Ä‚¢‚Ü‚¹‚ñ");
+            Debug.LogError("RigidbodyãŒã‚¢ã‚¿ãƒƒãƒã•ã‚Œã¦ã„ã¾ã›ã‚“");
         }
     }
     private void Update()
     {
         if (!m_Jumping)
         {
-            //spaceƒL[‚ğ‰Ÿ‚µ‚½‚çƒWƒƒƒ“ƒv‚·‚é
+            //spaceã‚­ãƒ¼ã‚’æŠ¼ã—ãŸã‚‰ã‚¸ãƒ£ãƒ³ãƒ—ã™ã‚‹
             if (Input.GetKeyDown(KeyCode.Space)||Input.GetKeyDown("joystick button 2") || Input.GetKeyDown("joystick button 0") )
             {
                 float jumpPower = 4.0f;
@@ -27,6 +27,20 @@ public class PlayerJump : MonoBehaviour
 
                 m_Jumping = true;
             }
+        }
+    }
+
+    /// <summary>
+    /// ã‚¹ãƒãƒ›UIã‹ã‚‰ã‚¸ãƒ£ãƒ³ãƒ—ã‚’å‘¼ã³å‡ºã™ãŸã‚ã®é–¢æ•°
+    /// </summary>
+    public void MobileJump()
+    {
+        if (!this.enabled) return;
+        if (!m_Jumping && m_Rigidbody2D != null)
+        {
+            float jumpPower = 4.0f;
+            m_Rigidbody2D.velocity = new Vector2(m_Rigidbody2D.velocity.x, jumpPower);
+            m_Jumping = true;
         }
     }
 }
