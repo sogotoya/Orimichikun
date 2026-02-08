@@ -25,14 +25,43 @@ public class SmartPhoneUI : MonoBehaviour
     [Header("コイン・回復管理")]
     public CoinCountManager m_CoinCountManager;
 
+    [Header("スマホUI全体（PCで非表示にするオブジェクト）"), SerializeField]
+    private GameObject m_MobileUIRoot;
+
+    [Header("PCで自動的にUIを非表示にする"), SerializeField]
+    private bool m_AutoHideOnPC = true;
+
     // ボタンが押された時に実行する処理を保持する（タイトル用、TP用など）
     private System.Action m_OnNextStageClick;
+
+    // モバイルデバイスかどうか
+    private bool m_IsMobile = false;
 
     /// <summary>
     /// 開始
     /// </summary>
     private void Start()
     {
+        // 自動非表示機能がオンの場合のみプラットフォーム判定を行う
+        if (m_AutoHideOnPC)
+        {
+            // プラットフォーム判定：モバイルまたはWebGL（タッチ対応）の場合はtrue
+#if UNITY_ANDROID || UNITY_IOS
+            m_IsMobile = true;
+#elif UNITY_WEBGL
+            // WebGLの場合はタッチスクリーンがあるかどうかで判定
+            m_IsMobile = Input.touchSupported;
+#else
+            m_IsMobile = false;
+#endif
+
+            // PCの場合はスマホUI全体を非表示
+            if (m_MobileUIRoot != null)
+            {
+                m_MobileUIRoot.SetActive(m_IsMobile);
+            }
+        }
+
         if (m_NextStageUI != null) m_NextStageUI.SetActive(false);
         if (m_HeelUI != null) m_HeelUI.SetActive(false);
     }
@@ -49,6 +78,9 @@ public class SmartPhoneUI : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// ジャンプ処理
+    /// </summary>
     public void Jamp()
     {
         if (playerScript != null && playerScript.enabled)

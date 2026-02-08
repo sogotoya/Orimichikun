@@ -597,6 +597,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b79b5b79c73112941b754fab68e665a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &426494546 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4102725188693893409, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+  m_PrefabInstance: {fileID: 994782065}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &429947423
 GameObject:
   m_ObjectHideFlags: 0
@@ -2796,20 +2801,100 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1852336426}
     - target: {fileID: 399364658811873955, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_AutoHideOnPC
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 399364658811873955, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_MobileUIRoot
+      value: 
+      objectReference: {fileID: 426494546}
+    - target: {fileID: 399364658811873955, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
       propertyPath: titleJumpScript
       value: 
       objectReference: {fileID: 1852336429}
+    - target: {fileID: 943178396824111567, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9aa8893cad1d1534982e87a8cdb8a599, type: 3}
+    - target: {fileID: 2242059299593184241, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 7b36604c04181e84c9b1b6c8180801ed, type: 3}
+    - target: {fileID: 2650931978580468868, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: d80122248d52cc946a82ef5fa3be3fc4, type: 3}
+    - target: {fileID: 3245787161335594008, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_AutoHideOnPC
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3245787161335594008, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_MobileUIRoot
+      value: 
+      objectReference: {fileID: 426494546}
     - target: {fileID: 3426623150375527382, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
       propertyPath: playerScript
       value: 
       objectReference: {fileID: 1852336426}
     - target: {fileID: 3426623150375527382, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_AutoHideOnPC
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3426623150375527382, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_MobileUIRoot
+      value: 
+      objectReference: {fileID: 426494546}
+    - target: {fileID: 3426623150375527382, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
       propertyPath: titleJumpScript
       value: 
       objectReference: {fileID: 1852336429}
+    - target: {fileID: 3645345136629077569, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.137
+      objectReference: {fileID: 0}
+    - target: {fileID: 3645345136629077569, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.137
+      objectReference: {fileID: 0}
+    - target: {fileID: 3645345136629077569, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.137
+      objectReference: {fileID: 0}
     - target: {fileID: 4102725188693893409, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
       propertyPath: m_Name
       value: SmartPhoneUICanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4152015983367254714, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: f764a01b1967de94daa1b810b6e5bdd2, type: 3}
+    - target: {fileID: 5218303761405800889, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.1374
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218303761405800889, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.1374
+      objectReference: {fileID: 0}
+    - target: {fileID: 5218303761405800889, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.1374
+      objectReference: {fileID: 0}
+    - target: {fileID: 6255424811905248781, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.1226146
+      objectReference: {fileID: 0}
+    - target: {fileID: 6255424811905248781, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.1226146
+      objectReference: {fileID: 0}
+    - target: {fileID: 6255424811905248781, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.1226146
+      objectReference: {fileID: 0}
+    - target: {fileID: 6492070367606977752, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 134.6
       objectReference: {fileID: 0}
     - target: {fileID: 7343989752187795498, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
       propertyPath: m_Pivot.x
@@ -2895,6 +2980,14 @@ PrefabInstance:
       propertyPath: playerScript
       value: 
       objectReference: {fileID: 1852336426}
+    - target: {fileID: 9057384147181616584, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_AutoHideOnPC
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9057384147181616584, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_MobileUIRoot
+      value: 
+      objectReference: {fileID: 426494546}
     - target: {fileID: 9057384147181616584, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
       propertyPath: titleJumpScript
       value: 

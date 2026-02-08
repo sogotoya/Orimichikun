@@ -108,8 +108,11 @@ public class CoinCountManager : MonoBehaviour
             m_CoinReset= false;
             m_RecoveryCount = 0;
             m_CoinCount = 0;
-            ChangeSenseCoin.m_InstanceCoin.CS_CoinCount = 0;
-            ChangeSenseCoin.m_InstanceCoin.CS_RecoveryCount = 0;
+            if (ChangeSenseCoin.m_InstanceCoin != null)
+            {
+                ChangeSenseCoin.m_InstanceCoin.CS_CoinCount = 0;
+                ChangeSenseCoin.m_InstanceCoin.CS_RecoveryCount = 0;
+            }
 
             UpdateCoinText(); 
             UpdateRecoveryText();
