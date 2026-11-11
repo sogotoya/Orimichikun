@@ -1,66 +1,45 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+ï»¿//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‚«ãƒ¡ãƒ©ã‚’ã‚ºãƒ¼ãƒ ã•ã›ã‚‹ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
+//ã‚ºãƒ¼ãƒ ç”¨ã®ä»®æƒ³ã‚«ãƒ¡ãƒ©ã®å„ªå…ˆåº¦ã‚’ä¸Šã’ã¦åˆ‡ã‚Šæ›¿ãˆã‚‹ï¼ˆåˆ‡ã‚Šæ›¿ãˆã®é€Ÿã•ã¯ CinemachineBrain ã® Blend è¨­å®šï¼‰
 using Cinemachine;
+using UnityEngine;
+
 public class ZoomObject : MonoBehaviour
 {
-    [SerializeField]
-    [Header("ƒY[ƒ€‚µ‚½‚¢ƒIƒuƒWƒFƒNƒg")]
+    //CameraManager ã®å„ªå…ˆåº¦ï¼ˆ20ï¼‰ã‚ˆã‚Šé«˜ãã—ã¦ã‚ºãƒ¼ãƒ ã‚’å„ªå…ˆã™ã‚‹
+    const int k_ZoomPriority = 30;
+    const int k_IdlePriority = 0;
+
+    [Header("ã‚ºãƒ¼ãƒ ã—ãŸã„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ")]
     public GameObject m_ZoomObj;
 
     [SerializeField]
-    [Header("ƒY[ƒ€‚·‚éƒJƒƒ‰")]
-    Camera m_ZoomCamera;
+    [Header("ã‚ºãƒ¼ãƒ ç”¨ã®ä»®æƒ³ã‚«ãƒ¡ãƒ©")]
+    CinemachineVirtualCamera m_ZoomVcam;
 
     [SerializeField]
-    [Header("ƒY[ƒ€ƒXƒs[ƒh")]
-    float m_ZoomSpeed = 0.1f;
+    [Header("ã‚ºãƒ¼ãƒ æ™‚ã® FOV")]
+    float m_TargetSize = 20f;
 
-    [SerializeField]
-    [Header("–Ú•WƒY[ƒ€ƒTƒCƒY")]
-    float m_TargetSize = 3f;
-
-    [SerializeField]
-    [Tooltip("ƒY[ƒ€‚·‚é‚©‚µ‚È‚¢‚©”»’èƒtƒ‰ƒO")]
+    [Tooltip("ã‚ºãƒ¼ãƒ ã™ã‚‹ã‹ã—ãªã„ã‹ã‚’æ±ºã‚ã‚‹ãƒ•ãƒ©ã‚°")]
     public bool m_IsZoomFlag;
-
-    //ƒJƒƒ‰‚ÌÅ‰‚ÌÀ•W‚ğ•Û‘¶‚·‚é•Ï”
-    Vector3 m_CameraPos;
-
-    //ƒJƒƒ‰‚ÌŒ³‚ÌFOVƒTƒCƒY
-    float m_CameraFOV = 0f;
 
     private void Start()
     {
-        //‰Šú’l‘ã“ü
-        m_CameraPos = m_ZoomCamera.transform.position;
-        m_CameraFOV = m_ZoomCamera.fieldOfView;
+        if (m_ZoomVcam == null)
+        {
+            Debug.LogError("ã‚¢ã‚¿ãƒƒãƒã—ã¦ãã ã•ã„", this);
+            return;
+        }
+        m_ZoomVcam.m_Lens.FieldOfView = m_TargetSize;
+        m_ZoomVcam.Priority = k_IdlePriority;
     }
 
     private void Update()
     {
-        //ƒY[ƒ€ON
-        if (m_IsZoomFlag)
-        {
-            //ƒJƒƒ‰‚ğƒIƒuƒWƒFƒNƒg‚Ì•ûŒü‚Ö­‚µ‚Ã‚Â‹ß‚Ã‚¯‚é
-            Vector3 targetPos = m_ZoomObj.transform.position;
-            //ZÀ•W‚ÍŒÅ’è(ƒIƒuƒWƒFƒNƒg‚É–„‚à‚ê‚é‘Îô)
-            targetPos.z = m_ZoomCamera.transform.position.z;
-            m_ZoomCamera.transform.position = Vector3.Lerp(m_ZoomCamera.transform.position, targetPos, m_ZoomSpeed * Time.deltaTime);
+        if (m_ZoomVcam == null) return;
 
-            //ƒY[ƒ€‚ğ™X‚É¬‚³‚­‚·‚é
-            m_ZoomCamera.fieldOfView = Mathf.Lerp(m_ZoomCamera.fieldOfView, m_TargetSize, m_ZoomSpeed * Time.deltaTime);
-        }
-        else//ƒY[ƒ€OFF
-        {
-            //ƒJƒƒ‰‚ğƒIƒuƒWƒFƒNƒg‚Ì•ûŒü‚Ö­‚µ‚Ã‚Â‹ß‚Ã‚¯‚é
-            Vector3 targetPos = m_CameraPos;
-            //ZÀ•W‚ÍŒÅ’è(ƒIƒuƒWƒFƒNƒg‚É–„‚à‚ê‚é‘Îô)
-            targetPos.z = m_ZoomCamera.transform.position.z;
-            m_ZoomCamera.transform.position = Vector3.Lerp(m_ZoomCamera.transform.position, targetPos, m_ZoomSpeed * Time.deltaTime);
-
-            //ƒY[ƒ€‚ğ™X‚É¬‚³‚­‚·‚é
-            m_ZoomCamera.fieldOfView = Mathf.Lerp(m_ZoomCamera.fieldOfView, m_CameraFOV, m_ZoomSpeed * Time.deltaTime);
-        }
+        bool zoom = m_IsZoomFlag && m_ZoomObj != null;
+        if (zoom) m_ZoomVcam.Follow = m_ZoomObj.transform;
+        m_ZoomVcam.Priority = zoom ? k_ZoomPriority : k_IdlePriority;
     }
 }

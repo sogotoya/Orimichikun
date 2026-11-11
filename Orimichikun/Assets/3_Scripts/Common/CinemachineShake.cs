@@ -54,6 +54,28 @@ public class CinemachineShake : MonoBehaviour
         m_LoopCoroutine = null;
     }
 
+    /// <summary>
+    /// delay 秒後から duration 秒間揺らし続ける
+    /// </summary>
+    public void ShakeFor(float duration, float delay = 0f)
+    {
+        StopShake();
+        m_LoopCoroutine = StartCoroutine(ShakeForRoutine(duration, delay));
+    }
+
+    IEnumerator ShakeForRoutine(float duration, float delay)
+    {
+        if (delay > 0f) yield return new WaitForSeconds(delay);
+        float end = Time.time + duration;
+        var wait = new WaitForSeconds(m_Duration);
+        while (Time.time < end)
+        {
+            Shake();
+            yield return wait;
+        }
+        m_LoopCoroutine = null;
+    }
+
     IEnumerator ShakeLoop(float delay)
     {
         if (delay > 0f) yield return new WaitForSeconds(delay);

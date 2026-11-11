@@ -1,42 +1,47 @@
-//ƒ{ƒXí‚É‚ÄƒJƒƒ‰‚ğƒvƒŒƒCƒ„[ƒJƒƒ‰AƒXƒe[ƒWƒJƒƒ‰‚ğ•Ï‚¦‚ê‚éƒXƒNƒŠƒvƒg
-using System.Collections;
-using System.Collections.Generic;
+ï»¿//ãƒœã‚¹æˆ¦ã«ã¦ã‚«ãƒ¡ãƒ©ã‚’ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚«ãƒ¡ãƒ©ã€ã‚¹ãƒ†ãƒ¼ã‚¸ã‚«ãƒ¡ãƒ©ã«å¤‰ãˆã‚‹ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
+//Cinemachine ã®ä»®æƒ³ã‚«ãƒ¡ãƒ©ã®å„ªå…ˆåº¦ï¼ˆPriorityï¼‰ã‚’åˆ‡ã‚Šæ›¿ãˆã¦è¡Œã†
+using Cinemachine;
 using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-    //ƒvƒŒƒCƒ„[ƒJƒƒ‰
-    [SerializeField]
-    Camera m_PCamera;
+    //æœ‰åŠ¹ã«ã™ã‚‹å´ã®å„ªå…ˆåº¦ï¼ˆZoomObject ã®ã‚ºãƒ¼ãƒ ã¯ã“ã‚Œã‚ˆã‚Šé«˜ã„ï¼‰
+    const int k_ActivePriority = 20;
+    const int k_InactivePriority = 0;
 
-    //ƒXƒe[ƒWƒJƒƒ‰
+    //ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’è¿½ã†ä»®æƒ³ã‚«ãƒ¡ãƒ©
     [SerializeField]
-    Camera m_SCamera;
+    CinemachineVirtualCameraBase m_PlayerVcam;
+
+    //ã‚¹ãƒ†ãƒ¼ã‚¸å…¨ä½“ã‚’æ˜ ã™ä»®æƒ³ã‚«ãƒ¡ãƒ©
+    [SerializeField]
+    CinemachineVirtualCameraBase m_StageVcam;
 
     private void Start()
     {
-        if (m_PCamera == null || m_SCamera == null)
+        if (m_PlayerVcam == null || m_StageVcam == null)
         {
-            Debug.LogError("ƒAƒ^ƒbƒ`‚µ‚Ä‚­‚¾‚³‚¢", this);
+            Debug.LogError("ã‚¢ã‚¿ãƒƒãƒã—ã¦ãã ã•ã„", this);
+            return;
         }
-        m_SCamera.enabled = false;
+        PlayerCameraChange();
     }
 
     /// <summary>
-    /// ƒvƒŒƒCƒ„[ƒJƒƒ‰‚É•ÏX
+    /// ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚«ãƒ¡ãƒ©ã«å¤‰æ›´
     /// </summary>
     public void PlayerCameraChange()
     {
-        m_SCamera.enabled = false;
-        m_PCamera.enabled = true;
+        m_PlayerVcam.Priority = k_ActivePriority;
+        m_StageVcam.Priority = k_InactivePriority;
     }
 
     /// <summary>
-    /// ƒXƒe[ƒWƒJƒƒ‰‚É•ÏX
+    /// ã‚¹ãƒ†ãƒ¼ã‚¸ã‚«ãƒ¡ãƒ©ã«å¤‰æ›´
     /// </summary>
     public void StageCameraChange()
     {
-        m_PCamera.enabled = false;
-        m_SCamera.enabled=true;
+        m_PlayerVcam.Priority = k_InactivePriority;
+        m_StageVcam.Priority = k_ActivePriority;
     }
 }

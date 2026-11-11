@@ -1,4 +1,4 @@
-//Boss‚ÉŠÖ‚·‚é‚±‚Æ‚ğŠÇ—‚µ‚Ä‚¢‚éƒ}ƒl[ƒWƒƒ[
+ï»¿//Bossã«é–¢ã™ã‚‹ã“ã¨ã‚’ç®¡ç†ã—ã¦ã„ã‚‹ãƒãƒãƒ¼ã‚¸ãƒ£ãƒ¼
 using StateMachineAI;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,15 +8,15 @@ using UnityEngine;
 public class BossManager : MonoBehaviour
 {
     [SerializeField]
-    [Header("ƒXƒe[ƒgƒ}ƒVƒ“ƒIƒuƒWƒFƒNƒg")]
+    [Header("ã‚¹ãƒ†ãƒ¼ãƒˆãƒã‚·ãƒ³ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ")]
     GameObject m_State;
 
     [SerializeField]
-    [Header("ƒ{ƒX‚ÌÄ“oêƒeƒLƒXƒg")]
+    [Header("ãƒœã‚¹ã®å†ç™»å ´ãƒ†ã‚­ã‚¹ãƒˆ")]
     GameObject m_FastText;
 
     [SerializeField]
-    [Header("ƒ{ƒXƒeƒLƒXƒgƒIƒuƒWƒFƒNƒg")]
+    [Header("ãƒœã‚¹ãƒ†ã‚­ã‚¹ãƒˆã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ")]
     GameObject m_FastTextBoss;
 
     [SerializeField]
@@ -27,13 +27,11 @@ public class BossManager : MonoBehaviour
     StartTextManager m_STM;
     [SerializeField]
     PanelHight m_PH;
-    [SerializeField]
-    CameraShake m_CS;
-    [SerializeField]
-    CameraShake m_CS_Boss;
+    [SerializeField, Tooltip("Cinemachine ã§ç”»é¢ã‚’æºã‚‰ã™ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ")]
+    CinemachineShake m_Shake;
     [SerializeField]
     BossCollarChange m_BCC;
-    [Header("ƒ{ƒX")]
+    [Header("ãƒœã‚¹")]
     public GameObject m_BossObj;
     public AITester_StateMachine m_AITSM;
 
@@ -42,11 +40,11 @@ public class BossManager : MonoBehaviour
     [SerializeField]
     AudioSource m_Houkou;
 
-    //1‰ñ‚Ì‚İŒÄ‚Ño‚·‘Îô
+    //1å›ã®ã¿å‘¼ã³å‡ºã™å¯¾ç­–
     bool m_Flag=false;
     bool m_RoarFlag=false;
     bool m_CSFlag = false;
-    public bool m_BossAnger = false;//“{‚èó‘Ô‚©‚Ç‚¤‚©‚ÌŠm”Fƒtƒ‰ƒO
+    public bool m_BossAnger = false;//æ€’ã‚ŠçŠ¶æ…‹ã‹ã©ã†ã‹ã®ç¢ºèªãƒ•ãƒ©ã‚°
     public bool m_BossDie=false;
     [SerializeField]
     public GameObject m_Clear;
@@ -61,25 +59,25 @@ public class BossManager : MonoBehaviour
         m_AB = m_FastTextBoss.GetComponentInChildren<ApproachBoss>();
         if (m_FastText == null || m_BS == null|| m_AB==null||m_STM==null||m_PCM==null||m_BTM==null)
         {
-            Debug.LogError("ƒAƒ^ƒbƒ`‚µ‚Ä‚­‚¾‚³‚¢",this);
+            Debug.LogError("ã‚¢ã‚¿ãƒƒãƒã—ã¦ãã ã•ã„",this);
         }
         m_FastText.SetActive(false);
     }
 
     private void Update()
     {
-        //ƒ{ƒX‚ªoŒ»‚µ‚½‚çˆÚ“®ŠJn
+        //ãƒœã‚¹ãŒå‡ºç¾ã—ãŸã‚‰ç§»å‹•é–‹å§‹
         if (m_BS.m_BossFlag && !m_CSFlag)
         {
             StartCoroutine(m_AB.BossMoveStart());
-            //ˆÚ“®Š®—¹‚µ‚½‚ç‰ï˜bŠJn
+            //ç§»å‹•å®Œäº†ã—ãŸã‚‰ä¼šè©±é–‹å§‹
             if (m_AB.m_ApFlag)
             {
                 m_Move.Stop();
                 m_FastText.SetActive(true);
             }
         }
-        //‰ï˜bI‚í‚èŠÔÛ™ôšKŠJn
+        //ä¼šè©±çµ‚ã‚ã‚Šé–“éš›å’†å“®é–‹å§‹
         if(m_STM.m_ContactFlag == true&&!m_CSFlag)
         {
             m_Houkou.enabled = true;
@@ -90,21 +88,22 @@ public class BossManager : MonoBehaviour
                 Animator anim = m_FastTextBoss.GetComponentInChildren<Animator>();
                 anim.SetTrigger("Roar");
                 StartCoroutine(EndText());
+                //å’†å“®ã®æºã‚Œï¼ˆ0.78ç§’å¾Œã‹ã‚‰ã€ä¼šè©±çµ‚äº†ã®å°‘ã—å¾Œã¾ã§ï¼‰
+                m_Shake.ShakeFor(2.5f, 0.78f);
             }
-            StartCoroutine(m_CS.Shake(0.5f, 0.1f,0.78f));
             m_Houkou.Stop();
         }
 
-        //“{‚èó‘Ô‚Ì•Ï‰»ŠJn
+        //æ€’ã‚ŠçŠ¶æ…‹ã®å¤‰åŒ–é–‹å§‹
         if(m_BossAnger)
         {
-            //F•Ï‰»ŠJn
+            //è‰²å¤‰åŒ–é–‹å§‹
             if (!m_BCC.m_CollarChangeFlag)
             {
                 m_BCC.m_CollarChangeFlag = true;
                 m_BCC.CollarChangeStart();
-                //‰æ–Ê‚Ì—h‚ê
-                StartCoroutine(m_CS_Boss.BossShake(3f, 0.1f, 0.78f, m_CS_Boss.transform));
+                //ç”»é¢ã®æºã‚Œ
+                m_Shake.ShakeFor(3f, 0.78f);
             }
 
         }
@@ -116,7 +115,7 @@ public class BossManager : MonoBehaviour
     }
 
 
-    //‰ï˜bI—¹‚ÉŒÄ‚Î‚ê‚éƒRƒ‹[ƒ`ƒ“
+    //ä¼šè©±çµ‚äº†æ™‚ã«å‘¼ã°ã‚Œã‚‹ã‚³ãƒ«ãƒ¼ãƒãƒ³
     IEnumerator EndText()
     {
         yield return new WaitForSeconds(2.0f);

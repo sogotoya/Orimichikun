@@ -1,4 +1,4 @@
-//BossíƒvƒŒƒCƒ„[‚É‹ß‚Ã‚­‚½‚ß‚ÌƒXƒNƒŠƒvƒg
+ï»¿//Bossæˆ¦æ™‚ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«è¿‘ã¥ããŸã‚ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,41 +8,50 @@ public class ApproachBoss : MonoBehaviour
     [SerializeField]
     GameObject m_Player;
 
-    [SerializeField]
-    CameraShake m_CameraShake;
+    [SerializeField, Tooltip("Cinemachine ã§ç”»é¢ã‚’æºã‚‰ã™ã‚³ãƒ³ãƒãƒ¼ãƒãƒ³ãƒˆ")]
+    CinemachineShake m_Shake;
 
     public bool m_ApFlag=false;
 
-    // ƒvƒŒƒCƒ„[‚É‹ß‚Ã‚­ƒXƒs[ƒh
+    //è‡ªåˆ†ãŒæºã‚Œã‚’å§‹ã‚ãŸã‹ï¼ˆä»–ã®æºã‚Œã‚’æ­¢ã‚ãªã„ãŸã‚ï¼‰
+    bool m_IsShaking = false;
+
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«è¿‘ã¥ãã‚¹ãƒ”ãƒ¼ãƒ‰
     float m_MoveSpeed = 1.0f;
 
-    // ƒvƒŒƒCƒ„[‚É‚Ç‚±‚Ü‚Å‹ß‚Ã‚­‚©i’â~‹——£j
+    // ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ã©ã“ã¾ã§è¿‘ã¥ãã‹ï¼ˆåœæ­¢è·é›¢ï¼‰
     float m_StopDistance = 2f;
 
     public IEnumerator BossMoveStart()
     {
-        //ƒRƒ‹[ƒ`ƒ“~‚ß‚é‚½‚ß‚Ì•Û‘¶
-        Coroutine shakeCoroutine = StartCoroutine(m_CameraShake.Shake(0.5f, 0.1f,0.5f));
-
         Vector2 dir = m_Player.transform.position - transform.position;
-        //À•W‚ª‹ó’†‚É‚È‚é‚½‚ßY‚Í0
+        //åº§æ¨™ãŒç©ºä¸­ã«ãªã‚‹ãŸã‚Yã¯0
         dir.y = 0f;
         float distance = dir.magnitude;
-        //Debug.Log($"‹——£: {m_Distance}, ’â~‹——£: {m_StopDistance}");
+        //Debug.Log($"è·é›¢: {m_Distance}, åœæ­¢è·é›¢: {m_StopDistance}");
 
         if (distance > m_StopDistance)
         {
-            // ˆÚ“®
+            // ç§»å‹•ï¼ˆç§»å‹•ä¸­ã¯ 0.5 ç§’å¾Œã‹ã‚‰æºã‚‰ã—ç¶šã‘ã‚‹ï¼‰
+            if (!m_IsShaking)
+            {
+                m_IsShaking = true;
+                m_Shake.StartShake(0.5f);
+            }
             Vector3 move = dir.normalized * m_MoveSpeed * Time.deltaTime;
             transform.position += move;
         }
-        else//w’è‚µ‚½’n“_‚É‚Â‚¢‚½
+        else//æŒ‡å®šã—ãŸåœ°ç‚¹ã«ã¤ã„ãŸ
         {
-            //‘Îô
-            StopCoroutine(shakeCoroutine);
+            //è‡ªåˆ†ã§å§‹ã‚ãŸæºã‚Œã ã‘æ­¢ã‚ã‚‹
+            if (m_IsShaking)
+            {
+                m_IsShaking = false;
+                m_Shake.StopShake();
+            }
             yield return new WaitForSeconds(1f);
             m_ApFlag = true;
-            Debug.Log("“’…");
+            Debug.Log("åˆ°ç€");
         }
     }
 }
