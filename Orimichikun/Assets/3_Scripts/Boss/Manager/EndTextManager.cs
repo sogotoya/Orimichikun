@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,11 +7,11 @@ public class EndTextManager : MonoBehaviour
     public System.Action EndBoss;
 
     [SerializeField]
-    [Header("ƒRƒƒ“ƒg")]
+    [Header("ã‚³ãƒ¡ãƒ³ãƒˆ")]
     GameObject[] m_Renderer;
-    //ŒJ‚è•Ô‚µŒÄ‚Î‚ê‚È‚¢‘Îô
+    //ç¹°ã‚Šè¿”ã—å‘¼ã°ã‚Œãªã„å¯¾ç­–
     bool m_EndContactFlag = false;
-    //1‰ñ‚Ì‚İŒÄ‚Î‚ê‚éƒtƒ‰ƒO
+    //1å›ã®ã¿å‘¼ã°ã‚Œã‚‹ãƒ•ãƒ©ã‚°
     bool m_Flag = false;
     private void Start()
     {
@@ -22,11 +22,11 @@ public class EndTextManager : MonoBehaviour
     }
 
     /// <summary>
-    /// ÅI‰ï˜bƒXƒ^[ƒg
+    /// æœ€çµ‚ä¼šè©±ã‚¹ã‚¿ãƒ¼ãƒˆ
     /// </summary>
     public void EndTextStart()
     {
-        //1‰ñ‚Ì‚İ‹N“®
+        //1å›ã®ã¿èµ·å‹•
         if (!m_EndContactFlag)
         {
             StartCoroutine(Contact());
@@ -34,16 +34,16 @@ public class EndTextManager : MonoBehaviour
         }
     }
     /// <summary>
-    /// ‚»‚ê‚¼‚ê‚ÌƒRƒƒ“ƒg‡‚É•\¦
+    /// ãã‚Œãã‚Œã®ã‚³ãƒ¡ãƒ³ãƒˆé †ã«è¡¨ç¤º
     /// </summary>
     /// <returns></returns>
     public IEnumerator Contact()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(MessageTiming.StartDelay);
         for (int i = 0; m_Renderer.Length > i; i++)
         {
             m_Renderer[i].SetActive(true);
-            yield return new WaitForSeconds(5.0f);
+            yield return new WaitForSeconds(MessageTiming.DisplayTime);
             m_Renderer[i].SetActive(false);
         }
         EndBoss.Invoke();

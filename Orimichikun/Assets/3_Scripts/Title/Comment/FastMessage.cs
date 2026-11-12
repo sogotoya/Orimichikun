@@ -50,30 +50,30 @@ public class FastMessage : MonoBehaviour
     /// <returns></returns>
     public IEnumerator Contact()
     {
-        yield return new WaitForSeconds(1.0f);
+        yield return new WaitForSeconds(MessageTiming.StartDelay);
         for (int i = 0; m_Renderer.Length > i; i++)
         {
+            //会話を表示して、決まった秒数（MessageTiming.DisplayTime）で次へ切り替える
             m_Renderer[i].SetActive(true);
+            yield return new WaitForSeconds(MessageTiming.DisplayTime);
+            m_Renderer[i].SetActive(false);
 
-            yield return new WaitForSeconds(5.0f);
-            //0番目だった場合: コインを奪われる
+            //0番目の会話の後: コインを奪われる
             if(i==0)
             {
                 if (m_CoinSteal != null)
                 {
-                    //会話を消してから、攻撃 → 暗転 → 被ダメの演出
-                    m_Renderer[i].SetActive(false);
+                    //攻撃 → 暗転 → 被ダメの演出
                     yield return m_CoinSteal.Play();
                     yield return new WaitForSeconds(1.0f);
-                    continue;
                 }
-
-                //従来: 暗転してボスがコインを持つ
-                m_PH.Hight();
-                m_EnemyCoin.SetActive(true);
+                else
+                {
+                    //従来: 暗転してボスがコインを持つ
+                    m_PH.Hight();
+                    m_EnemyCoin.SetActive(true);
+                }
             }
-            yield return new WaitForSeconds(1.5f);
-            m_Renderer[i].SetActive(false);
         }
         //Contact()終わったのでtrue
         m_ContactFlag = true;
