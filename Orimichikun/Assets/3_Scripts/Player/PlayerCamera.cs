@@ -86,6 +86,11 @@ public class PlayerCamera : MonoBehaviour
         // 現在位置から目標位置へスムーズに移動
         m_FollowPos = Vector3.Lerp(m_FollowPos, desiredPosition, m_smoothSpeed);
 
+        // 上の「プレイヤーが動いた分だけ追従位置も動かす」処理で制限を超えてしまうため、ここでも制限する
+        // （超えたまま Lerp で押し戻されると、ジャンプの頂点付近でカメラが震え、背景の外が見えていた）
+        m_FollowPos.x = Mathf.Clamp(m_FollowPos.x, minX, maxX);
+        m_FollowPos.y = Mathf.Clamp(m_FollowPos.y, minY, maxY);
+
         // 区間カメラの目標を更新（範囲を出た後は最後の値を使って戻る）
         if (m_Area != null)
         {
