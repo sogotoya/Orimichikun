@@ -18,6 +18,8 @@ public class TP : MonoBehaviour
     public PlayScript m_PlayScript;
     [Header("スマホUIの参照")]
     public SmartPhoneUI m_SmartPhoneUI;
+    [Header("ボス戦へのロード画面（未設定ならすぐ切り替え）")]
+    public LoadingScreen m_LoadingScreen;
     //プレイヤーがTPエリアに入ったか？
     private bool m_PlayerTpTrigger = false;
     
@@ -72,12 +74,15 @@ public class TP : MonoBehaviour
     }
     private void TpPlayer()
     {
-        if (m_TP != null)
+        if (m_TP != null && !LoadingScreen.IsLoading)
         {
             m_Bgm1.Stop();
-            //シーンに移動
-            SceneManager.LoadScene("BossStage");
-            m_Bgm2.Play();
+            //ロード中にプレイヤーが動かないように
+            if (m_PlayScript != null) m_PlayScript.enabled = false;
+            //ロード画面を出してシーンに移動（読み込み完了 + 指定秒数で自動で切り替わる）
+            LoadingScreen.Load(m_LoadingScreen, "BossStage");
+            //m_Bgm2 は Stage のオブジェクトで切り替え時に消えるため、ロード中は鳴らさない
+            //（以前も LoadScene 直後に消えて実際には鳴っていなかった）
         }
     }
 
