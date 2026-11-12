@@ -3421,7 +3421,7 @@ Transform:
   m_GameObject: {fileID: 649417185}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.652, y: 1.5, z: -3.5}
+  m_LocalPosition: {x: 2.652, y: 0.972, z: -3.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3667,6 +3667,40 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2777075635460223235, guid: ec50ba26f85065f4d97d88b1a7610fa5, type: 3}
   m_PrefabInstance: {fileID: 2008647339}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &688478188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 688478184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbf8fcdf49b67a247bb0de54cd2e8570, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Boss: {fileID: 688478187}
+  m_BossAnimator: {fileID: 2008647340}
+  m_AttackTrigger: Roll_1
+  m_IdleTrigger: Idle
+  m_WindupTime: 1
+  m_DashSpeed: 12
+  m_DashStopDistance: 0.6
+  m_EnemyCoin: {fileID: 1451178526}
+  m_Player: {fileID: 1852336428}
+  m_PlayerAnimator: {fileID: 1852336434}
+  m_PlayerSprite: {fileID: 1079792944}
+  m_DamageTrigger: Damage
+  m_KnockBack: 0.6
+  m_BlinkTime: 0.8
+  m_FadeImage: {fileID: 606367961}
+  m_FadeColor: {r: 0, g: 0, b: 0, a: 1}
+  m_FadeDelay: 0.05
+  m_FadeOutTime: 0.15
+  m_BlackTime: 0.5
+  m_FadeInTime: 0.5
+  m_HitSE: {fileID: 0}
+  m_Shake: {fileID: 1453935506}
 --- !u!1 &697381996
 GameObject:
   m_ObjectHideFlags: 0
@@ -6221,7 +6255,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7884932937453508877, guid: 0b16cf9fc19795048990008fa290e732, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.528
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7884932937453508877, guid: 0b16cf9fc19795048990008fa290e732, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6241,6 +6275,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1152278003}
   m_SourcePrefab: {fileID: 100100000, guid: 0b16cf9fc19795048990008fa290e732, type: 3}
+--- !u!212 &1079792944 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6789903937020074479, guid: 0b16cf9fc19795048990008fa290e732, type: 3}
+  m_PrefabInstance: {fileID: 1079792943}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1081705632
 GameObject:
   m_ObjectHideFlags: 0
@@ -7102,6 +7141,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PH: {fileID: 730100785}
   m_EnemyCoin: {fileID: 1451178526}
+  m_CoinSteal: {fileID: 688478188}
   m_Renderer:
   - {fileID: 2126050114}
   - {fileID: 1656466074}
@@ -11043,10 +11083,18 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2219795374471144696, guid: ec50ba26f85065f4d97d88b1a7610fa5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 688478186}
+    - targetCorrespondingSourceObject: {fileID: 2219795374471144696, guid: ec50ba26f85065f4d97d88b1a7610fa5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 688478188}
     - targetCorrespondingSourceObject: {fileID: 4736748705059810482, guid: ec50ba26f85065f4d97d88b1a7610fa5, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1905816725}
   m_SourcePrefab: {fileID: 100100000, guid: ec50ba26f85065f4d97d88b1a7610fa5, type: 3}
+--- !u!95 &2008647340 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2901159880857769179, guid: ec50ba26f85065f4d97d88b1a7610fa5, type: 3}
+  m_PrefabInstance: {fileID: 2008647339}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2042868383
 PrefabInstance:
   m_ObjectHideFlags: 0

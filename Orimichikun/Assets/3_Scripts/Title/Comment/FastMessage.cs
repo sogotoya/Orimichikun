@@ -1,6 +1,5 @@
-//ƒ`ƒ…[ƒgƒŠƒAƒ‹‚ÉBoss‚Æ‰ï˜b‚·‚é‚ÌƒXƒNƒŠƒvƒg
+ï»¿//ãƒãƒ¥ãƒ¼ãƒˆãƒªã‚¢ãƒ«æ™‚ã«Bossã¨ä¼šè©±ã™ã‚‹æ™‚ã®ã‚¹ã‚¯ãƒªãƒ—ãƒˆ
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class FastMessage : MonoBehaviour
@@ -12,12 +11,16 @@ public class FastMessage : MonoBehaviour
     GameObject m_EnemyCoin;
 
     [SerializeField]
+    [Tooltip("æœ€åˆã®ä¼šè©±ã®å¾Œã«å†ç”Ÿã™ã‚‹ã‚³ã‚¤ãƒ³å¥ªå–ã®æ¼”å‡ºï¼ˆæœªè¨­å®šãªã‚‰å¾“æ¥ã®æš—è»¢ï¼‰")]
+    CoinSteal m_CoinSteal;
+
+    [SerializeField]
     GameObject[] m_Renderer;
-    //‘O‚Ìs“®‚ªI‚í‚Á‚½‚©‚Ì”»’è
+    //å‰ã®è¡Œå‹•ãŒçµ‚ã‚ã£ãŸã‹ã®åˆ¤å®š
     public bool m_MessageFlag=false;
-    //IEnumerator Contact()‚ªI‚í‚Á‚½‚©‚Ì”»’è
+    //IEnumerator Contact()ãŒçµ‚ã‚ã£ãŸã‹ã®åˆ¤å®š
     public bool m_ContactFlag=false;
-    //1‰ñ‚Ì‚İŒÄ‚Î‚ê‚éƒtƒ‰ƒO
+    //1å›ã®ã¿å‘¼ã°ã‚Œã‚‹ãƒ•ãƒ©ã‚°
     bool m_Flag = false;
     private void Start()
     {
@@ -33,7 +36,7 @@ public class FastMessage : MonoBehaviour
     {
         if (m_MessageFlag)
         {
-            //1‰ñ‚Ì‚İ‹N“®
+            //1å›ã®ã¿èµ·å‹•
             if (!m_Flag)
             {
                 StartCoroutine(Contact());
@@ -42,7 +45,7 @@ public class FastMessage : MonoBehaviour
         }
     }
     /// <summary>
-    /// ‚»‚ê‚¼‚ê‚ÌƒRƒƒ“ƒg‡‚É•\¦
+    /// ãã‚Œãã‚Œã®ã‚³ãƒ¡ãƒ³ãƒˆé †ã«è¡¨ç¤º
     /// </summary>
     /// <returns></returns>
     public IEnumerator Contact()
@@ -53,17 +56,26 @@ public class FastMessage : MonoBehaviour
             m_Renderer[i].SetActive(true);
 
             yield return new WaitForSeconds(5.0f);
-            //0”Ô–Ú‚¾‚Á‚½ê‡ˆÃ“]
+            //0ç•ªç›®ã ã£ãŸå ´åˆ: ã‚³ã‚¤ãƒ³ã‚’å¥ªã‚ã‚Œã‚‹
             if(i==0)
             {
+                if (m_CoinSteal != null)
+                {
+                    //ä¼šè©±ã‚’æ¶ˆã—ã¦ã‹ã‚‰ã€æ”»æ’ƒ â†’ æš—è»¢ â†’ è¢«ãƒ€ãƒ¡ã®æ¼”å‡º
+                    m_Renderer[i].SetActive(false);
+                    yield return m_CoinSteal.Play();
+                    yield return new WaitForSeconds(1.0f);
+                    continue;
+                }
+
+                //å¾“æ¥: æš—è»¢ã—ã¦ãƒœã‚¹ãŒã‚³ã‚¤ãƒ³ã‚’æŒã¤
                 m_PH.Hight();
                 m_EnemyCoin.SetActive(true);
-
             }
             yield return new WaitForSeconds(1.5f);
             m_Renderer[i].SetActive(false);
         }
-        //Contact()I‚í‚Á‚½‚Ì‚Åtrue
+        //Contact()çµ‚ã‚ã£ãŸã®ã§true
         m_ContactFlag = true;
         yield return null;
     }
