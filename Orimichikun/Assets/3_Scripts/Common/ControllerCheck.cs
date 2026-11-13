@@ -12,8 +12,7 @@ public static class ControllerCheck
 
     //InputManager に追加した LT 用の軸の名前
     //LT … 9番目の軸（Windows の Xbox 型コントローラー）
-    //LT_Shared … 3番目の軸（LT と RT が1本にまとまっているコントローラー。LT がプラス側）
-    static readonly string[] k_LTAxisNames = { "LT", "LT_Shared" };
+    static readonly string[] k_LTAxisNames = { "LT" };
 
     static bool s_IsConnected;
     static float s_NextCheckTime = -1f;
