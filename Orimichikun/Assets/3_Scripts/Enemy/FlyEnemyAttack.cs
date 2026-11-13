@@ -16,6 +16,8 @@ public class FlyEnemyAttack : MonoBehaviour
     private bool m_AttackTrigger = false;
     private bool m_HasAttackedOnce=false;
     private float m_Count;
+    //最後に弾を撃った時間（画面に出たり入ったりしても、クールタイム中は撃たないようにする）
+    private float m_LastAttackTime = -999f;
     private FlySound m_Sound;
     private Parameta2D m_Parameta;
     private void Start()
@@ -52,7 +54,7 @@ public class FlyEnemyAttack : MonoBehaviour
         {
             m_Count += Time.deltaTime;
 
-            if (m_Count >= m_AttackCoolingtime)
+            if (m_Count >= m_AttackCoolingtime && CanAttack())
             {
                 AttackMode();
                 m_Count = 0f;
@@ -66,7 +68,7 @@ public class FlyEnemyAttack : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             m_AttackTrigger=true;
-            if (!m_HasAttackedOnce) // 初回のみ
+            if (!m_HasAttackedOnce && CanAttack()) // 初回のみ
             {
                 AttackMode();
                 m_HasAttackedOnce = false;
@@ -87,8 +89,17 @@ public class FlyEnemyAttack : MonoBehaviour
             }
         }
     }
+    /// <summary>
+    /// クールタイムが終わっていて撃てるか調べる処理
+    /// </summary>
+    bool CanAttack()
+    {
+        return Time.time - m_LastAttackTime >= m_AttackCoolingtime;
+    }
     void AttackMode()
     {
+        //撃った時間を覚えておく
+        m_LastAttackTime = Time.time;
         //攻撃アニメーション
         m_Animator.SetTrigger("Attack");
         //攻撃SE

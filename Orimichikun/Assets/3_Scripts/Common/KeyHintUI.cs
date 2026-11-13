@@ -24,19 +24,22 @@ public class KeyHintUI : MonoBehaviour
     struct Hint
     {
         public string m_Label;
-        public string m_PcIcon;
-        public string m_PadIcon;
-        public Hint(string label, string pcIcon, string padIcon)
+        public string[] m_PcIcons;
+        public string[] m_PadIcons;
+        public Hint(string label, string[] pcIcons, string[] padIcons)
         {
             m_Label = label;
-            m_PcIcon = pcIcon;
-            m_PadIcon = padIcon;
+            m_PcIcons = pcIcons;
+            m_PadIcons = padIcons;
         }
     }
 
-    static readonly Hint k_Teleport = new Hint("ボス戦へ進む", "Key_E", "Pad_RB");
-    static readonly Hint k_Recovery = new Hint("回復する", "Key_E", "Pad_LB");
-    static readonly Hint k_Continue = new Hint("コンティニュー", "Key_Enter", "Pad_LT");
+    static readonly Hint k_Teleport = new Hint("ボス戦へ進む", new[] { "Key_E" }, new[] { "Pad_RB" });
+    static readonly Hint k_Recovery = new Hint("回復する", new[] { "Key_E" }, new[] { "Pad_LB" });
+    static readonly Hint k_Continue = new Hint("コンティニュー", new[] { "Key_Enter" }, new[] { "Pad_LT" });
+    //常に出す操作
+    static readonly Hint k_Attack = new Hint("攻撃", new[] { "Mouse_Left" }, new[] { "Pad_Y", "Pad_B" });
+    static readonly Hint k_Jump = new Hint("ジャンプ", new[] { "Key_Space" }, new[] { "Pad_X", "Pad_A" });
 
     RectTransform m_RowParent;
     Font m_Font;
@@ -133,6 +136,10 @@ public class KeyHintUI : MonoBehaviour
         }
 
         if (m_CoinManager != null && m_CoinManager.CanRecovery) m_Hints.Add(k_Recovery);
+
+        //攻撃とジャンプはいつも出す（一番下）
+        m_Hints.Add(k_Attack);
+        m_Hints.Add(k_Jump);
     }
 
     /// <summary>
@@ -158,7 +165,10 @@ public class KeyHintUI : MonoBehaviour
 
         foreach (Hint h in m_Hints)
         {
-            AddRow(h.m_Label, LoadIcon(pad ? h.m_PadIcon : h.m_PcIcon));
+            string[] names = pad ? h.m_PadIcons : h.m_PcIcons;
+            Sprite[] icons = new Sprite[names.Length];
+            for (int i = 0; i < names.Length; i++) icons[i] = LoadIcon(names[i]);
+            AddRow(h.m_Label, icons);
         }
     }
 
@@ -175,9 +185,9 @@ public class KeyHintUI : MonoBehaviour
     }
 
     /// <summary>
-    /// 1行（文字 + キー画像）を追加する処理
+    /// 1行（文字 + キー画像）を追加する処理（キーが2つあるときは横に並べる）
     /// </summary>
-    void AddRow(string label, Sprite icon)
+    void AddRow(string label, Sprite[] icons)
     {
         GameObject row = new GameObject("Row", typeof(RectTransform));
         row.transform.SetParent(m_RowParent, false);
@@ -205,16 +215,19 @@ public class KeyHintUI : MonoBehaviour
         outline.effectDistance = new Vector2(2f, -2f);
 
         //キー画像（元の大きさで出す）
-        GameObject iconObj = new GameObject("Key", typeof(RectTransform));
-        iconObj.transform.SetParent(row.transform, false);
-        Image image = iconObj.AddComponent<Image>();
-        image.sprite = icon;
-        image.raycastTarget = false;
-        LayoutElement le = iconObj.AddComponent<LayoutElement>();
-        if (icon != null)
+        foreach (Sprite icon in icons)
         {
-            le.preferredWidth = icon.rect.width;
-            le.preferredHeight = icon.rect.height;
+            GameObject iconObj = new GameObject("Key", typeof(RectTransform));
+            iconObj.transform.SetParent(row.transform, false);
+            Image image = iconObj.AddComponent<Image>();
+            image.sprite = icon;
+            image.raycastTarget = false;
+            LayoutElement le = iconObj.AddComponent<LayoutElement>();
+            if (icon != null)
+            {
+                le.preferredWidth = icon.rect.width;
+                le.preferredHeight = icon.rect.height;
+            }
         }
     }
 
