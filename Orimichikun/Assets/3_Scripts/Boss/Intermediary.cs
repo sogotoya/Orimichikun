@@ -45,4 +45,14 @@ public class Intermediary : MonoBehaviour
         //元の色に戻す
         m_Boss.GetComponent<SpriteRenderer>().color = m_DefaultColor;
     }
+
+    private void OnDisable()
+    {
+        //とどめの一撃の直後に死亡処理でこのオブジェクトが非表示になると、
+        //上のコルーチンが途中で止まって色が戻らない（ボスが黒いままになる）ため、ここでも元に戻す
+        if (m_Boss != null)
+        {
+            m_Boss.GetComponent<SpriteRenderer>().color = m_DefaultColor;
+        }
+    }
 }

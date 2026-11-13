@@ -18158,6 +18158,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmartPhoneUICanvas
       objectReference: {fileID: 0}
+    - target: {fileID: 4102725188693893409, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4152015983367254714, guid: d1a15c3ad5a6ca847a8cd60e0c35b7b0, type: 3}
       propertyPath: m_Sprite
       value: 

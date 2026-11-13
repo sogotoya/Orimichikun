@@ -23,9 +23,22 @@ public class Thunder_Damage : MonoBehaviour
 
     private void Start()
     {
-        m_PCManager = GameObject.Find("PlayerControlManager").GetComponent<PlayerControlManager>();
-        m_Player = GameObject.Find("プレイヤ-");
-        m_SR = m_Player.GetComponent<SpriteRenderer>();
+        FindReferences();
+    }
+
+    /// <summary>
+    /// プレイヤーなどの参照を取得する（まだ取得できていないものだけ）
+    /// 雷が出た瞬間に当たると Start より先に OnTriggerEnter2D が呼ばれるため、当たったときにも呼ぶ
+    /// </summary>
+    void FindReferences()
+    {
+        if (m_PCManager == null)
+        {
+            GameObject pcm = GameObject.Find("PlayerControlManager");
+            if (pcm != null) m_PCManager = pcm.GetComponent<PlayerControlManager>();
+        }
+        if (m_Player == null) m_Player = GameObject.Find("プレイヤ-");
+        if (m_SR == null && m_Player != null) m_SR = m_Player.GetComponent<SpriteRenderer>();
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -38,6 +51,7 @@ public class Thunder_Damage : MonoBehaviour
             if (otherParam.m_Team != m_Parameta.m_Team)
             {
 
+                FindReferences();
                 StartCoroutine(ThunderStan());
             }
 
@@ -55,11 +69,11 @@ public class Thunder_Damage : MonoBehaviour
             foreach (Coroutine c in m_ThunderRoutine)
             StopCoroutine(c);
         }
-        m_SR.color = Color.blue;
-        m_PCManager.m_IsPSPlaying = true;
+        if (m_SR != null) m_SR.color = Color.blue;
+        if (m_PCManager != null) m_PCManager.m_IsPSPlaying = true;
         yield return new WaitForSeconds(1.0f);
-        m_SR.color = Color.white;
-        m_PCManager.m_IsPSPlaying=false;
+        if (m_SR != null) m_SR.color = Color.white;
+        if (m_PCManager != null) m_PCManager.m_IsPSPlaying = false;
         yield return null;
     }
 }
