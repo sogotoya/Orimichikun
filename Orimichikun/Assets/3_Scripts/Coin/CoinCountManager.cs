@@ -29,6 +29,9 @@ public class CoinCountManager : MonoBehaviour
     public List<Coin> m_Coins = new List<Coin>();
     public bool m_CoinReset=false;
 
+    //回復できる状態か（回復アイテムがあって HP が減っている）。右下のキー表示（KeyHintUI）で使う
+    public bool CanRecovery => m_RecoveryCount >= 1 && m_PlayerParameta != null && m_PlayerParameta.m_Hp < m_PlayerParameta.m_MaxHp;
+
 
     public void RegisterCoin(Coin coin)
     {

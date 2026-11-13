@@ -22,12 +22,14 @@ public class TP : MonoBehaviour
     public LoadingScreen m_LoadingScreen;
     //プレイヤーがTPエリアに入ったか？
     private bool m_PlayerTpTrigger = false;
+    //プレイヤーが TP エリアにいるか。右下のキー表示（KeyHintUI）で使う
+    public bool IsPlayerInArea => m_PlayerTpTrigger;
     
 
     private void Start()
     {
         
-        m_Image.SetActive(false);
+        if (m_Image != null) m_Image.SetActive(false);
         m_Image2.SetActive(false);
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -36,8 +38,7 @@ public class TP : MonoBehaviour
         if (collision.gameObject == m_Player)
         {
             m_PlayerTpTrigger = true;
-            //表示
-            m_Image.SetActive(true);
+            //表示（キーは右下のキー表示 KeyHintUI に出すので、浮かぶキーは出さない）
             m_Image2.SetActive(true);
 
             // スマホUIの「次へ」ボタンを表示（テレポート用ボタンとして流用）
@@ -54,7 +55,7 @@ public class TP : MonoBehaviour
         {
             m_PlayerTpTrigger = false;
             //非表示
-            m_Image.SetActive(false);
+            if (m_Image != null) m_Image.SetActive(false);
             m_Image2.SetActive(false);
 
             // スマホUIの「次へ」ボタンを非表示
@@ -66,7 +67,8 @@ public class TP : MonoBehaviour
     }
     private void Update()
     {
-        if ((Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown("joystick button 4")|| Input.GetKeyDown("joystick button 5")) && m_PlayerTpTrigger)
+        //テレポートは E キーかコントローラーの RB（LB は回復に使うので外す）
+        if ((Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown("joystick button 5")) && m_PlayerTpTrigger)
         {
             TpPlayer();
             

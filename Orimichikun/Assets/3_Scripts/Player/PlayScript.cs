@@ -64,6 +64,8 @@ public class PlayScript : MonoBehaviour
 
     //復活中フラグToya
     private bool m_IsRespawning = false;
+    //死んでいて、コンティニューを待っているか。右下のキー表示（KeyHintUI）で使う
+    public bool IsDead => CurrentState == State.Die && !m_IsRespawning;
 
     // スマホ操作用の水平入力
     private float m_MobileHorizontal = 0f;
@@ -78,6 +80,8 @@ public class PlayScript : MonoBehaviour
 
         // UI は消す
         if (m_image != null) m_image.SetActive(false);
+        //コントローラー接続中はゲームオーバーのコンティニュー表示を LT にする
+        KeyGuideIcon.Attach(m_image, "", "KeyGuide/GameOver_LT");
 
         // 移動の制約だけ初期化
         if (m_Rigidbody != null)
@@ -123,7 +127,8 @@ public class PlayScript : MonoBehaviour
         {
             LockFall();
         }
-        if ((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown("joystick button 6") || Input.GetKeyDown("joystick button 7"))
+        //コンティニューは Enter キーかコントローラーの LT
+        if ((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown("joystick button 6") || Input.GetKeyDown("joystick button 7") || ControllerCheck.IsLTDown())
     && CurrentState == State.Die
     && !m_IsRespawning)
         {
