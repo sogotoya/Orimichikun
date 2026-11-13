@@ -971,9 +971,25 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4234926846192033704, guid: 7e260cef67fd236478e0b0e9bfce082d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5878650926284367411, guid: 7e260cef67fd236478e0b0e9bfce082d, type: 3}
       propertyPath: m_Name
       value: "Boss\u6226"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5900623671269006092, guid: 7e260cef67fd236478e0b0e9bfce082d, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5900623671269006092, guid: 7e260cef67fd236478e0b0e9bfce082d, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 5900623671269006092, guid: 7e260cef67fd236478e0b0e9bfce082d, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 6327692229357460851, guid: 7e260cef67fd236478e0b0e9bfce082d, type: 3}
       propertyPath: m_AnchorMax.x
@@ -981,6 +997,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6327692229357460851, guid: 7e260cef67fd236478e0b0e9bfce082d, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6589488689530769381, guid: 7e260cef67fd236478e0b0e9bfce082d, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6947000868301901023, guid: 7e260cef67fd236478e0b0e9bfce082d, type: 3}

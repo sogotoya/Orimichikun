@@ -19,13 +19,17 @@ public class Coin : MonoBehaviour
     public bool m_Iseffect=false;
     //コインのカウントをいれたかどうか
     public bool m_CoinGetCount=false;
+    private void Awake()
+    {
+        //部品の取得（スポーン位置にコインがあると Start より先に当たり判定が来るので Awake で取る）
+        m_CoinSource = GetComponent<AudioSource>();
+        m_animator = GetComponentInChildren<Animator>();
+    }
     private void Start()
     {
         //非表示
         m_effect.SetActive(false);
         //格納
-        m_CoinSource =GetComponent<AudioSource>();
-        m_animator = GetComponentInChildren<Animator>();
         // 自動登録
         FindObjectOfType<CoinCountManager>().RegisterCoin(this);
     }

@@ -40,6 +40,15 @@ public class SpriteGlow : MonoBehaviour
     }
 
     /// <summary>
+    /// 光の色（中間地点などで色を変えるとき用）
+    /// </summary>
+    public Color GlowColor
+    {
+        get => m_GlowColor;
+        set => m_GlowColor = value;
+    }
+
+    /// <summary>
     /// 光らせるかどうかを切り替える処理
     /// </summary>
     public void SetGlow(bool glow)

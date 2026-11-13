@@ -94,6 +94,21 @@ public class PlayScript : MonoBehaviour
         {
             m_Parameta.m_Hp = m_Parameta.m_MaxHp;
         }
+
+        //中間地点を取っていたら、Stage に戻ったときはそこから始める（ボス戦で死んだときなど）
+        if (MidPoint.HasSavedPosition && SceneManager.GetActiveScene().name == "Stage")
+        {
+            Vector3 pos = MidPoint.SavedPosition;
+            pos.z = transform.position.z;
+            transform.position = pos;
+            if (m_Rigidbody != null) m_Rigidbody.position = pos;
+            m_LastSavePosition = pos;
+
+            //カメラもすぐに合わせる
+            PlayerCamera playerCamera = GetComponentInChildren<PlayerCamera>();
+            if (playerCamera == null) playerCamera = FindObjectOfType<PlayerCamera>();
+            if (playerCamera != null) playerCamera.SnapToPlayer();
+        }
       
     }
     private void Update()
