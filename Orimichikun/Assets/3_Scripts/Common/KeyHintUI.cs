@@ -1,6 +1,6 @@
 ﻿//画面右下に、今できる操作とキーを表示する処理
 //コントローラー接続中はコントローラーのボタン、そうでないときは PC のキーを出す
-//Stage と BossStage を読み込んだときに自動で作られる（シーンに置く必要はない）
+//Title と Stage と BossStage を読み込んだときに自動で作られる（シーンに置く必要はない）
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -9,15 +9,17 @@ using UnityEngine.UI;
 public class KeyHintUI : MonoBehaviour
 {
     //表示するシーン
-    static readonly string[] k_TargetScenes = { "Stage", "BossStage" };
+    static readonly string[] k_TargetScenes = { "Title", "Stage", "BossStage" };
 
     //キー画像（Resources/KeyGuide の中）
     const string k_IconFolder = "KeyGuide/";
 
     //見た目の設定
-    const int k_FontSize = 32;
-    const float k_RowSpacing = 12f;
-    const float k_KeySpacing = 12f;
+    const int k_FontSize = 28;
+    const float k_RowSpacing = 8f;
+    const float k_KeySpacing = 8f;
+    //キー画像の大きさ（元の画像に対する倍率。2/3 で小さめ、1 で元の大きさ）
+    const float k_IconScale = 5f / 6f;
     static readonly Vector2 k_Margin = new Vector2(30f, 30f);
 
     //行ごとの表示内容
@@ -37,6 +39,8 @@ public class KeyHintUI : MonoBehaviour
     static readonly Hint k_Teleport = new Hint("ボス戦へ進む", new[] { "Key_E" }, new[] { "Pad_RB" });
     static readonly Hint k_Recovery = new Hint("回復する", new[] { "Key_E" }, new[] { "Pad_LB" });
     static readonly Hint k_Continue = new Hint("コンティニュー", new[] { "Key_Enter" }, new[] { "Pad_LT" });
+    //タイトルが出たときの操作
+    static readonly Hint k_GameStart = new Hint("ゲームスタート", new[] { "Key_E" }, new[] { "Pad_RB" });
     //常に出す操作
     static readonly Hint k_Attack = new Hint("攻撃", new[] { "Mouse_Left" }, new[] { "Pad_Y", "Pad_B" });
     static readonly Hint k_Jump = new Hint("ジャンプ", new[] { "Key_Space" }, new[] { "Pad_X", "Pad_A" });
@@ -48,6 +52,7 @@ public class KeyHintUI : MonoBehaviour
     TP[] m_Teleports;
     CoinCountManager m_CoinManager;
     PlayScript m_Player;
+    TriggerManager m_TitleManager;
 
     //今表示している内容（変わったときだけ作り直す）
     string m_CurrentKey = null;
@@ -98,7 +103,7 @@ public class KeyHintUI : MonoBehaviour
         CollectHints();
 
         //表示内容とコントローラー接続の状態をまとめて、変わったときだけ作り直す
-        bool pad = ControllerCheck.IsConnected;
+        bool pad = ControllerCheck.IsUsingPad;
         string key = pad ? "pad" : "pc";
         foreach (Hint h in m_Hints) key += "|" + h.m_Label;
         if (key == m_CurrentKey) return;
@@ -115,6 +120,13 @@ public class KeyHintUI : MonoBehaviour
 
         //ロード中と一時停止中は出さない
         if (LoadingScreen.IsLoading || Time.timeScale == 0f) return;
+
+        //タイトルが出たらゲームスタートだけ
+        if (m_TitleManager != null && m_TitleManager.m_IsTitle)
+        {
+            m_Hints.Add(k_GameStart);
+            return;
+        }
 
         //死んでいるときはコンティニューだけ
         if (m_Player != null && m_Player.IsDead)
@@ -150,6 +162,7 @@ public class KeyHintUI : MonoBehaviour
         if (m_Teleports == null) m_Teleports = FindObjectsOfType<TP>();
         if (m_CoinManager == null) m_CoinManager = FindObjectOfType<CoinCountManager>();
         if (m_Player == null) m_Player = FindObjectOfType<PlayScript>();
+        if (m_TitleManager == null && gameObject.scene.name == "Title") m_TitleManager = FindObjectOfType<TriggerManager>();
     }
 
     /// <summary>
@@ -225,8 +238,8 @@ public class KeyHintUI : MonoBehaviour
             LayoutElement le = iconObj.AddComponent<LayoutElement>();
             if (icon != null)
             {
-                le.preferredWidth = icon.rect.width;
-                le.preferredHeight = icon.rect.height;
+                le.preferredWidth = icon.rect.width * k_IconScale;
+                le.preferredHeight = icon.rect.height * k_IconScale;
             }
         }
     }

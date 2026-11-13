@@ -63,7 +63,7 @@ public class KeyGuideIcon : MonoBehaviour
         Setup();
         if (!m_IsReady) return;
 
-        bool pad = ControllerCheck.IsConnected;
+        bool pad = ControllerCheck.IsUsingPad;
         //状態が変わったときだけ入れ替える
         if (m_ShowingPad == pad) return;
         m_ShowingPad = pad;
