@@ -30,7 +30,9 @@ public class CoinCountManager : MonoBehaviour
     public bool m_CoinReset=false;
 
     //回復できる状態か（回復アイテムがあって HP が減っている）。右下のキー表示（KeyHintUI）で使う
-    public bool CanRecovery => m_RecoveryCount >= 1 && m_PlayerParameta != null && m_PlayerParameta.m_Hp < m_PlayerParameta.m_MaxHp;
+    public bool CanRecovery => m_RecoveryCount >= 1 && m_PlayerParameta != null && m_PlayerParameta.m_Hp < m_PlayerParameta.m_MaxHp && !IsPlayerDead();
+    //プレイヤーのscript（死んでいるかを見る）
+    private PlayScript m_PlayScript;
 
 
     public void RegisterCoin(Coin coin)
@@ -80,8 +82,8 @@ public class CoinCountManager : MonoBehaviour
                 UpdateRecoveryText();
             }
         }
-        //回復アイテムを一個以上ゲットしたら使用可能
-        if (m_RecoveryCount>=1)
+        //回復アイテムを一個以上ゲットしたら使用可能（死んでいるときは使えない）
+        if (m_RecoveryCount>=1 && !IsPlayerDead())
         {
            //Hpが削れていたら回復Key表示
             if (m_PlayerParameta.m_Hp < m_PlayerParameta.m_MaxHp)
@@ -131,8 +133,18 @@ public class CoinCountManager : MonoBehaviour
         //Textに回復加算を表示
         m_RecoveryCountText.text = "x" + ((int)m_RecoveryCount).ToString();
     }
+    /// <summary>
+    /// プレイヤーが死んでいるか調べる処理
+    /// </summary>
+    bool IsPlayerDead()
+    {
+        if (m_PlayScript == null && m_PlayerParameta != null) m_PlayScript = m_PlayerParameta.GetComponent<PlayScript>();
+        return m_PlayScript != null && m_PlayScript.IsDead;
+    }
     public void Recovery()
     {
+        //死んでいるときは回復できない（スマホのボタンからも呼ばれるのでここでも止める）
+        if (IsPlayerDead()) return;
         if (m_PlayerParameta.m_Hp<m_PlayerParameta.m_MaxHp)
         {
             m_Source.PlayOneShot(m_RecoverySE);

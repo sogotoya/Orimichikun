@@ -32,6 +32,9 @@ public class playershoot : MonoBehaviour
                            Input.GetKeyDown("joystick button 1") || 
                            Input.GetKeyDown("joystick button 3") ||
                            m_Player.ConsumeMobileAttack();
+
+        //死んでいるときは攻撃できない
+        if (m_Player.IsDead) return;
         
         if (attackInput) 
         {
