@@ -348,6 +348,11 @@ public class PlayScript : MonoBehaviour
 
         m_IsRespawning = false;
 
+        //カメラをリスポーン先へ一気に合わせる（ズームアウトしたまま動いて背景の外が見えるのを防ぐ）
+        PlayerCamera playerCamera = GetComponentInChildren<PlayerCamera>();
+        if (playerCamera == null) playerCamera = FindObjectOfType<PlayerCamera>();
+        if (playerCamera != null) playerCamera.SnapToPlayer();
+
         Debug.Log("リスポーン！");
     }    /// <summary>
     /// スマホUIから移動入力を受け取る関数

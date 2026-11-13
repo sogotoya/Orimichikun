@@ -59,6 +59,29 @@ public class PlayerCamera : MonoBehaviour
     }
 
     /// <summary>
+    /// カメラをプレイヤーの位置へ一気に合わせる（リスポーン直後に呼ぶ）
+    /// ズームアウトの区間で死んだとき、引いたままリスポーン先へ動いて背景の外が見えるのを防ぐ
+    /// </summary>
+    public void SnapToPlayer()
+    {
+        if (m_Player == null) return;
+
+        // リスポーン先が今の区間の外なら、区間カメラをやめる
+        if (m_Area != null && !m_Area.Contains(m_Player.position)) m_Area = null;
+
+        // 追従位置をリスポーン先にそろえる
+        m_LastPlayerPos = m_Player.position;
+        Vector3 desiredPosition = m_Player.position + offset;
+        desiredPosition.x = Mathf.Clamp(desiredPosition.x, minX, maxX);
+        desiredPosition.y = Mathf.Clamp(desiredPosition.y, minY, maxY);
+        m_FollowPos = desiredPosition;
+
+        // ズームの切り替え途中をなくして、すぐに反映する
+        m_AreaWeight = m_Area != null ? 1f : 0f;
+        LateUpdate();
+    }
+
+    /// <summary>
     /// 指定のズームアウト倍率のとき、z=0 の位置で映る高さの半分
     /// </summary>
     float GetHalfHeightAtGround(float cameraZ, float zoom)

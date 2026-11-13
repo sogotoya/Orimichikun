@@ -78,6 +78,14 @@ public class CameraArea : MonoBehaviour
         return Mathf.Clamp(cameraY, min, max);
     }
 
+    /// <summary>
+    /// 指定の位置がこの区間の中にあるか（リスポーン直後のカメラ切り替えで使う）
+    /// </summary>
+    public bool Contains(Vector3 position)
+    {
+        return GetComponent<BoxCollider2D>().OverlapPoint(position);
+    }
+
     private void Start()
     {
         GetComponent<BoxCollider2D>().isTrigger = true;
