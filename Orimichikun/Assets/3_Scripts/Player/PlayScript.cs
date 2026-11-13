@@ -66,6 +66,10 @@ public class PlayScript : MonoBehaviour
     private bool m_IsRespawning = false;
     //死んでいて、コンティニューを待っているか。右下のキー表示（KeyHintUI）で使う
     public bool IsDead => CurrentState == State.Die && !m_IsRespawning;
+    //ゲームオーバー表示が出て、コンティニューできるか。右下のキー表示（KeyHintUI）で使う
+    public bool CanContinue => IsDead && m_GameOver != null && m_GameOver.IsReady;
+    //死んだときの演出（カメラ揺れ・SE・BGM・ゲームオーバー表示）
+    private GameOverEffect m_GameOver;
 
     // スマホ操作用の水平入力
     private float m_MobileHorizontal = 0f;
@@ -75,8 +79,13 @@ public class PlayScript : MonoBehaviour
         m_LastSavePosition = transform.position;
         m_Animator = GetComponent<Animator>();
         m_Rigidbody = GetComponent<Rigidbody2D>();
+        //物理の動きを描画の間で補間して、移動とカメラのカクつきを減らす
+        if (m_Rigidbody != null) m_Rigidbody.interpolation = RigidbodyInterpolation2D.Interpolate;
         m_Parameta = GetComponent<Parameta2D>();
         m_Audio = GetComponent<AudioSource>();
+        //死んだときの演出を付ける
+        m_GameOver = GetComponent<GameOverEffect>();
+        if (m_GameOver == null) m_GameOver = gameObject.AddComponent<GameOverEffect>();
 
         // UI は消す
         if (m_image != null) m_image.SetActive(false);
@@ -125,8 +134,8 @@ public class PlayScript : MonoBehaviour
         isGrounded = CheckGrounded();
 
 
-        // 接地したらジャンプ回数リセット
-        if (isGrounded)
+        // 接地したらジャンプ回数リセット（跳んだ直後の上昇中はまだ地面判定に当たるのでリセットしない）
+        if (isGrounded && (m_Rigidbody == null || m_Rigidbody.velocity.y <= 0.01f))
         {
             jumpCount = 0;
         }
@@ -142,10 +151,14 @@ public class PlayScript : MonoBehaviour
         {
             LockFall();
         }
-        //コンティニューは Enter キーかコントローラーの LT
+        //死んでいる間はダメージのアニメーションで死亡アニメーションが止まらないようにする
+        if (CurrentState == State.Die && m_Animator != null) m_Animator.ResetTrigger("Damage");
+
+        //コンティニューは Enter キーかコントローラーの LT（ゲームオーバー表示が出てから）
         if ((Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown("joystick button 6") || Input.GetKeyDown("joystick button 7") || ControllerCheck.IsLTDown())
     && CurrentState == State.Die
-    && !m_IsRespawning)
+    && !m_IsRespawning
+    && (m_GameOver == null || m_GameOver.IsReady))
         {
             m_Manager.m_CoinReset = true;
             PlayerSpawn();
@@ -252,8 +265,28 @@ public class PlayScript : MonoBehaviour
         // アニメーターに速度を反映（空中でも動きがある時にアニメーション変える用）
         if (m_Animator != null) m_Animator.SetFloat("Speed", Mathf.Abs(moveX));
 
-        // 状態をIdleに戻すのは「着地したら」
-        StartCoroutine(CheckLanding());
+        //空中でもジャンプ（二段ジャンプ）
+        if ((Input.GetKeyDown("joystick button 2") || Input.GetKeyDown("joystick button 0") || Input.GetKeyDown(KeyCode.Space)) && jumpCount < maxJumpCount)
+        {
+            if (m_jump != null && m_jump.Length > 0)
+            {
+                int index = Mathf.Clamp(jumpCount, 0, m_jump.Length - 1);
+                if (m_Audio != null && m_jump[index] != null)
+                {
+                    m_Audio.PlayOneShot(m_jump[index]);
+                }
+            }
+            m_Rigidbody.velocity = new Vector2(m_Rigidbody.velocity.x, m_jumpForce);
+            jumpCount++;
+            return;
+        }
+
+        // 状態をIdleに戻すのは「着地したら」（上昇中は戻さない）
+        //（前は毎フレーム CheckLanding のコルーチンを起動していて、空中にいる間どんどん増えて重くなっていた）
+        if (isGrounded && m_Rigidbody.velocity.y <= 0.01f)
+        {
+            ChangeState(State.Idle);
+        }
     }
     void ModeAttack() { }
 
@@ -278,6 +311,9 @@ public class PlayScript : MonoBehaviour
     }
     void LockFall()
     {
+        //死んだ瞬間かどうか（LockFall は死んでいる間ずっと呼ばれるため）
+        bool justDied = CurrentState != State.Die;
+
         // 移動やジャンプを止める
         CurrentState = State.Die;
         if (m_Rigidbody != null)
@@ -288,8 +324,13 @@ public class PlayScript : MonoBehaviour
             m_Rigidbody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
         }
 
-        // UI表示
-        if (m_image != null) m_image.SetActive(true);
+        // 死んだ瞬間だけ、死亡アニメーションと演出（ゲームオーバー表示は演出の中で少し遅れて出す）
+        if (justDied)
+        {
+            if (m_Animator != null) m_Animator.SetTrigger("Die");
+            if (m_GameOver != null) m_GameOver.Play(m_image);
+            else if (m_image != null) m_image.SetActive(true);
+        }
     }
 
 
@@ -347,9 +388,20 @@ public class PlayScript : MonoBehaviour
                 point?.Respawn();
         }
 
+        //死んだときの演出を止める（ボス戦からは Stage を読み直すので、BGMは流し直さない）
+        if (m_GameOver != null) m_GameOver.Stop(SceneManager.GetActiveScene().name != "BossStage");
+        //死亡アニメーションから元に戻す
+        if (m_Animator != null)
+        {
+            m_Animator.ResetTrigger("Die");
+            m_Animator.Play("Blend Tree", 0, 0f);
+        }
+
         // 通常のセーブポイントリスポーン
         if (m_image != null) m_image.SetActive(false);
         transform.position = m_LastSavePosition;
+        //物理側の位置も合わせる（補間をオンにしているため、transform だけだと戻されることがある）
+        if (m_Rigidbody != null) m_Rigidbody.position = m_LastSavePosition;
         foreach (var point in m_RespawnPoint)
             point?.Respawn();
 

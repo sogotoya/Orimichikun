@@ -30,6 +30,21 @@ public class PlayerCamera : MonoBehaviour
     Vector3 m_AreaPos;
     float m_AreaZoom = 1f;       //ズームアウト倍率（1 = 通常）
 
+    //揺れ（死んだときなど）
+    float m_ShakeTimer;
+    float m_ShakeDuration;
+    float m_ShakeStrength;
+
+    /// <summary>
+    /// カメラを少しの間揺らす処理（揺れは時間とともに小さくなる）
+    /// </summary>
+    public void Shake(float duration, float strength)
+    {
+        m_ShakeDuration = Mathf.Max(0.01f, duration);
+        m_ShakeTimer = m_ShakeDuration;
+        m_ShakeStrength = strength;
+    }
+
     void Start()
     {
         m_Camera = GetComponent<Camera>();
@@ -132,6 +147,14 @@ public class PlayerCamera : MonoBehaviour
         float t = Mathf.SmoothStep(0f, 1f, m_AreaWeight);
 
         transform.position = Vector3.Lerp(m_FollowPos, m_AreaPos, t);
+
+        // 揺れを足す（追従位置とは別に足すので、揺れが終わればそのまま元の位置）
+        if (m_ShakeTimer > 0f)
+        {
+            m_ShakeTimer -= Time.unscaledDeltaTime;
+            float power = m_ShakeStrength * Mathf.Clamp01(m_ShakeTimer / m_ShakeDuration);
+            transform.position += (Vector3)(Random.insideUnitCircle * power);
+        }
         // ズームアウト（映る範囲を倍率分だけ広げる）
         if (m_Camera != null)
         {

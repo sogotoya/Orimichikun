@@ -53,6 +53,7 @@ public class KeyHintUI : MonoBehaviour
     CoinCountManager m_CoinManager;
     PlayScript m_Player;
     TriggerManager m_TitleManager;
+    float m_NextFindTime;
 
     //今表示している内容（変わったときだけ作り直す）
     string m_CurrentKey = null;
@@ -131,7 +132,8 @@ public class KeyHintUI : MonoBehaviour
         //死んでいるときはコンティニューだけ
         if (m_Player != null && m_Player.IsDead)
         {
-            m_Hints.Add(k_Continue);
+            //ゲームオーバー表示が出るまでは何も出さない
+            if (m_Player.CanContinue) m_Hints.Add(k_Continue);
             return;
         }
 
@@ -159,6 +161,10 @@ public class KeyHintUI : MonoBehaviour
     /// </summary>
     void FindTargets()
     {
+        //見つからないものを毎フレーム探すと重いので、1秒に1回だけ探す
+        if (Time.unscaledTime < m_NextFindTime) return;
+        m_NextFindTime = Time.unscaledTime + 1f;
+
         if (m_Teleports == null) m_Teleports = FindObjectsOfType<TP>();
         if (m_CoinManager == null) m_CoinManager = FindObjectOfType<CoinCountManager>();
         if (m_Player == null) m_Player = FindObjectOfType<PlayScript>();
