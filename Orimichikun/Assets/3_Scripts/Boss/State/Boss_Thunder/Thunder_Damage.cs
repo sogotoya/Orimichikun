@@ -20,6 +20,9 @@ public class Thunder_Damage : MonoBehaviour
 
     Coroutine[] m_ThunderRoutine;
 
+    //しびれが終わる時間（雷が何回当たっても、最後に当たってから1秒で元に戻す）
+    static float s_StanEndTime;
+
 
     private void Start()
     {
@@ -52,7 +55,10 @@ public class Thunder_Damage : MonoBehaviour
             {
 
                 FindReferences();
-                StartCoroutine(ThunderStan());
+                //雷のオブジェクトはすぐ消えるので、消えないプレイヤー操作管理の上で動かす
+                //（雷の上で動かすと途中で止まり、青いまま・攻撃できないままになっていた）
+                MonoBehaviour runner = m_PCManager != null ? (MonoBehaviour)m_PCManager : this;
+                runner.StartCoroutine(ThunderStan());
             }
 
         }
@@ -69,11 +75,16 @@ public class Thunder_Damage : MonoBehaviour
             foreach (Coroutine c in m_ThunderRoutine)
             StopCoroutine(c);
         }
-        if (m_SR != null) m_SR.color = Color.blue;
-        if (m_PCManager != null) m_PCManager.m_IsPSPlaying = true;
-        yield return new WaitForSeconds(1.0f);
-        if (m_SR != null) m_SR.color = Color.white;
-        if (m_PCManager != null) m_PCManager.m_IsPSPlaying = false;
+        //参照を手元に持っておく（雷が消えても使えるように）
+        SpriteRenderer sr = m_SR;
+        PlayerControlManager pcManager = m_PCManager;
+        s_StanEndTime = Time.time + 1.0f;
+        if (sr != null) sr.color = Color.blue;
+        if (pcManager != null) pcManager.m_IsPSPlaying = true;
+        //最後に当たってから1秒たつまで待つ
+        while (Time.time < s_StanEndTime) yield return null;
+        if (sr != null) sr.color = Color.white;
+        if (pcManager != null) pcManager.m_IsPSPlaying = false;
         yield return null;
     }
 }

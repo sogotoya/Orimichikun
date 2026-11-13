@@ -41,6 +41,24 @@ namespace StateMachineAI
         [Header("第二形態変化フラグ")]
         public bool m_IsAnger;
 
+        /// <summary>
+        /// ステートを切り替える処理（第二形態に確実に入るようにする）
+        /// </summary>
+        public override void ChangeState(AIState_ActionType state)
+        {
+            //咆哮中は、雷か死亡以外に切り替えない（同じフレームの別の切り替えで咆哮が打ち切られないように）
+            if (IsCurrentState(AIState_ActionType.Houkou) && state != AIState_ActionType.Kaminari && state != AIState_ActionType.Die) return;
+
+            //HPが半分以下なのにまだ第二形態になっていなければ、咆哮へ
+            //（各ステートは「ちょうど半分」のときしか咆哮に行かないので、通り過ぎたときはここで拾う）
+            if (!m_IsAnger && m_MaxHP > 0 && m_HP > 0 && m_HP <= m_MaxHP / 2
+                && state != AIState_ActionType.Houkou && state != AIState_ActionType.Die)
+            {
+                state = AIState_ActionType.Houkou;
+            }
+            base.ChangeState(state);
+        }
+
 
         public Fast_Roll m_FR;
         public Second_Roll m_SR;

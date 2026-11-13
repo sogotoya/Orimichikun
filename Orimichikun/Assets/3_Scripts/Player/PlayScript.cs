@@ -102,6 +102,8 @@ public class PlayScript : MonoBehaviour
         if (m_Parameta != null && SceneManager.GetActiveScene().name == "Stage")
         {
             m_Parameta.m_Hp = m_Parameta.m_MaxHp;
+            //シーンをまたぐ HP の記録も満タンにする（0 のままだと Parameta2D が読み直して死んでしまう）
+            ResetSavedHP();
         }
 
         //中間地点を取っていたら、Stage に戻ったときはそこから始める（ボス戦で死んだときなど）
@@ -377,11 +379,23 @@ public class PlayScript : MonoBehaviour
     {
         m_LastSavePosition = pos;
     }
+    /// <summary>
+    /// シーンをまたいで残す HP の記録（ChangeSenseHP）を満タンにする処理
+    /// </summary>
+    void ResetSavedHP()
+    {
+        if (m_Parameta != null && ChangeSenseHP.m_Instance != null)
+        {
+            ChangeSenseHP.m_Instance.PlayerHP = m_Parameta.m_MaxHp;
+        }
+    }
     public void PlayerSpawn()
     {
         if (SceneManager.GetActiveScene().name=="BossStage")
         {
             m_Parameta.m_Hp = m_Parameta.m_MaxHp;
+            //Stage を読み直す前に HP の記録も満タンにする（0 のままだと Stage で読み直してすぐ死ぬ）
+            ResetSavedHP();
             SceneManager.LoadScene("Stage");
             transform.position = m_LastSavePosition;
             foreach (var point in m_RespawnPoint)
@@ -412,6 +426,8 @@ public class PlayScript : MonoBehaviour
         }
         CurrentState = State.Idle;
         if (m_Parameta != null) m_Parameta.m_Hp = m_Parameta.m_MaxHp;
+        //HP の記録も満タンにする（0 のままだとボス戦に行ったときにすぐ死ぬ）
+        ResetSavedHP();
 
         m_IsRespawning = false;
 
