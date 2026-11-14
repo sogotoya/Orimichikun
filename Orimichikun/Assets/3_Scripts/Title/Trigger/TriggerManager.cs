@@ -39,6 +39,14 @@ public class TriggerManager : MonoBehaviour
     GameObject m_GhostAttackObj;
     [SerializeField]
     GameObject m_GhostTama;
+
+    [Header("ゴーストと一緒に出すボタン説明（ButtonBlink、未設定なら出さない）")]
+    [SerializeField]
+    GameObject m_JumpGuide;
+    [SerializeField]
+    GameObject m_DoubleJumpGuide;
+    [SerializeField]
+    GameObject m_AttackGuide;
     [Header("背景を動かすオブジェクト")]
     [SerializeField]
     GameObject m_HaikeiMoveObj;
@@ -82,6 +90,11 @@ public class TriggerManager : MonoBehaviour
             m_GhostTama.SetActive(false);
         }
 
+        //ゴーストのお手本と一緒に、押すボタンを光らせて見せる
+        SetGuide(m_JumpGuide, m_IsJump);
+        SetGuide(m_DoubleJumpGuide, m_IsDoubleJump);
+        SetGuide(m_AttackGuide, m_IsAttackTama);
+
         if (m_IsEnemy)
         {
             if (!m_IsSpown)
@@ -108,6 +121,14 @@ public class TriggerManager : MonoBehaviour
        
     }
 
+
+    /// <summary>
+    /// ボタン説明の表示切り替え（状態が変わったときだけ切り替えて、点滅を最初からやり直さないようにする）
+    /// </summary>
+    void SetGuide(GameObject guide, bool show)
+    {
+        if (guide != null && guide.activeSelf != show) guide.SetActive(show);
+    }
 
     /// <summary>
     /// 敵の生成
